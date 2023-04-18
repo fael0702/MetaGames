@@ -67,5 +67,5 @@ Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
                           </sub>
                       </a>
               </td>
-</tr>
+         </tr>
 </table>
