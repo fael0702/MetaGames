@@ -40,33 +40,5 @@ Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
                       </a>
               </td>
 
-             <td align="center">
-                    <a href="[https://github.com/YonErick](https://github.com/YonErick)">
-                           <img src="" width="100px;" alt="Foto do Eick no GitHub"/>
-                     <br>
-                          <sub>
-                             <b>Erick Cardoso</b>
-                          </sub>
-                      </a>
-              </td>
-             <td align="center">
-                    <a href="[https://github.com/fael0702](https://github.com/fael0702)">
-                           <img src="" width="100px;" alt="Foto do Rafael no GitHub"/>
-                     <br>
-                          <sub>
-                             <b>Rafael</b>
-                          </sub>
-                      </a>
-              </td>
-
-             <td align="center">
-                    <a href="[https://github.com/GabrielHenrique0](https://github.com/GabrielHenrique0)">
-                           <img src="" width="100px;" alt="Foto do Gabriel Henrique no GitHub"/>
-                     <br>
-                          <sub>
-                             <b>Gabriel Henrique</b>
-                          </sub>
-                      </a>
-              </td>
        </tr>
 </table>
