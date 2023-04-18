@@ -32,7 +32,7 @@ Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
        <tr>
             <td align="center">
                     <a href="https://github.com/guilhermesouza48">
-                           <img src="https://avatars.githubusercontent.com/u/79008811?v=4" width="100px;" alt="Foto do Guilherme Souza no GitHub"/>
+                           <img src="https://avatars.githubusercontent.com/u/79008811?v=4" width="250px;" alt="Foto do Guilherme Souza no GitHub"/>
                      <br>
                           <sub>
                              <b>Guilherme Souza</b>
@@ -41,7 +41,7 @@ Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
               </td>
             <td align="center">
                     <a href="https://github.com/YonErick">
-                           <img src="https://avatars.githubusercontent.com/u/79008664?v=4" width="100px;" alt="Foto do Eick no GitHub"/>
+                           <img src="https://avatars.githubusercontent.com/u/79008664?v=4" width="250px;" alt="Foto do Eick no GitHub"/>
                      <br>
                           <sub>
                              <b>Erick Cardoso</b>
@@ -50,7 +50,7 @@ Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
               </td>
              <td align="center">
                     <a href="https://github.com/fael0702">
-                           <img src="https://avatars.githubusercontent.com/u/79324220?v=4" width="100px;" alt="Foto do Rafael no GitHub"/>
+                           <img src="https://avatars.githubusercontent.com/u/79324220?v=4" width="250px;" alt="Foto do Rafael no GitHub"/>
                      <br>
                           <sub>
                              <b>Rafael</b>
@@ -59,7 +59,7 @@ Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
               </td>
              <td align="center">
                     <a href="https://github.com/GabrielHenrique0">
-                           <img src="https://avatars.githubusercontent.com/u/79008744?v=4" width="100px;" alt="Foto do Gabriel Henrique no GitHub"/>
+                           <img src="https://avatars.githubusercontent.com/u/79008744?v=4" width="250px;" alt="Foto do Gabriel Henrique no GitHub"/>
                      <br>
                           <sub>
                              <b>Gabriel Henrique</b>
