@@ -39,7 +39,6 @@ Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
                           </sub>
                       </a>
               </td>
-       </tr>
             <td align="center">
                     <a href="https://github.com/YonErick">
                            <img src="https://avatars.githubusercontent.com/u/79008664?v=4" width="100px;" alt="Foto do Eick no GitHub"/>
@@ -68,4 +67,5 @@ Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
                           </sub>
                       </a>
               </td>
+</tr>
 </table>
