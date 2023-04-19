@@ -12,17 +12,25 @@
 
 O App é composto por (NUMERO DE SEÇÕES) seções:
 
-- **Home:** Nele temos uma breve apresentação do aplicativo;
-- 
-
+- **Home:** Nele temos uma breve apresentação do aplicativo, informações dos games saparados por categoria;
+- **Login:** Nesta tela colocamos o acesso do usuário, podendo fazer login por GOOGLE e FaceBook;
+- **Cadastro:** Nesta tela temos o registro do usuário no APP,podendo realizar também com GOOGLE e FaceBook;
+- **Histórico:** Registro das avaliações feita pelo usuário;
+- **Listagem:** Lista de Games para avaliar;
+- **Perfil:** Tela para usuário alterar informações pessoais e configurações;
+ 
 ---
 
 ## 📱 Tecnologias utilizadas
 
 Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
 
-- React Native;
+- IncScape (Ilustrações)
 - Figma;
+- React Native;
+- PostgreSQL;
+- Clever Cloud;
+- Expo GO;
 
 ---
 
