@@ -11,7 +11,7 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="login" component={Login} options={{
+        {/* <Stack.Screen name="login" component={Login} options={{
           title: 'Login',
           headerTitleAlign: 'center',
           headerStyle: {
@@ -32,7 +32,7 @@ export default function Routes() {
             color: 'black',
             fontWeight: 'bold',
           }
-        }} />
+        }} /> */}
         <Stack.Screen name='home' component={Home} options={{
           title: '',
           headerLeft: null,
@@ -45,6 +45,7 @@ export default function Routes() {
             fontWeight: 'bold',
           }
         }}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
