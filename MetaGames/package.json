@@ -13,9 +13,13 @@
     "@react-navigation/material-top-tabs": "^6.6.2",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
+    "cors": "^2.8.5",
     "expo": "~48.0.18",
     "expo-linear-gradient": "~12.1.2",
     "expo-status-bar": "~1.4.4",
+    "express": "^4.18.2",
+    "pg": "^8.11.0",
+    "pg-promise": "^11.5.0",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.71.8",
@@ -28,7 +32,8 @@
     "react-navigation-tabs": "^2.11.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "nodemon": "^2.0.22"
   },
   "private": true
 }
