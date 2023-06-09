@@ -22,7 +22,6 @@ function MainTabs() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      swipeEnabled={true}
       tabBarOptions={{
         showIcon: true,
         showLabel: false,
@@ -46,13 +45,6 @@ function MainTabs() {
             <CustomIcon
               focused={focused}
               iconSource={require('../assets/lista.png')}
-            />
-          ),
-          headerTitle: () => (
-            <Image
-              source={require('../assets/logo.png')}
-              style={{ width: 100, height: 90, marginTop: 80 }}
-              resizeMode="contain"
             />
           ),
         }}
