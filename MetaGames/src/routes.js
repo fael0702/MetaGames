@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ImageBackground, Image } from 'react-native';
 import Login from './pages/login';
@@ -7,13 +7,13 @@ import Lista from './pages/lista';
 import Historico from './pages/historico';
 import Home from './pages/home';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 const CustomIcon = ({ focused, iconSource }) => (
   <Image
     source={iconSource}
-    style={{ width: 35, height: 35, tintColor: focused ? null : '#000' }}
+    style={{ width: 30, height: 30, tintColor: focused ? null : '#000' }}
     resizeMode="contain"
   />
 );
@@ -22,41 +22,29 @@ function MainTabs() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={({ route }) => ({
-        headerShown: true,
-        tabBarIcon: ({ focused }) => {
-          let iconSource;
-
-          if (route.name === 'Home') {
-            iconSource = require('../assets/home.png');
-          } else if (route.name === 'Lista') {
-            iconSource = require('../assets/lista.png');
-          } else {
-            iconSource = require('../assets/historico.png');
-          }
-          return <CustomIcon focused={focused} iconSource={iconSource} />;
-        },
-        tabBarStyle: {
+      tabBarOptions={{
+        showIcon: true,
+        showLabel: false,
+        style: {
           backgroundColor: '#d2d2d2',
           position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
         },
-      })}
+        indicatorStyle: {
+          backgroundColor: 'blue',
+        },
+      }}
     >
-
       <Tab.Screen
         name="Lista"
         component={Lista}
         options={{
-          tabBarLabel: () => null,
-          headerTransparent: true,
-          headerTitle: () => (
-            <Image
-              source={require('../assets/logo.png')}
-              style={{ width: 100, height: 90, marginTop: 80 }}
-              resizeMode="contain"
+          tabBarIcon: ({ focused }) => (
+            <CustomIcon
+              focused={focused}
+              iconSource={require('../assets/lista.png')}
             />
           ),
         }}
@@ -65,14 +53,10 @@ function MainTabs() {
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: () => null,
-          headerTransparent: true,
-          headerShown: true,
-          headerTitle: () => (
-            <Image
-              source={require('../assets/logo.png')}
-              style={{ width: 100, height: 90, marginTop: 80 }}
-              resizeMode="contain"
+          tabBarIcon: ({ focused }) => (
+            <CustomIcon
+              focused={focused}
+              iconSource={require('../assets/home.png')}
             />
           ),
         }}
@@ -81,13 +65,10 @@ function MainTabs() {
         name="Historico"
         component={Historico}
         options={{
-          tabBarLabel: () => null,
-          headerTransparent: true,
-          headerTitle: () => (
-            <Image
-              source={require('../assets/logo.png')}
-              style={{ width: 100, height: 90, marginTop: 80 }}
-              resizeMode="contain"
+          tabBarIcon: ({ focused }) => (
+            <CustomIcon
+              focused={focused}
+              iconSource={require('../assets/historico.png')}
             />
           ),
         }}
