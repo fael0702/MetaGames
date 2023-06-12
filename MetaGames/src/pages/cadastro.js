@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { Component, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground } from "react-native";
-const image = { uri: 'https://wallpaper4k.com.br/wp-content/uploads/2022/07/wallpapers-do-rick-and-morty-4k-para-pc-e-celular-7-scaled.jpg' };
 
 const Cadastro = () => {
     const navigation = useNavigation();
