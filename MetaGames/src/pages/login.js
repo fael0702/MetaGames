@@ -4,6 +4,7 @@ import { StyleSheet, Text, ImageBackground, View, TextInput, TouchableOpacity } 
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import apiGames from "../service/apiGames";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -11,22 +12,32 @@ const Login = () => {
   const [userInfo, setUserInfo] = React.useState(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "70917160074-s1qriiq7gculsok7vjpvpedhfpcrblvi.apps.googleusercontent.com",
-    // webClientId: "70917160074-5nlm5o251q9epbncq4geqegolcr23ud8.apps.googleusercontent.com" //192.168.1.7:190000
+    webClientId: "70917160074-5nlm5o251q9epbncq4geqegolcr23ud8.apps.googleusercontent.com" //192.168.1.7:190000
   })
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [genreList, setGenreList]=useState([])
 
   const navigation = useNavigation();
+  let logs;
 
   React.useEffect(() => {
     loginGoogle();
+    getGenreList();
   }, [response])
+
+  const getGenreList=()=>{
+    apiGames.getGenreList.then((resp)=>{
+        console.log(resp.data.results);
+        setGenreList(resp.data.results);
+    })
+}
 
   async function loginGoogle() {
     const user = await AsyncStorage.getItem("@user");
 
-    if(!user) {
-      if(response?.type === 'success') {
+    if (!user) {
+      if (response?.type === 'success') {
         await getUserInfo(response.authentication.accessToken);
       }
     } else {
@@ -46,7 +57,7 @@ const Login = () => {
       );
       const user = await response.json();
       await AsyncStorage.setItem("@user", JSON.stringify(user));
-      setUserInfo(user);  
+      setUserInfo(user);
 
     } catch (error) {
       console.log('erro: ' + error);
@@ -93,7 +104,8 @@ const Login = () => {
           <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => AsyncStorage.removeItem("@user")}>
             <Text style={[styles.red, styles.contorno]}>Deletar local storage</Text>
           </TouchableOpacity>
-          <Text>{JSON.stringify(userInfo)}</Text>
+          {/* <Text>{JSON.stringify(userInfo)}</Text> */}
+          <Text>{logs}</Text>
         </View>
       </View>
     </ImageBackground>
