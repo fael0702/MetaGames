@@ -6,6 +6,8 @@ import Login from './pages/login';
 import Lista from './pages/lista';
 import Historico from './pages/historico';
 import Home from './pages/home';
+import Cadastro from './pages/cadastro';
+import Formulario from './pages/form';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -89,6 +91,20 @@ export default function Routes() {
           <Stack.Screen
             name="Login"
             component={Login}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Cadastro"
+            component={Cadastro}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Formulario"
+            component={Formulario}
             options={{
               headerShown: false,
             }}

@@ -16,22 +16,13 @@ const Login = () => {
   })
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [genreList, setGenreList]=useState([])
 
   const navigation = useNavigation();
   let logs;
 
   React.useEffect(() => {
     loginGoogle();
-    getGenreList();
   }, [response])
-
-  const getGenreList=()=>{
-    apiGames.getGenreList.then((resp)=>{
-        console.log(resp.data.results);
-        setGenreList(resp.data.results);
-    })
-}
 
   async function loginGoogle() {
     const user = await AsyncStorage.getItem("@user");
@@ -93,7 +84,7 @@ const Login = () => {
           </TouchableOpacity>
 
           <Text style={styles.red2}>Ainda não cadastrado?</Text>
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { }}>
+          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { navigation.navigate('Formulario')}}>
             <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
           </TouchableOpacity>
 
@@ -104,7 +95,7 @@ const Login = () => {
           <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => AsyncStorage.removeItem("@user")}>
             <Text style={[styles.red, styles.contorno]}>Deletar local storage</Text>
           </TouchableOpacity>
-          {/* <Text>{JSON.stringify(userInfo)}</Text> */}
+          <Text>{JSON.stringify(userInfo)}</Text> 
           <Text>{logs}</Text>
         </View>
       </View>
@@ -114,8 +105,8 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 25,
-    height: 50,
+    width: '25%',
+    height: '70%',
     backgroundColor: '#D9D9D9',
     alignItems: 'center',
     justifyContent: 'center',
@@ -148,7 +139,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
   },
   red: {
-    color: '#DFE321',
+    color: '#FAFF19',
     fontSize: 22,
   },
   red2: {
@@ -157,7 +148,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    color: '#DFE321',
+    color: '#FAFF19',
     fontSize: 22,
     marginBottom: 20,
   },
