@@ -5,55 +5,87 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground } 
 const Cadastro = () => {
     const navigation = useNavigation();
 
-    const [name, setName] = useState('')
-    const [cellphone, setPhone] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+    const [authPassword, setAuthPassword] = useState('');
+    const [dataNasc, setDataNasc] = useState('');
+    const [senhaVisivel, setSenhaVisivel] = useState(false);
+    const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
 
-    const handleLogin = () => {
-        if (!email || !password) alert('Email or Password Incorrect')
-        else navigation.navigate('login')
-    }
+    const handleCadastro = () => {
+        console.log('Nome:', nome);
+        console.log('Senha:', senha);
+        console.log('Confirmar Senha:', confirmarSenha);
+        console.log('Data de Nascimento:', dataNasc);
+      };
+
+
+    const toggleSenhaVisivel = () => {
+        setSenhaVisivel(!senhaVisivel);
+    };
+    
+    const toggleConfirmarSenhaVisivel = () => {
+        setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
+    };
 
     return (
-        <ImageBackground source={image} resizeMode="cover" style={{
-            flex: 1,
-            justifyContent: 'center'
-        }}>
+        <ImageBackground
+            source={require('../../assets/FundoMetaGames.png')}
+            style={styles.background}>
 
             <View style={styles.container}>
+                <label>Nome</label>
                 <TextInput
                     style={styles.input}
-                    placeholder='Nome'
                     placeholderTextColor={'#000'}
                     value={name}
                     onChangeText={setName}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder='Celular'
-                    placeholderTextColor={'#000'}
-                    value={cellphone}
-                    onChangeText={setPhone}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder='E-mail'
-                    placeholderTextColor={'#000'}
-                    value={email}
-                    onChangeText={setEmail}
-                />
+                <label>Senha</label>
+                <View style={{ flexDirection: 'row' }} >
                 <TextInput
                     style={styles.input}
                     placeholderTextColor={'#000'}
-                    placeholder='Password'
-                    secureTextEntry={true}
+                    secureTextEntry={!senhaVisivel}
                     value={password}
                     onChangeText={setPassword}
                 />
 
-                <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Create</Text>
+                <Button
+                title={senhaVisivel ? 'Esconder' : 'Mostrar'}
+                onPress={toggleSenhaVisivel}
+                />
+
+                </View>
+
+                <label>Confirme sua Senha</label>
+                <View style={{ flexDirection: 'row' }}>
+                <TextInput
+                    style={styles.input}
+                    placeholderTextColor={'#000'}
+                    secureTextEntry={!confirmarSenhaVisivel}
+                    value={authPassword}
+                    onChangeText={setAuthPassword}
+                />
+
+                <Button
+                title={confirmarSenhaVisivel ? 'Esconder' : 'Mostrar'}
+                onPress={toggleConfirmarSenhaVisivel}
+                />
+
+                </View>
+
+                <label>Data de Nascimento</label>
+                <TextInput
+                    style={styles.input}
+                    placeholderTextColor={'#000'}
+                    secureTextEntry={true}
+                    value={dataNasc}
+                    onChangeText={setDataNasc}
+                />
+
+                <TouchableOpacity style={styles.button} onPress={handleCadastro}>
+                    <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
             </View>
         </ImageBackground>
@@ -62,30 +94,58 @@ const Cadastro = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+      width: '25%',
+      height: '50%' ,
+      backgroundColor: '#D9D9D9',
+      alignItems: 'center',
+      justifyContent: 'center',
+      opacity: '0.7',
+      borderRadius: '5%' ,
     },
+  
+    containerRola: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  
+    background: {
+      flex: 1,
+      resizeMode: 'cover',
+    },
+  
     input: {
-        borderWidth: 2,
-        borderColor: '#ccc',
-        color: '#ccc',
-        borderRadius: 5,
-        padding: 10,
-        marginVertical: 10,
-        width: '80%',
+      padding: 4,
+      marginTop: 7,
+      marginBottom: 12,
+      borderRadius: 10,
+      fontSize: 16,
+      borderWidth: 2,
     },
-    button: {
-        backgroundColor: '#28FA7D',
-        borderRadius: 5,
-        padding: 10,
-        width: '80%',
-        alignItems: 'center'
+    contorno: {
+      textShadowColor: '#000000',
+      textShadowOffset: { width: 0, height: 0 },
+      textShadowRadius: 2,
     },
-    buttonText: {
-        color: 'lack',
-        fontWeight: 'bold'
-    }
-})
+    red: {
+      color: '#DFE321',
+      fontSize: 22,
+    },
+    red2: {
+      marginTop: 15,
+      fontSize: 16,
+    },
+  
+    title: {
+      color: '#DFE321',
+      fontSize: 22,
+      marginBottom: 20,
+    },
+  
+    ou: {
+      fontSize: 10,
+    },
+  
+  });
 
 export default Cadastro;
