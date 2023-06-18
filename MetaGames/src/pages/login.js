@@ -30,6 +30,7 @@ const Login = () => {
     if (!user) {
       if (response?.type === 'success') {
         await getUserInfo(response.authentication.accessToken);
+        navigation.navigate('MainTabs')
       }
     } else {
       setUserInfo(JSON.parse(user));
@@ -84,7 +85,7 @@ const Login = () => {
           </TouchableOpacity>
 
           <Text style={styles.red2}>Ainda não cadastrado?</Text>
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { navigation.navigate('Formulario')}}>
+          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => {navigation.navigate('Cadastro')}}>
             <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
           </TouchableOpacity>
 

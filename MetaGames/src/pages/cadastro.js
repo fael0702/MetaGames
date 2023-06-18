@@ -14,10 +14,10 @@ const Cadastro = () => {
     const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
 
     const handleCadastro = () => {
-        console.log('Nome:', nome);
-        console.log('Senha:', senha);
-        console.log('Confirmar Senha:', confirmarSenha);
-        console.log('Data de Nascimento:', dataNasc);
+        // console.log('Nome:', nome);
+        // console.log('Senha:', senha);
+        // console.log('Confirmar Senha:', confirmarSenha);
+        // console.log('Data de Nascimento:', dataNasc);
         navigation.navigate('Login')
     };
 
@@ -35,69 +35,69 @@ const Cadastro = () => {
             source={require('../../assets/FundoMetaGames.png')}
             style={styles.background}>
             <View style={styles.containerRola}>
-            <View style={styles.container}>
-            <Text style={[styles.title, styles.contorno]}>Cadastrar</Text>
-                <label>Nome</label>
-                <TextInput
-                    style={styles.input}
-                    placeholderTextColor={'#000'}
-                    value={name}
-                    onChangeText={setName}
-                />
-                <label>Senha</label>
-                <View style={{ flexDirection: 'row' }} >
+                <View style={styles.container}>
+                    <Text style={[styles.title, styles.contorno]}>Cadastrar</Text>
+                    <label>Nome</label>
                     <TextInput
                         style={styles.input}
                         placeholderTextColor={'#000'}
-                        secureTextEntry={!senhaVisivel}
-                        value={password}
-                        onChangeText={setPassword}
+                        value={name}
+                        onChangeText={setName}
                     />
-
-                    <TouchableOpacity onPress={toggleSenhaVisivel}>
-                        <Icon
-                            name={senhaVisivel ? 'eye-slash' : 'eye'}
-                            size={20}
-                            color="#000"
+                    <label>Senha</label>
+                    <View style={{ flexDirection: 'row' }} >
+                        <TextInput
+                            style={styles.input}
+                            placeholderTextColor={'#000'}
+                            secureTextEntry={!senhaVisivel}
+                            value={password}
+                            onChangeText={setPassword}
                         />
-                    </TouchableOpacity>
 
-                </View>
+                        <TouchableOpacity onPress={toggleSenhaVisivel}>
+                            <Icon
+                                name={senhaVisivel ? 'eye-slash' : 'eye'}
+                                size={20}
+                                color="#000"
+                            />
+                        </TouchableOpacity>
 
-                <label>Confirme sua Senha</label>
-                <View style={{ flexDirection: 'row' }}>
+                    </View>
+
+                    <label>Confirme sua Senha</label>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TextInput
+                            style={styles.input}
+                            placeholderTextColor={'#000'}
+                            secureTextEntry={!confirmarSenhaVisivel}
+                            value={authPassword}
+                            onChangeText={setAuthPassword}
+                        />
+
+                        <TouchableOpacity onPress={toggleConfirmarSenhaVisivel}>
+                            <Icon
+                                name={confirmarSenhaVisivel ? 'eye-slash' : 'eye'}
+                                size={20}
+                                color="#000"
+                            />
+                        </TouchableOpacity>
+
+                    </View>
+
+                    <label>Data de Nascimento</label>
                     <TextInput
                         style={styles.input}
                         placeholderTextColor={'#000'}
-                        secureTextEntry={!confirmarSenhaVisivel}
-                        value={authPassword}
-                        onChangeText={setAuthPassword}
+                        secureTextEntry={true}
+                        value={dataNasc}
+                        onChangeText={setDataNasc}
                     />
 
-                    <TouchableOpacity onPress={toggleConfirmarSenhaVisivel}>
-                        <Icon
-                            name={confirmarSenhaVisivel ? 'eye-slash' : 'eye'}
-                            size={20}
-                            color="#000"
-                        />
+                    <TouchableOpacity style={styles.button} onPress={handleCadastro}>
+                        <Text style={[styles.red, styles.contorno]}>Cadastrar</Text>
                     </TouchableOpacity>
 
-                </View>
-
-                <label>Data de Nascimento</label>
-                <TextInput
-                    style={styles.input}
-                    placeholderTextColor={'#000'}
-                    secureTextEntry={true}
-                    value={dataNasc}
-                    onChangeText={setDataNasc}
-                />
-
-                <TouchableOpacity style={styles.button} onPress={handleCadastro}>
-                    <Text style={[styles.red, styles.contorno]}>Cadastrar</Text>
-                </TouchableOpacity>
-
-                <Text style={styles.ou}>ou</Text>
+                    {/* <Text style={styles.ou}>ou</Text> */}
                 </View>
             </View>
         </ImageBackground>
