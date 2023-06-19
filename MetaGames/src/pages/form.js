@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { Component, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import DropDown from "./DropDown";
 
 const Formulario = () => {
     const navigation = useNavigation();
@@ -33,13 +33,7 @@ const Formulario = () => {
                 </View>
 
                 <label>Nota</label>
-                <TextInput
-                    style={styles.input}
-                    placeholderTextColor={'#000'}
-                    value={nota}
-                    onChangeText={setNota}
-                />
-
+                <DropDown/>
                 <TouchableOpacity style={styles.button} onPress={handleForm}>
                     <Text style={[styles.red, styles.contorno]}>Enviar Review</Text>
                 </TouchableOpacity>
@@ -59,7 +53,7 @@ const styles = StyleSheet.create({
         opacity: 0.7,
         borderRadius: 5,
     },
-
+    
     containerRola: {
         flex: 1,
         alignItems: 'center',
