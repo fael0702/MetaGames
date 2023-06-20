@@ -10,19 +10,22 @@ WebBrowser.maybeCompleteAuthSession();
 
 const Login = () => {
   const [userInfo, setUserInfo] = React.useState(null);
+  
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "70917160074-s1qriiq7gculsok7vjpvpedhfpcrblvi.apps.googleusercontent.com",
-    webClientId: "70917160074-5nlm5o251q9epbncq4geqegolcr23ud8.apps.googleusercontent.com" //192.168.1.7:190000
-  })
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+    webClientId: "70917160074-5nlm5o251q9epbncq4geqegolcr23ud8.apps.googleusercontent.com",
+    expoClientId: "70917160074-frph8sskggdpenhrfsd44jivgi34u3h1.apps.googleusercontent.com",
+    redirectUri: "https://auth.expo.io/@gabriel_caldeira/MetaGames",
+  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
   let logs;
 
   React.useEffect(() => {
     loginGoogle();
-  }, [response])
+  }, [response]);
 
   async function loginGoogle() {
     const user = await AsyncStorage.getItem("@user");
@@ -30,7 +33,7 @@ const Login = () => {
     if (!user) {
       if (response?.type === 'success') {
         await getUserInfo(response.authentication.accessToken);
-        navigation.navigate('MainTabs')
+        navigation.navigate('MainTabs');
       }
     } else {
       setUserInfo(JSON.parse(user));
@@ -58,17 +61,17 @@ const Login = () => {
 
   const handleLogin = () => {
     if (email === '' && password === '') {
-      navigation.navigate('MainTabs')
+      navigation.navigate('MainTabs');
     } else {
-      alert('E-mail ou senha inválidos!')
+      alert('E-mail ou senha inválidos!');
     }
   };
 
   return (
-
     <ImageBackground
       source={require('../../assets/FundoMetaGames.png')}
-      style={styles.background}>
+      style={styles.background}
+    >
       <View style={styles.containerRola}>
         <View style={styles.container}>
           <Text style={[styles.title, styles.contorno]}>Login</Text>
@@ -79,17 +82,22 @@ const Login = () => {
             <TextInput style={styles.input} secureTextEntry={true} />
           </View>
           <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => {
-            navigation.navigate('MainTabs')
+            navigation.navigate('MainTabs');
           }}>
             <Text style={[styles.red, styles.contorno]}>Entrar</Text>
           </TouchableOpacity>
 
           <Text style={styles.red2}>Ainda não cadastrado?</Text>
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => {navigation.navigate('Cadastro')}}>
+          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => {navigation.navigate('Formulario')}}>
             <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
           </TouchableOpacity>
 
-          <Text style={styles.ou}>ou</Text>
+          <View style={styles.dividerContainer}>
+            <View style={styles.dividerLine}></View>
+            <Text style={styles.dividerText}>ou</Text>
+            <View style={styles.dividerLine}></View>
+          </View>
+
           <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
             <Text style={[styles.red, styles.contorno]}>Login com google</Text>
           </TouchableOpacity>
@@ -101,12 +109,12 @@ const Login = () => {
         </View>
       </View>
     </ImageBackground>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    width: '25%',
+    width: '80%',
     height: '70%',
     backgroundColor: '#D9D9D9',
     alignItems: 'center',
@@ -133,16 +141,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16,
     borderWidth: 2,
+    width: 250,
   },
+
   contorno: {
     textShadowColor: '#000000',
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 2,
   },
+
   red: {
     color: '#FAFF19',
     fontSize: 22,
   },
+
   red2: {
     marginTop: 15,
     fontSize: 16,
@@ -154,10 +166,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-  ou: {
-    fontSize: 10,
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+    width: 250,
   },
 
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'black',
+  },
+
+  dividerText: {
+    paddingHorizontal: 10,
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
 });
 
 export default Login;
