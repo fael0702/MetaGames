@@ -1,17 +1,42 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { Component, useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground } from "react-native";
+import React, { Component, useState, useEffect } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image } from "react-native";
 import DropDown from "./DropDown";
+import axios from "axios";
 
 const Formulario = () => {
     const navigation = useNavigation();
 
     const [nota, setNota] = useState('');
     const [comentario, setComantario] = useState('');
+    const [jogo, setJogo] = useState(null);
+
+    useEffect(() => {
+        if (jogo) {
+            console.log('Dados do Jogo:', jogo);
+        }
+    }, [jogo]);
+
+    const getGameData = async (nomeJogo) => {
+        try {
+            const response = await axios.get(`https://api.rawg.io/api/games?search=${encodeURIComponent(nomeJogo)}`);
+            const { results } = response.data;
+
+            if (results && results.length > 0) {
+                const jogoEncontrado = results[0];
+                setJogo(jogoEncontrado);
+            }
+        } catch (error) {
+            console.error('Erro ao obter dados do jogo:', error);
+        }
+    };
 
     const handleForm = () => {
         console.log('Nota:', nota);
         console.log('Comentario:', comentario);
+
+        // Chama a função para buscar os dados do jogo
+        getGameData(nota);
     };
 
     return (
@@ -19,24 +44,33 @@ const Formulario = () => {
             source={require('../../assets/FundoMetaGames.png')}
             style={styles.background}>
             <View style={styles.containerRola}>
-            <View style={styles.container}>
-            <Text style={[styles.title, styles.contorno]}>Review</Text>
-                
-                <label>Comentário</label>
-                <View style={{ flexDirection: 'row' }}>
-                    <textarea
-                        style={styles.input}
-                        placeholderTextColor={'#000'}
-                        value={comentario}
-                        onChangeText={setComantario}
-                    />
-                </View>
+                <View style={styles.container}>
+                    <Text style={[styles.title, styles.contorno]}>Review</Text>
 
-                <label>Nota</label>
-                <DropDown/>
-                <TouchableOpacity style={styles.button} onPress={handleForm}>
-                    <Text style={[styles.red, styles.contorno]}>Enviar Review</Text>
-                </TouchableOpacity>
+                    <Text>Comentário</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TextInput
+                            style={styles.input}
+                            placeholderTextColor={'#000'}
+                            value={comentario}
+                            onChangeText={setComantario}
+                        />
+                    </View>
+
+                    <Text>Nota</Text>
+                    <DropDown />
+                    <TouchableOpacity style={styles.button} onPress={handleForm}>
+                        <Text style={[styles.red, styles.contorno]}>Enviar Review</Text>
+                    </TouchableOpacity>
+
+                    {/* Exibe os dados do jogo */}
+                    {jogo && (
+                        <View>
+                            <Image source={{ uri: jogo.background_image }} style={styles.gameImage} />
+                            <Text style={styles.gameName}>{jogo.name}</Text>
+                            <Text style={styles.gameRating}>Avaliação: {jogo.rating}/5</Text>
+                        </View>
+                    )}
                 </View>
             </View>
         </ImageBackground>
@@ -53,7 +87,7 @@ const styles = StyleSheet.create({
         opacity: 0.7,
         borderRadius: 5,
     },
-    
+
     containerRola: {
         flex: 1,
         alignItems: 'center',
@@ -97,6 +131,20 @@ const styles = StyleSheet.create({
         fontSize: 10,
     },
 
+    gameImage: {
+        width: 200,
+        height: 200,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+    gameName: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    gameRating: {
+        fontSize: 16,
+    },
 });
 
 export default Formulario;
