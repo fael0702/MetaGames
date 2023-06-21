@@ -8,6 +8,7 @@ import Historico from './pages/historico';
 import Home from './pages/home';
 import Cadastro from './pages/cadastro';
 import Formulario from './pages/form';
+import Perfil from './pages/perfil';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -75,6 +76,7 @@ function MainTabs() {
           ),
         }}
       />
+      
     </Tab.Navigator>
   );
 }
@@ -112,6 +114,13 @@ export default function Routes() {
           <Stack.Screen
             name="MainTabs"
             component={MainTabs}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Perfil"
+            component={Perfil}
             options={{
               headerShown: false,
             }}
