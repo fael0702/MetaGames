@@ -1,16 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, ImageBackground, View, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, ImageBackground, View, TextInput, TouchableOpacity, Button } from "react-native";
 import * as WebBrowser from "expo-web-browser";
+import * as Facebook from 'expo-auth-session/providers/facebook'
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiGames from "../service/apiGames";
+import { Image } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
 const Login = () => {
   const [userInfo, setUserInfo] = React.useState(null);
-  
+  const [user, setUser] = React.useState(null);
+
+  const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
+    clientId: "222572750606789"
+  })
+
+  useEffect(() => {
+    if (response2 && response2.type === "success" && response2.authentication) {
+      (async () => {
+        const userInfoResponse = await fetch(
+          `https://graph.facebook.com/me?access_token=${response2.authentication.accessToken}&fields=id,name,picture.type(large)`
+        );
+        const userInfo = await userInfoResponse.json();
+        setUser(userInfo);
+      })();
+    }
+  }, [response2]);
+
+  const handlePressAsync = async () => {
+    const result = await promptAsync2();
+    if (result.type !== "success") {
+      alert("Uh oh, something went wrong");
+      return;
+    }
+    else {
+      // navigation.navigate('MainTabs');
+    }
+  };
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "70917160074-s1qriiq7gculsok7vjpvpedhfpcrblvi.apps.googleusercontent.com",
     webClientId: "70917160074-5nlm5o251q9epbncq4geqegolcr23ud8.apps.googleusercontent.com",
@@ -88,7 +118,7 @@ const Login = () => {
           </TouchableOpacity>
 
           <Text style={styles.red2}>Ainda não cadastrado?</Text>
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => {navigation.navigate('Formulario')}}>
+          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { navigation.navigate('Formulario') }}>
             <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
           </TouchableOpacity>
 
@@ -98,24 +128,53 @@ const Login = () => {
             <View style={styles.dividerLine}></View>
           </View>
 
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
-            <Text style={[styles.red, styles.contorno]}>Login com google</Text>
-          </TouchableOpacity>
+          <View style={styles.imageContainer}>
+            <TouchableOpacity style={[styles.red, styles.contorno]}  onPress={() => promptAsync()}>
+              <Image
+                source={require('../../assets/LoginComGoogle.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity disabled={!request2} style={[styles.red, styles.contorno]} onPress={() => handlePressAsync()}>
+              <Image
+                source={require('../../assets/LoginComFacebook.png')}
+              />
+            </TouchableOpacity>
+          </View>
+
+
           <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => AsyncStorage.removeItem("@user")}>
             <Text style={[styles.red, styles.contorno]}>Deletar local storage</Text>
           </TouchableOpacity>
-          <Text>{JSON.stringify(userInfo)}</Text> 
+          <Text>{JSON.stringify(userInfo)}</Text>
           <Text>{logs}</Text>
+          <Text>{logs}</Text>
+          {user ? (
+            <Profile user={user} />
+          ) : ("")}
         </View>
       </View>
     </ImageBackground>
   );
 };
 
+function Profile({ user }) {
+  return (
+    <View style={styles.profile}>
+      <Image source={{ uri: user.picture.data.url }} style={styles.image} />
+      <Text style={styles.name}>{user.name}</Text>
+      <Text>ID: {user.id}</Text>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
+  imageContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },  
   container: {
     width: '80%',
-    height: '70%',
+    height: '75%',
     backgroundColor: '#D9D9D9',
     alignItems: 'center',
     justifyContent: 'center',
@@ -148,6 +207,7 @@ const styles = StyleSheet.create({
     textShadowColor: '#000000',
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 2,
+    padding: 5,
   },
 
   red: {
@@ -183,6 +243,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 12,
     fontWeight: 'bold',
+  },
+  profile: {
+    alignItems: "center",
+  },
+  name: {
+    fontSize: 10,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
   },
 });
 

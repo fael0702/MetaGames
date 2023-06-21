@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="20.599703mm"
+   height="20.599701mm"
+   viewBox="0 0 20.599703 20.599702"
+   version="1.1"
+   id="svg879"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="LoginComFacebook.svg"
+   inkscape:export-filename="C:\MetaGames\MetaGames\assets\LoginComFacebook.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs873" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="-27.416395"
+     inkscape:cy="-6.5847805"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g1572"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1805"
+     inkscape:window-height="1020"
+     inkscape:window-x="97"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata876">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-40.673176,-91.574327)">
+    <g
+       id="g1572"
+       transform="matrix(0.4769942,0,0,0.4769942,34.110921,56.646238)">
+      <g
+         id="g1442"
+         transform="translate(-0.14008002,-1.961121)"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96">
+        <circle
+           style="fill:#134ba3;fill-opacity:1;stroke-width:0.264583"
+           id="path1546"
+           cx="36.082401"
+           cy="95.749123"
+           r="15.56845"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96" />
+        <path
+           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.296084px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 33.545189,105.93211 0.07477,-9.084903 -3.162364,-0.06382 0.05929,-3.600051 3.140463,-0.03739 c 0,0 0.05276,-2.660935 0.07477,-3.962965 0.02626,-1.552303 1.652123,-2.997751 3.140461,-3.439556 1.446926,-0.429512 4.262057,-0.03739 4.262057,-0.03739 v 3.364792 c 0,0 -1.512826,-0.07749 -2.612378,0.07945 -0.505979,0.07222 -1.020531,0.344039 -1.088882,1.079535 v 2.953528 l 3.61327,0.0022 -0.435419,3.685773 -3.06569,-0.02417 -0.112161,9.122307 z"
+           id="path1548"
+           sodipodi:nodetypes="cccccssccsccccccc"
+           inkscape:export-xdpi="96"
+           inkscape:export-ydpi="96" />
+      </g>
+    </g>
+  </g>
+</svg>
