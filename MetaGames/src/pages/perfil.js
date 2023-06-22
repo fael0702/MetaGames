@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,42 +7,40 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from 'expo-image-picker';
 
-export default function Home() {
+export default function Perfil() {
   const navigation = useNavigation();
   const handleHome = () => navigation.navigate("Home");
   const handlePerfil = () => navigation.navigate("Perfil");
+  const [image, setImage] = useState('https://cdn-icons-png.flaticon.com/512/5953/5953527.png');
+
+  const handleImagePicker = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4,3],
+        quality: 1,
+    });
+
+    if (!result.canceled) {
+        setImage(result.assets[0].uri);
+    }
+  }
+
   return (
     <ImageBackground
       source={require("../../assets/FundoMetaGames.png")}
       style={styles.background}
     >
       <View style={styles.container}>
-        <View style={styles.logoContainer}>
-          <TouchableOpacity onPress={handleHome}>
-            <Image
-              source={require("../../assets/logo.png")}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
+        <Text>IMAGENS</Text>
+        <Image source={{uri: image}} style={{width:180, height:180}}></Image>
+        <Button title="Escolha uma foto" onPress={handleImagePicker}/>
 
-        <View style={styles.perfilctn}>
-
-          <TouchableOpacity onPress={handlePerfil}>
-            <Image
-              source={require("../../assets/usercommun.png")}
-              style={styles.perfil}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-
-        </View>
-
-        <Text></Text>
         <StatusBar style="auto" />
       </View>
     </ImageBackground>

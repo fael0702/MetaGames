@@ -37,14 +37,14 @@ const Cadastro = () => {
             <View style={styles.containerRola}>
                 <View style={styles.container}>
                     <Text style={[styles.title, styles.contorno]}>Cadastrar</Text>
-                    <label>Nome</label>
+                    <Text>Nome</Text>
                     <TextInput
                         style={styles.input}
                         placeholderTextColor={'#000'}
                         value={name}
                         onChangeText={setName}
                     />
-                    <label>Senha</label>
+                    <Text>Senha</Text>
                     <View style={{ flexDirection: 'row' }} >
                         <TextInput
                             style={styles.input}
@@ -64,7 +64,7 @@ const Cadastro = () => {
 
                     </View>
 
-                    <label>Confirme sua Senha</label>
+                    <Text>Confirme sua Senha</Text>
                     <View style={{ flexDirection: 'row' }}>
                         <TextInput
                             style={styles.input}
@@ -84,7 +84,7 @@ const Cadastro = () => {
 
                     </View>
 
-                    <label>Data de Nascimento</label>
+                    <Text>Data de Nascimento</Text>
                     <TextInput
                         style={styles.input}
                         placeholderTextColor={'#000'}
@@ -106,7 +106,7 @@ const Cadastro = () => {
 
 const styles = StyleSheet.create({
     container: {
-        width: '25%',
+        width: '85%',
         height: '70%',
         backgroundColor: '#D9D9D9',
         alignItems: 'center',
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         fontSize: 16,
         borderWidth: 2,
+        width: 250,
     },
     contorno: {
         textShadowColor: '#000000',

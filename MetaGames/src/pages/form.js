@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { Component, useState, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image } from "react-native";
-import DropDown from "./DropDown";
-import axios from "axios";
+import React, { Component, useState } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Formulario = () => {
     const navigation = useNavigation();
@@ -34,9 +33,6 @@ const Formulario = () => {
     const handleForm = () => {
         console.log('Nota:', nota);
         console.log('Comentario:', comentario);
-
-        // Chama a função para buscar os dados do jogo
-        getGameData(nota);
     };
 
     return (
@@ -57,20 +53,17 @@ const Formulario = () => {
                         />
                     </View>
 
-                    <Text>Nota</Text>
-                    <DropDown />
-                    <TouchableOpacity style={styles.button} onPress={handleForm}>
-                        <Text style={[styles.red, styles.contorno]}>Enviar Review</Text>
-                    </TouchableOpacity>
+                <label>Nota</label>
+                <TextInput
+                    style={styles.input}
+                    placeholderTextColor={'#000'}
+                    value={nota}
+                    onChangeText={setNota}
+                />
 
-                    {/* Exibe os dados do jogo */}
-                    {jogo && (
-                        <View>
-                            <Image source={{ uri: jogo.background_image }} style={styles.gameImage} />
-                            <Text style={styles.gameName}>{jogo.name}</Text>
-                            <Text style={styles.gameRating}>Avaliação: {jogo.rating}/5</Text>
-                        </View>
-                    )}
+                <TouchableOpacity style={styles.button} onPress={handleForm}>
+                    <Text style={[styles.red, styles.contorno]}>Enviar Review</Text>
+                </TouchableOpacity>
                 </View>
             </View>
         </ImageBackground>
@@ -79,7 +72,7 @@ const Formulario = () => {
 
 const styles = StyleSheet.create({
     container: {
-        width: '25%',
+        width: '80%',
         height: '70%',
         backgroundColor: '#D9D9D9',
         alignItems: 'center',
@@ -106,6 +99,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         fontSize: 16,
         borderWidth: 2,
+        width: 250,
     },
     contorno: {
         textShadowColor: '#000000',
