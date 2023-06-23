@@ -128,20 +128,20 @@ const Login = () => {
           </View>
 
           <View style={styles.imageContainer}>
-            <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
-              <Image
-                source={require('../../assets/LoginComGoogle.png')}
-              />
-            </TouchableOpacity>
             <TouchableOpacity disabled={!request2} style={[styles.red, styles.contorno]} onPress={() => handlePressAsync()}>
               <Image
                 source={require('../../assets/LoginComFacebook.png')}
               />
             </TouchableOpacity>
+            <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
+              <Image
+                source={require('../../assets/LoginComGoogle.png')}
+              />
+            </TouchableOpacity>
           </View>
 
 
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => AsyncStorage.removeItem("@user")}>
+          {/* <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => AsyncStorage.removeItem("@user")}>
             <Text style={[styles.red, styles.contorno]}>Deletar local storage</Text>
           </TouchableOpacity>
           <Text>{JSON.stringify(userInfo)}</Text>
@@ -149,7 +149,7 @@ const Login = () => {
           <Text>{logs}</Text>
           {user ? (
             <Profile user={user} />
-          ) : ("")}
+          ) : ("")} */}
         </View>
       </View>
     </ImageBackground>
@@ -164,21 +164,22 @@ function Profile({ user }) {
       <Text>ID: {user.id}</Text>
     </View>
   );
-  }
-  const styles = StyleSheet.create({
-    imageContainer: {
-      flexDirection: 'row',
-      marginBottom: 10,
-    },
-    container: {
-      width: '80%',
-      height: '75%',
-      backgroundColor: '#D9D9D9',
-      alignItems: 'center',
-      justifyContent: 'center',
-      opacity: 0.7,
-      borderRadius: 5,
-    },
+}
+
+const styles = StyleSheet.create({
+  imageContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },  
+  container: {
+    width: '80%',
+    height: '75%',
+    backgroundColor: '#D9D9D9',
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.7,
+    borderRadius: 5,
+  },
 
     containerRola: {
       flex: 1,

@@ -18,9 +18,8 @@ const Cadastro = () => {
         // console.log('Senha:', senha);
         // console.log('Confirmar Senha:', confirmarSenha);
         // console.log('Data de Nascimento:', dataNasc);
-        navigation.navigate('Login')
+        navigation.navigate('Lista')
     };
-
 
     const toggleSenhaVisivel = () => {
         setSenhaVisivel(!senhaVisivel);
