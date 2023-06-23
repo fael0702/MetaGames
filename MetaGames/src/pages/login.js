@@ -5,7 +5,6 @@ import * as WebBrowser from "expo-web-browser";
 import * as Facebook from 'expo-auth-session/providers/facebook'
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiGames from "../service/apiGames";
 import { Image } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
