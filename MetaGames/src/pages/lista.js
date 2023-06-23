@@ -26,8 +26,8 @@ export default function Lista() {
   const renderGameCard = ({ item }) => {
     return (
       <TouchableOpacity style={styles.card}>
-        <Text>{item.title}</Text>
         <Text>{item.name}</Text>
+        <Image>{item.image_background}</Image>
       </TouchableOpacity>
     );
   };
