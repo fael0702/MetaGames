@@ -22,6 +22,7 @@ const Review = () => {
     const handleForm = () => {
         console.log('Nota:', nota);
         console.log('Comentario:', comentario);
+        navigation.navigate('Historico')
     };
 
     return (
@@ -46,7 +47,7 @@ const Review = () => {
                         />
                     </View>
 
-                    <label>Nota</label>
+                    <Text>Nota</Text>
                     <TextInput
                         style={styles.input}
                         placeholderTextColor={'#000'}

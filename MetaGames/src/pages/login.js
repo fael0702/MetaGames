@@ -37,7 +37,7 @@ const Login = () => {
       return;
     }
     else {
-      // navigation.navigate('MainTabs');
+      navigation.navigate('MainTabs');
     }
   };
 
@@ -118,7 +118,7 @@ const Login = () => {
           </TouchableOpacity>
 
           <Text style={styles.red2}>Ainda não cadastrado?</Text>
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { navigation.navigate('Formulario') }}>
+          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { navigation.navigate('Cadastro') }}>
             <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
           </TouchableOpacity>
 

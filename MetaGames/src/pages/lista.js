@@ -48,7 +48,7 @@ export default function Lista() {
 
   const renderGameCard = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.card} onPress={handleNavigate(item)}>
+      <TouchableOpacity style={styles.card} onPress={handleNavigate}>
         <Text style={styles.gameTitle}>{item.name}</Text>
         <Image
           source={{ uri: item.background_image }}
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 16,
-    marginTop: 150,
+    marginTop: 125,
   },
   gameTitle: {
     fontSize: 12,
