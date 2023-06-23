@@ -1,0 +1,305 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.anonymous.MetaGames"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="33" />
+10
+11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+11-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:4:3-75
+11-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:4:20-73
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:2:3-64
+12-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:2:20-62
+13    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+13-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:3:3-77
+13-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:3:20-75
+14    <uses-permission android:name="android.permission.VIBRATE" />
+14-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:5:3-63
+14-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:5:20-61
+15    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+15-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:6:3-78
+15-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:6:20-76
+16
+17    <queries>
+17-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:7:3-13:13
+18        <intent>
+18-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:8:5-12:14
+19            <action android:name="android.intent.action.VIEW" />
+19-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:9:7-58
+19-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:9:15-56
+20
+21            <category android:name="android.intent.category.BROWSABLE" />
+21-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:10:7-67
+21-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:10:17-65
+22
+23            <data android:scheme="https" />
+23-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:11:7-37
+23-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:11:13-35
+24        </intent>
+25        <!-- Query open documents -->
+26        <intent>
+26-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:9-17:18
+27            <action android:name="android.intent.action.OPEN_DOCUMENT_TREE" />
+27-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-79
+27-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:21-76
+28        </intent>
+29        <intent>
+29-->[:expo-web-browser] C:\react-native\projeto\MetaGames\node_modules\expo-web-browser\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:8:9-12:18
+30
+31            <!-- Required for opening tabs if targeting API 30 -->
+32            <action android:name="android.support.customtabs.action.CustomTabsService" />
+32-->[:expo-web-browser] C:\react-native\projeto\MetaGames\node_modules\expo-web-browser\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-90
+32-->[:expo-web-browser] C:\react-native\projeto\MetaGames\node_modules\expo-web-browser\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:21-87
+33        </intent>
+34    </queries>
+35
+36    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+36-->[com.facebook.flipper:flipper:0.125.0] C:\Users\Rafael\.gradle\caches\transforms-3\ec3d59c9c826ff8a84652b9ebb1656c5\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:16:5-76
+36-->[com.facebook.flipper:flipper:0.125.0] C:\Users\Rafael\.gradle\caches\transforms-3\ec3d59c9c826ff8a84652b9ebb1656c5\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:16:22-73
+37    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+37-->[com.android.installreferrer:installreferrer:1.0] C:\Users\Rafael\.gradle\caches\transforms-3\144682ec828db5de2db720d68f6f6790\transformed\jetified-installreferrer-1.0\AndroidManifest.xml:9:5-110
+37-->[com.android.installreferrer:installreferrer:1.0] C:\Users\Rafael\.gradle\caches\transforms-3\144682ec828db5de2db720d68f6f6790\transformed\jetified-installreferrer-1.0\AndroidManifest.xml:9:22-107
+38
+39    <application
+39-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:14:3-33:17
+40        android:name="com.anonymous.MetaGames.MainApplication"
+40-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:14:16-47
+41        android:allowBackup="true"
+41-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:14:162-188
+42        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+42-->[androidx.core:core:1.7.0] C:\Users\Rafael\.gradle\caches\transforms-3\742695b6ea79f7ca011b128faf587d4b\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
+43        android:debuggable="true"
+44        android:icon="@mipmap/ic_launcher"
+44-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:14:81-115
+45        android:label="@string/app_name"
+45-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:14:48-80
+46        android:roundIcon="@mipmap/ic_launcher_round"
+46-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:14:116-161
+47        android:theme="@style/AppTheme"
+47-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:14:189-220
+48        android:usesCleartextTraffic="true" >
+48-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:14:221-256
+49        <meta-data
+49-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:15:5-82
+50            android:name="expo.modules.updates.ENABLED"
+50-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:15:16-59
+51            android:value="true" />
+51-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:15:60-80
+52        <meta-data
+52-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:16:5-93
+53            android:name="expo.modules.updates.EXPO_SDK_VERSION"
+53-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:16:16-68
+54            android:value="48.0.0" />
+54-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:16:69-91
+55        <meta-data
+55-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:17:5-105
+56            android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH"
+56-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:17:16-80
+57            android:value="ALWAYS" />
+57-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:17:81-103
+58        <meta-data
+58-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:18:5-99
+59            android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS"
+59-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:18:16-79
+60            android:value="0" />
+60-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:18:80-97
+61        <meta-data
+61-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:19:5-122
+62            android:name="expo.modules.updates.EXPO_UPDATE_URL"
+62-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:19:16-67
+63            android:value="https://exp.host/@fael0702/MetaGames" />
+63-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:19:68-120
+64
+65        <activity
+65-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:20:5-31:16
+66            android:name="com.anonymous.MetaGames.MainActivity"
+66-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:20:15-43
+67            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+67-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:20:77-154
+68            android:exported="true"
+68-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:20:276-299
+69            android:label="@string/app_name"
+69-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:20:44-76
+70            android:launchMode="singleTask"
+70-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:20:155-186
+71            android:screenOrientation="portrait"
+71-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:20:300-336
+72            android:theme="@style/Theme.App.SplashScreen"
+72-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:20:230-275
+73            android:windowSoftInputMode="adjustResize" >
+73-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:20:187-229
+74            <intent-filter>
+74-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:21:7-24:23
+75                <action android:name="android.intent.action.MAIN" />
+75-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:22:9-60
+75-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:22:17-58
+76
+77                <category android:name="android.intent.category.LAUNCHER" />
+77-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:23:9-68
+77-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:23:19-66
+78            </intent-filter>
+79            <intent-filter>
+79-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:25:7-30:23
+80                <action android:name="android.intent.action.VIEW" />
+80-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:9:7-58
+80-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:9:15-56
+81
+82                <category android:name="android.intent.category.DEFAULT" />
+82-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:27:9-67
+82-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:27:19-65
+83                <category android:name="android.intent.category.BROWSABLE" />
+83-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:10:7-67
+83-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:10:17-65
+84
+85                <data android:scheme="com.anonymous.MetaGames" />
+85-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:11:7-37
+85-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:11:13-35
+86            </intent-filter>
+87        </activity>
+88        <activity
+88-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:32:5-106
+89            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+89-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:32:15-79
+90            android:exported="false" />
+90-->C:\react-native\projeto\MetaGames\android\app\src\main\AndroidManifest.xml:32:80-104
+91
+92        <meta-data
+92-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:9-11:36
+93            android:name="app_data_collection_default_enabled"
+93-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:13-63
+94            android:value="true" />
+94-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-33
+95
+96        <service
+96-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:9-21:19
+97            android:name="com.google.firebase.components.ComponentDiscoveryService"
+97-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-84
+98            android:directBootAware="true"
+98-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-43
+99            android:exported="false" >
+99-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-37
+100            <meta-data
+100-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:13-20:85
+101                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
+101-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:19:17-120
+102                android:value="com.google.firebase.components.ComponentRegistrar" />
+102-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:17-82
+103        </service>
+104
+105        <provider
+105-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:9-27:38
+106            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
+106-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-88
+107            android:authorities="com.anonymous.MetaGames.reactnativefirebaseappinitprovider"
+107-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:13-86
+108            android:exported="false"
+108-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-37
+109            android:initOrder="99" />
+109-->[:react-native-firebase_app] C:\react-native\projeto\MetaGames\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:13-35
+110        <provider
+110-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:9-30:20
+111            android:name="expo.modules.filesystem.FileSystemFileProvider"
+111-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-74
+112            android:authorities="com.anonymous.MetaGames.FileSystemFileProvider"
+112-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-74
+113            android:exported="false"
+113-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-37
+114            android:grantUriPermissions="true" >
+114-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:13-47
+115            <meta-data
+115-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:13-29:70
+116                android:name="android.support.FILE_PROVIDER_PATHS"
+116-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:17-67
+117                android:resource="@xml/file_system_provider_paths" />
+117-->[:expo-file-system] C:\react-native\projeto\MetaGames\node_modules\expo-file-system\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:17-67
+118        </provider>
+119
+120        <meta-data
+120-->[:expo-modules-core] C:\react-native\projeto\MetaGames\node_modules\expo-modules-core\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:8:9-10:89
+121            android:name="org.unimodules.core.AppLoader#react-native-headless"
+121-->[:expo-modules-core] C:\react-native\projeto\MetaGames\node_modules\expo-modules-core\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:13-79
+122            android:value="expo.modules.adapters.react.apploader.RNHeadlessAppLoader" />
+122-->[:expo-modules-core] C:\react-native\projeto\MetaGames\node_modules\expo-modules-core\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:13-86
+123
+124        <activity
+124-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:23:9-27:75
+125            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+125-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:24:13-93
+126            android:excludeFromRecents="true"
+126-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:25:13-46
+127            android:exported="false"
+127-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:26:13-37
+128            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+128-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:27:13-72
+129        <!--
+130            Service handling Google Sign-In user revocation. For apps that do not integrate with
+131            Google Sign-In, this service will never be started.
+132        -->
+133        <service
+133-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:33:9-37:51
+134            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+134-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:34:13-89
+135            android:exported="true"
+135-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:35:13-36
+136            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+136-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:36:13-107
+137            android:visibleToInstantApps="true" />
+137-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\Rafael\.gradle\caches\transforms-3\b827a63e7bb2146c7c464b8263b66e0a\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:37:13-48
+138
+139        <provider
+139-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Rafael\.gradle\caches\transforms-3\468c7525363f9f3044a9229656b613cb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+140            android:name="androidx.startup.InitializationProvider"
+140-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Rafael\.gradle\caches\transforms-3\468c7525363f9f3044a9229656b613cb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
+141            android:authorities="com.anonymous.MetaGames.androidx-startup"
+141-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Rafael\.gradle\caches\transforms-3\468c7525363f9f3044a9229656b613cb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
+142            android:exported="false" >
+142-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Rafael\.gradle\caches\transforms-3\468c7525363f9f3044a9229656b613cb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
+143            <meta-data
+143-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Rafael\.gradle\caches\transforms-3\468c7525363f9f3044a9229656b613cb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+144                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+144-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Rafael\.gradle\caches\transforms-3\468c7525363f9f3044a9229656b613cb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
+145                android:value="androidx.startup" />
+145-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Rafael\.gradle\caches\transforms-3\468c7525363f9f3044a9229656b613cb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+146            <meta-data
+146-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Rafael\.gradle\caches\transforms-3\194c08221c9858599639426c07a0dab8\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+147                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+147-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Rafael\.gradle\caches\transforms-3\194c08221c9858599639426c07a0dab8\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+148                android:value="androidx.startup" />
+148-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Rafael\.gradle\caches\transforms-3\194c08221c9858599639426c07a0dab8\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+149        </provider>
+150
+151        <activity
+151-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Rafael\.gradle\caches\transforms-3\28e8b0db3d63108628a3fce1eb79e0b9\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+152            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+152-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Rafael\.gradle\caches\transforms-3\28e8b0db3d63108628a3fce1eb79e0b9\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+153            android:exported="false"
+153-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Rafael\.gradle\caches\transforms-3\28e8b0db3d63108628a3fce1eb79e0b9\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+154            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+154-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Rafael\.gradle\caches\transforms-3\28e8b0db3d63108628a3fce1eb79e0b9\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+155
+156        <provider
+156-->[com.google.firebase:firebase-common:20.3.2] C:\Users\Rafael\.gradle\caches\transforms-3\460a988854cf87ac366d7a0fe4c0cfaf\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:25:9-30:39
+157            android:name="com.google.firebase.provider.FirebaseInitProvider"
+157-->[com.google.firebase:firebase-common:20.3.2] C:\Users\Rafael\.gradle\caches\transforms-3\460a988854cf87ac366d7a0fe4c0cfaf\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:26:13-77
+158            android:authorities="com.anonymous.MetaGames.firebaseinitprovider"
+158-->[com.google.firebase:firebase-common:20.3.2] C:\Users\Rafael\.gradle\caches\transforms-3\460a988854cf87ac366d7a0fe4c0cfaf\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:27:13-72
+159            android:directBootAware="true"
+159-->[com.google.firebase:firebase-common:20.3.2] C:\Users\Rafael\.gradle\caches\transforms-3\460a988854cf87ac366d7a0fe4c0cfaf\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:28:13-43
+160            android:exported="false"
+160-->[com.google.firebase:firebase-common:20.3.2] C:\Users\Rafael\.gradle\caches\transforms-3\460a988854cf87ac366d7a0fe4c0cfaf\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:29:13-37
+161            android:initOrder="100" />
+161-->[com.google.firebase:firebase-common:20.3.2] C:\Users\Rafael\.gradle\caches\transforms-3\460a988854cf87ac366d7a0fe4c0cfaf\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:30:13-36
+162
+163        <meta-data
+163-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\Rafael\.gradle\caches\transforms-3\97b1bf4e8666ce6384b2ddb13372cdc0\transformed\jetified-play-services-basement-18.2.0\AndroidManifest.xml:21:9-23:69
+164            android:name="com.google.android.gms.version"
+164-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\Rafael\.gradle\caches\transforms-3\97b1bf4e8666ce6384b2ddb13372cdc0\transformed\jetified-play-services-basement-18.2.0\AndroidManifest.xml:22:13-58
+165            android:value="@integer/google_play_services_version" />
+165-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\Rafael\.gradle\caches\transforms-3\97b1bf4e8666ce6384b2ddb13372cdc0\transformed\jetified-play-services-basement-18.2.0\AndroidManifest.xml:23:13-66
+166    </application>
+167
+168</manifest>
