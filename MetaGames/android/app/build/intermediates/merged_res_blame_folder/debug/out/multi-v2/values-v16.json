@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.anonymous.MetaGames.app-mergeDebugResources-36:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Rafael\\.gradle\\caches\\transforms-3\\742695b6ea79f7ca011b128faf587d4b\\transformed\\core-1.7.0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Rafael\\.gradle\\caches\\transforms-3\\0dcf7db566a9a803eab4097afc819ec9\\transformed\\appcompat-1.4.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                }
+            ]
+        }
+    ]
+}
