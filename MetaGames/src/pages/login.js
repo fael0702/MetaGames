@@ -5,6 +5,7 @@ import * as WebBrowser from "expo-web-browser";
 import * as Facebook from 'expo-auth-session/providers/facebook'
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import apiGames from "../service/apiGames";
 import { Image } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -117,7 +118,7 @@ const Login = () => {
           </TouchableOpacity>
 
           <Text style={styles.red2}>Ainda não cadastrado?</Text>
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { navigation.navigate('Cadastro') }}>
+          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { navigation.navigate('Formulario') }}>
             <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
           </TouchableOpacity>
 
@@ -153,7 +154,7 @@ const Login = () => {
         </View>
       </View>
     </ImageBackground>
-  )
+  );
 };
 
 function Profile({ user }) {
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flexDirection: 'row',
     marginBottom: 10,
-  },  
+  },
   container: {
     width: '80%',
     height: '75%',
@@ -181,79 +182,79 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-    containerRola: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  containerRola: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    background: {
-      flex: 1,
-      resizeMode: 'cover',
-    },
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
 
-    input: {
-      padding: 4,
-      marginTop: 7,
-      marginBottom: 12,
-      borderRadius: 10,
-      fontSize: 16,
-      borderWidth: 2,
-      width: 250,
-    },
+  input: {
+    padding: 4,
+    marginTop: 7,
+    marginBottom: 12,
+    borderRadius: 10,
+    fontSize: 16,
+    borderWidth: 2,
+    width: 250,
+  },
 
-    contorno: {
-      textShadowColor: '#000000',
-      textShadowOffset: { width: 0, height: 0 },
-      textShadowRadius: 2,
-      padding: 5,
-    },
+  contorno: {
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 2,
+    padding: 5,
+  },
 
-    red: {
-      color: '#FAFF19',
-      fontSize: 22,
-    },
+  red: {
+    color: '#FAFF19',
+    fontSize: 22,
+  },
 
-    red2: {
-      marginTop: 15,
-      fontSize: 16,
-    },
+  red2: {
+    marginTop: 15,
+    fontSize: 16,
+  },
 
-    title: {
-      color: '#FAFF19',
-      fontSize: 22,
-      marginBottom: 20,
-    },
+  title: {
+    color: '#FAFF19',
+    fontSize: 22,
+    marginBottom: 20,
+  },
 
-    dividerContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: 10,
-      width: 250,
-    },
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+    width: 250,
+  },
 
-    dividerLine: {
-      flex: 1,
-      height: 1,
-      backgroundColor: 'black',
-    },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'black',
+  },
 
-    dividerText: {
-      paddingHorizontal: 10,
-      fontSize: 12,
-      fontWeight: 'bold',
-    },
-    profile: {
-      alignItems: "center",
-    },
-    name: {
-      fontSize: 10,
-    },
-    image: {
-      width: 50,
-      height: 50,
-      borderRadius: 50,
-    },
-  });
+  dividerText: {
+    paddingHorizontal: 10,
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  profile: {
+    alignItems: "center",
+  },
+  name: {
+    fontSize: 10,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+});
 
-  export default Login;
+export default Login;
