@@ -6,6 +6,9 @@ import Login from './pages/login';
 import Lista from './pages/lista';
 import Historico from './pages/historico';
 import Home from './pages/home';
+import Cadastro from './pages/cadastro';
+import Review from './pages/review';
+import Perfil from './pages/perfil';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -73,6 +76,7 @@ function MainTabs() {
           ),
         }}
       />
+      
     </Tab.Navigator>
   );
 }
@@ -94,8 +98,29 @@ export default function Routes() {
             }}
           />
           <Stack.Screen
+            name="Cadastro"
+            component={Cadastro}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Review"
+            component={Review}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="MainTabs"
             component={MainTabs}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Perfil"
+            component={Perfil}
             options={{
               headerShown: false,
             }}

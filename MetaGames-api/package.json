@@ -9,11 +9,16 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "^4.15.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "pg": "^8.11.0"
+    "pg": "^8.11.0",
+    "prisma": "^4.15.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "@types/node": "^20.2.5",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
   }
 }

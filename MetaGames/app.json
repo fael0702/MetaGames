@@ -21,10 +21,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.MetaGames"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme": ["MetaGames", "fb222572750606789"]
   }
 }
