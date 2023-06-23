@@ -7,7 +7,7 @@ import Lista from './pages/lista';
 import Historico from './pages/historico';
 import Home from './pages/home';
 import Cadastro from './pages/cadastro';
-import Formulario from './pages/form';
+import Review from './pages/review';
 import Perfil from './pages/perfil';
 
 const Tab = createMaterialTopTabNavigator();
@@ -105,8 +105,8 @@ export default function Routes() {
             }}
           />
           <Stack.Screen
-            name="Formulario"
-            component={Formulario}
+            name="Review"
+            component={Review}
             options={{
               headerShown: false,
             }}
