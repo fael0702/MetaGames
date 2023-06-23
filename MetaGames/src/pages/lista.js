@@ -7,6 +7,7 @@ import apiGames from "../service/apiGames";
 export default function Lista() {
   const navigation = useNavigation();
   const [gameList, setGameList] = useState([]);
+  const [detailList, setDetailList] = useState([]);
 
   const handleLista = () => {
     navigation.navigate("Home");
@@ -14,7 +15,15 @@ export default function Lista() {
 
   useEffect(() => {
     getGamesList();
+    getDetail();
   }, []);
+
+  const getDetail = (id) => {
+    apiGames.getDetails(id).then((resp) => {
+      console.log(resp);
+      setDetailList(resp.data.results);
+    });
+  };
 
   const getGamesList = () => {
     apiGames.getAllGames.then((resp) => {

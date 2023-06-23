@@ -29,7 +29,6 @@ export default function Lista() {
 
   const getGamesList = () => {
     apiGames.getAllGames.then((resp) => {
-      console.log(resp.data.results);
       setGameList(resp.data.results);
     });
   };
