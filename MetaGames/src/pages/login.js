@@ -141,16 +141,16 @@ const Login = () => {
             </TouchableOpacity>
           </View>
 
-
+          
           <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => AsyncStorage.removeItem("@user")}>
             <Text style={[styles.red, styles.contorno]}>Deletar local storage</Text>
           </TouchableOpacity>
           <Text>{JSON.stringify(userInfo)}</Text>
           <Text>{logs}</Text>
           <Text>{logs}</Text>
-          {user ? (
-            <Profile user={user} />
-          ) : ("")}
+          
+          
+          <Text></Text>
         </View>
       </View>
     </ImageBackground>

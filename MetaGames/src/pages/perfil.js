@@ -10,26 +10,28 @@ import {
   Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 
 export default function Perfil() {
   const navigation = useNavigation();
   const handleHome = () => navigation.navigate("Home");
   const handlePerfil = () => navigation.navigate("Perfil");
-  const [image, setImage] = useState('https://cdn-icons-png.flaticon.com/512/5953/5953527.png');
+  const [image, setImage] = useState(
+    "https://cdn-icons-png.flaticon.com/512/5953/5953527.png"
+  );
 
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4,3],
-        quality: 1,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
 
     if (!result.canceled) {
-        setImage(result.assets[0].uri);
+      setImage(result.assets[0].uri);
     }
-  }
+  };
 
   return (
     <ImageBackground
@@ -38,8 +40,15 @@ export default function Perfil() {
     >
       <View style={styles.container}>
         <Text>IMAGENS</Text>
-        <Image source={{uri: image}} style={{width:180, height:180}}></Image>
-        <Button title="Escolha uma foto" onPress={handleImagePicker}/>
+
+        <TouchableOpacity onPress={handleImagePicker}>
+          <Image
+            source={{ uri: image }}
+            style={{ width: 180, height: 180 }}
+          ></Image>
+
+          
+        </TouchableOpacity>
 
         <StatusBar style="auto" />
       </View>
