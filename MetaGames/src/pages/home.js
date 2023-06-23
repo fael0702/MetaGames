@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
@@ -7,134 +6,75 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
-  FlatList,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import apiGames from '../service/apiGames';
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Lista() {
+export default function Home() {
   const navigation = useNavigation();
-  const [gameList, setGameList] = useState([]);
-  const [visibleCards, setVisibleCards] = useState(3);
-
-  const handleLista = () => {
-    navigation.navigate('Home');
-  };
-
-  useEffect(() => {
-    getGamesList();
-  }, []);
-
-  const getGamesList = () => {
-    apiGames.getAllGames.then((resp) => {
-      console.log(resp.data.results);
-      setGameList(resp.data.results);
-    });
-  };
-
-  const renderGameCard = ({ item }) => {
-    return (
-      <TouchableOpacity style={styles.card}>
-        <Text style={styles.gameTitle}>{item.name}</Text>
-        <Image
-          source={{ uri: item.background_image }}
-          style={styles.cardImage}
-        />
-        <Text style={styles.gameDescription}>{item.description}</Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const handleShowMore = () => {
-    setVisibleCards((prevVisibleCards) => prevVisibleCards + 3);
-  };
-
-  const visibleGameList = gameList.slice(0, visibleCards);
-
+  const handleHome = () => navigation.navigate("Home");
+  const handlePerfil = () => navigation.navigate("Perfil");
   return (
-    <SafeAreaView style={styles.container}>
-      <ImageBackground
-        source={require('../../assets/FundoMetaGames.png')}
-        style={styles.background}
-      >
-        
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+    <ImageBackground
+      source={require("../../assets/FundoMetaGames.png")}
+      style={styles.background}
+    >
+      <View style={styles.container}>
         <View style={styles.logoContainer}>
-          <TouchableOpacity onPress={handleLista} style={styles.logoContainer}>
+          <TouchableOpacity onPress={handleHome}>
             <Image
-              source={require('../../assets/logo.png')}
+              source={require("../../assets/logo.png")}
               style={styles.logo}
               resizeMode="contain"
             />
           </TouchableOpacity>
         </View>
-          <FlatList
-            data={visibleGameList}
-            renderItem={renderGameCard}
-            keyExtractor={(item) => item.id.toString()}
-          />
-          {visibleCards < gameList.length && (
-            <TouchableOpacity
-              style={styles.showMoreButton}
-              onPress={handleShowMore}
-            >
-              <Text style={styles.showMoreButtonText}>Mostrar Mais</Text>
-            </TouchableOpacity>
-          )}
-        </ScrollView>
+
+        <View style={styles.perfilctn}>
+
+          <TouchableOpacity onPress={handlePerfil}>
+            <Image
+              source={require("../../assets/usercommun.png")}
+              style={styles.perfil}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+
+        </View>
+
+        <Text></Text>
         <StatusBar style="auto" />
-      </ImageBackground>
-    </SafeAreaView>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-  },
-  background: {
-    flex: 1,
-    resizeMode: 'cover',
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   logoContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 35,
     left: 10,
+  },
+  perfilctn: {
+    position: "absolute",
+    top: 45,
+    left: 300,
+  },
+  perfil: {
+    width: 80,
+    height: 80,
   },
   logo: {
     width: 100,
     height: 100,
   },
-  scrollViewContent: {
-    alignItems: 'center',
-    paddingBottom: 16,
-  },
-  gameTitle: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  card: {
-    backgroundColor: '#FFF',
-    borderRadius: 20,
-    padding: 5,
-    margin: 8,
-    height: 151,
-    width: 298,
-    justifyContent: 'center',
-    opacity: 0.7,
-    alignSelf: 'center'
-  },
-  cardContent: {
-    alignItems: 'center',
-  },
-  cardImage: {
-    width: 80,
-    height: 80,
-    marginBottom: 8,
-    borderRadius: 20,
+  background: {
+    flex: 1,
+    resizeMode: "cover",
   },
 });
