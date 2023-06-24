@@ -1,6 +1,11 @@
+
+
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image, Picker } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Picker } from '@react-native-picker/picker';
+
 
 const Review = ({ route }) => {
     const navigation = useNavigation();
@@ -9,13 +14,33 @@ const Review = ({ route }) => {
     const [comentario, setComantario] = useState('');
     const [cor, setCor] = useState('#000000');
 
-    const { image, name, rating } = route.params?.parametro || {};
+    const { id, image, name, rating } = route.params?.parametro || {};
 
-    const handleForm = () => {
-        console.log('Nota:', nota);
-        console.log('Comentario:', comentario);
-        navigation.navigate('Historico');
-    };
+    const handleNavigate = async () => {
+        const reviewedGame = {
+          id: id,
+          image: image,
+          name: name,
+          rating: nota,
+          comentario: comentario,
+        };
+      
+        try {
+          const storedGames = await AsyncStorage.getItem('reviewedGames');
+          let gameList = [];
+          if (storedGames) {
+            gameList = JSON.parse(storedGames);
+          }
+          gameList.push(reviewedGame);
+          await AsyncStorage.setItem('reviewedGames', JSON.stringify(gameList));
+          navigation.navigate('Historico', {
+            parametro: reviewedGame,
+          });
+        } catch (error) {
+          console.log('Erro ao salvar jogo revisado:', error);
+        }
+      };
+      
 
     const handlePickerChange = (itemValue) => {
         setNota(itemValue);
@@ -51,7 +76,7 @@ const Review = ({ route }) => {
                         ]}
                         onValueChange={handlePickerChange}
                     >
-                        <Picker.Item label="Nota..."/>
+                        <Picker.Item label="Nota..." />
                         <Picker.Item label="1" value="1" />
                         <Picker.Item label="2" value="2" />
                         <Picker.Item label="3" value="3" />
@@ -70,7 +95,7 @@ const Review = ({ route }) => {
                         </View>
                     )}
 
-                    <TouchableOpacity style={styles.button} onPress={handleForm}>
+                    <TouchableOpacity style={styles.button} onPress={handleNavigate}>
                         <Text style={[styles.red, styles.contorno]}>Enviar</Text>
                     </TouchableOpacity>
                 </View>

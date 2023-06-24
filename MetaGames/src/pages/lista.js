@@ -1,3 +1,5 @@
+
+
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import {
@@ -17,6 +19,7 @@ import apiGames from '../service/apiGames';
 export default function Lista() {
   const navigation = useNavigation();
   const [gameList, setGameList] = useState([]);
+  const [detailList, setDetailList] = useState([]);
   const [visibleCards, setVisibleCards] = useState(3);
 
   const handleLista = () => {
@@ -25,19 +28,25 @@ export default function Lista() {
 
   useEffect(() => {
     getGamesList();
+    // getDetail();
   }, []);
+
+  // const getDetail = (id) => {
+  //   apiGames.getDetails(id).then((resp) => {
+  //     setDetailList(resp.data.results);
+  //   });
+  // };
 
   const getGamesList = () => {
     apiGames.getAllGames.then((resp) => {
-      console.log(resp.data.results);
       setGameList(resp.data.results);
     });
   };
 
   const handleNavigate = (item) => {
-    console.log(item);
     navigation.navigate('Review', {
       parametro: {
+        id: item?.id,
         image: item?.background_image,
         name: item?.name,
         rating: item?.rating,
@@ -58,7 +67,7 @@ export default function Lista() {
   };
 
   const handleShowMore = () => {
-    setVisibleCards((prevVisibleCards) => prevVisibleCards + 3);
+    setVisibleCards((prevVisibleCards) => prevVisibleCards + 6);
   };
 
   const visibleGameList = gameList.slice(0, visibleCards);
@@ -80,6 +89,7 @@ export default function Lista() {
             </TouchableOpacity>
           </View>
           <View style={styles.cardsContainer}>
+            
             <FlatList
               data={visibleGameList}
               renderItem={renderGameCard}
@@ -161,4 +171,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+<<<<<<< HEAD
 });
+=======
+});
+
+>>>>>>> 05b1c4dad29d49f07947b8f5695cfe89e00a0f6b
