@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -12,13 +12,29 @@ const Cadastro = () => {
     const [dataNasc, setDataNasc] = useState('');
     const [senhaVisivel, setSenhaVisivel] = useState(false);
     const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
+    const [senhaForca, setSenhaForca] = useState('');
 
     const handleCadastro = () => {
-        // console.log('Nome:', nome);
-        // console.log('Senha:', senha);
-        // console.log('Confirmar Senha:', confirmarSenha);
-        // console.log('Data de Nascimento:', dataNasc);
-        navigation.navigate('Login')
+        // Verificar se as senhas são iguais
+        if (password !== authPassword) {
+            console.log('As senhas não coincidem');
+            return;
+        }
+
+        // Restante do código para verificar a força da senha e cadastrar o usuário
+        if (senhaForca === 'fraca') {
+            console.log('Senha fraca');
+        } else if (senhaForca === 'média') {
+            console.log('Senha média');
+        } else if (senhaForca === 'forte') {
+            console.log('Senha forte');
+        }
+
+        console.log('Nome:', name);
+        console.log('Senha:', password);
+        console.log('Data de Nascimento:', dataNasc);
+
+        navigation.navigate('Login');
     };
 
     const toggleSenhaVisivel = () => {
@@ -29,14 +45,33 @@ const Cadastro = () => {
         setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
     };
 
+    const verificarForcaSenha = (senha) => {
+        const temLetra = /[a-zA-Z]/.test(senha);
+        const temNumero = /[0-9]/.test(senha);
+        const temCaractereEspecial = /[^a-zA-Z0-9]/.test(senha);
+
+        if (!temNumero || !temLetra || senha.length < 5) {
+            setSenhaForca('fraca');
+        } else if (temLetra && temNumero && !temCaractereEspecial) {
+            setSenhaForca('média');
+        } else if (temLetra && temNumero && temCaractereEspecial) {
+            setSenhaForca('forte');
+        }
+    };
+
+    const handlePasswordChange = (value) => {
+        setPassword(value);
+        verificarForcaSenha(value);
+    };
+
     return (
         <ImageBackground
             source={require('../../assets/FundoMetaGames.png')}
             style={styles.background}>
             <View style={styles.containerRola}>
                 <View style={styles.container}>
-                    <Text style={[styles.title, styles.contorno]}>Cadastrar</Text>
-                    <Text>Nome</Text>
+                    <Text style={[styles.title, styles.contorno]}>Cadastro</Text>
+                    <Text>Username</Text>
                     <TextInput
                         style={styles.input}
                         placeholderTextColor={'#000'}
@@ -44,27 +79,41 @@ const Cadastro = () => {
                         onChangeText={setName}
                     />
                     <Text>Senha</Text>
-                    <View style={{ flexDirection: 'row' }} >
+                    <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
                             placeholderTextColor={'#000'}
                             secureTextEntry={!senhaVisivel}
                             value={password}
-                            onChangeText={setPassword}
+                            onChangeText={handlePasswordChange}
                         />
-
-                        <TouchableOpacity onPress={toggleSenhaVisivel}>
+                        <TouchableOpacity
+                            style={styles.iconContainer}
+                            onPress={toggleSenhaVisivel}
+                        >
                             <Icon
                                 name={senhaVisivel ? 'eye-slash' : 'eye'}
                                 size={20}
                                 color="#000"
                             />
                         </TouchableOpacity>
+                        <View style={styles.senhaForcaContainer}>
+                            {senhaForca === 'fraca' && (
+                                <Text style={styles.senhaForcaFraca}>Senha fraca</Text>
+                            )}
+                            {senhaForca === 'média' && (
+                                <Text style={styles.senhaForcaMedia}>Senha média</Text>
+                            )}
+                            {senhaForca === 'forte' && (
+                                <Text style={styles.senhaForcaForte}>Senha forte</Text>
+                            )}
+                        </View>
 
                     </View>
 
+
                     <Text>Confirme sua Senha</Text>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
                             placeholderTextColor={'#000'}
@@ -72,15 +121,16 @@ const Cadastro = () => {
                             value={authPassword}
                             onChangeText={setAuthPassword}
                         />
-
-                        <TouchableOpacity onPress={toggleConfirmarSenhaVisivel}>
+                        <TouchableOpacity
+                            style={styles.iconContainer}
+                            onPress={toggleConfirmarSenhaVisivel}
+                        >
                             <Icon
                                 name={confirmarSenhaVisivel ? 'eye-slash' : 'eye'}
                                 size={20}
                                 color="#000"
                             />
                         </TouchableOpacity>
-
                     </View>
 
                     <Text>Data de Nascimento</Text>
@@ -93,10 +143,17 @@ const Cadastro = () => {
                     />
 
                     <TouchableOpacity style={styles.button} onPress={handleCadastro}>
-                        <Text style={[styles.red, styles.contorno]}>Cadastrar</Text>
+                        <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
                     </TouchableOpacity>
 
-                    {/* <Text style={styles.ou}>ou</Text> */}
+                    <View style={styles.inputContainer2}>
+                        <Text>Já cadastrado?</Text>
+                        <TouchableOpacity
+                            onPress={handleCadastro}
+                        >
+                            <Text style={[styles.red, styles.contorno2]}>Login</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </ImageBackground>
@@ -125,7 +182,20 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
 
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'center'
+    },
+    inputContainer2: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 15,
+    },
+
     input: {
+        flex: 1,
         padding: 4,
         marginTop: 7,
         marginBottom: 12,
@@ -133,11 +203,40 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderWidth: 2,
         width: 250,
+        height: 40,
+    },
+    iconContainer: {
+        marginLeft: -30,
+    },
+    senhaForcaContainer: {
+        width: 100,
+        marginLeft: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    senhaForcaFraca: {
+        color: 'red',
+        fontSize: 14,
+    },
+    senhaForcaMedia: {
+        color: 'yellow',
+        fontSize: 14,
+    },
+    senhaForcaForte: {
+        color: 'green',
+        fontSize: 14,
     },
     contorno: {
         textShadowColor: '#000000',
         textShadowOffset: { width: 0, height: 0 },
         textShadowRadius: 2,
+    },
+    contorno2: {
+        textShadowColor: '#000000',
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 2,
+        marginLeft: 5,
+        fontSize: 20
     },
     red: {
         color: '#FAFF19',

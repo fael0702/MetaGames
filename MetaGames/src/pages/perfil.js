@@ -20,14 +20,14 @@ export default function Perfil() {
 
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4,3],
-        quality: 1,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
 
     if (!result.canceled) {
-        setImage(result.assets[0].uri);
+      setImage(result.assets[0].uri);
     }
   }
 
@@ -38,8 +38,8 @@ export default function Perfil() {
     >
       <View style={styles.container}>
         <Text>IMAGENS</Text>
-        <Image source={{uri: image}} style={{width:180, height:180}}></Image>
-        <Button title="Escolha uma foto" onPress={handleImagePicker}/>
+        <Image source={{ uri: image }} style={{ width: 180, height: 180 }}></Image>
+        <Button title="Escolha uma foto" onPress={handleImagePicker} />
 
         <StatusBar style="auto" />
       </View>
