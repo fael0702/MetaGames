@@ -40,16 +40,22 @@ export default function Perfil() {
       style={styles.background}
     >
       <View style={styles.container}>
-        <Text>IMAGENS</Text>
-        <LinearGradient colors={["#F4C622", "white", "#1B30EB"]} style={styles.perfilctn}>
-          <Image
-            source={{ uri: image }}
-            onPress={handleImagePicker}
-            style={styles.perfil}
-          ></Image>
-        </LinearGradient>
+        <TouchableOpacity onPress={handleImagePicker}>
+          <LinearGradient
+            colors={["#F4C622", "white", "#1B30EB"]}
+            style={styles.perfilctn}
+          >
+            <Image
+              source={{ uri: image }}
+              onPress={handleImagePicker}
+              style={styles.perfil}
+            ></Image>
+          </LinearGradient>
+        </TouchableOpacity>
 
-        <Button title="Escolha uma foto" onPress={handleImagePicker} />
+        <View style={styles.infoPerfil}>
+          <Text>NOME DA PESSOA AQUI</Text>
+        </View>
 
         <StatusBar style="auto" />
       </View>
@@ -70,10 +76,13 @@ const styles = StyleSheet.create({
     left: 10,
   },
   perfilctn: {
-    borderRadius: 160 , padding: 10
+    borderRadius: 160,
+    padding: 10,
   },
   perfil: {
-    width: 240, height: 240,borderRadius: 160,
+    width: 240,
+    height: 240,
+    borderRadius: 160,
   },
   logo: {
     width: 100,

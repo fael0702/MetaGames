@@ -133,7 +133,6 @@ const Login = () => {
                   color="#000"
                 />
               </TouchableOpacity>
-
             </View>
 
           </View>
@@ -194,18 +193,21 @@ function Profile({ user }) {
 }
 
 const styles = StyleSheet.create({
+  
   imageContainer: {
     flexDirection: 'row',
     marginBottom: 10,
   },
+
   container: {
-    width: '80%',
-    height: '75%',
+    maxWidth: 500,
+    maxHeight: 700,
     backgroundColor: '#D9D9D9',
     alignItems: 'center',
     justifyContent: 'center',
     opacity: 0.7,
     borderRadius: 5,
+    padding: 50,
   },
 
   inputContainer: {
