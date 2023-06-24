@@ -34,15 +34,25 @@ export default function Lista() {
     });
   };
 
+  const handleNavigate = (item) => {
+    console.log(item);
+    navigation.navigate('Review', {
+      parametro: {
+        image: item?.background_image,
+        name: item?.name,
+        rating: item?.rating,
+      },
+    });
+  };
+
   const renderGameCard = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.card}>
+      <TouchableOpacity style={styles.card} onPress={() => handleNavigate(item)}>
         <Text style={styles.gameTitle}>{item.name}</Text>
         <Image
           source={{ uri: item.background_image }}
           style={styles.cardImage}
         />
-        <Text style={styles.gameDescription}>{item.description}</Text>
       </TouchableOpacity>
     );
   };
@@ -115,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 16,
-    marginTop: 150,
+    marginTop: 125,
   },
   gameTitle: {
     fontSize: 12,

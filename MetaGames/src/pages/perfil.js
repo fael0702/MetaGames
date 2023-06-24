@@ -41,7 +41,7 @@ export default function Perfil() {
     >
       <View style={styles.container}>
         <Text>IMAGENS</Text>
-        <LinearGradient colors={["#4c669f", "#3b5998", "#192f6a"]} style={styles.perfilctn}>
+        <LinearGradient colors={["#F4C622", "white", "#1B30EB"]} style={styles.perfilctn}>
           <Image
             source={{ uri: image }}
             onPress={handleImagePicker}

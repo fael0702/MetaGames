@@ -1,0 +1,190 @@
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image, Picker } from "react-native";
+
+const Review = ({ route }) => {
+    const navigation = useNavigation();
+
+    const [nota, setNota] = useState('');
+    const [comentario, setComantario] = useState('');
+    const [cor, setCor] = useState('#000000');
+
+    const { image, name, rating } = route.params?.parametro || {};
+
+    const handleForm = () => {
+        console.log('Nota:', nota);
+        console.log('Comentario:', comentario);
+        navigation.navigate('Historico');
+    };
+
+    const handlePickerChange = (itemValue) => {
+        setNota(itemValue);
+        setCor(itemValue >= 6 ? '#0f0' : '#f00');
+    };
+
+    return (
+        <ImageBackground
+            source={require('../../assets/FundoMetaGames.png')}
+            style={styles.background}>
+            <View style={styles.containerRola}>
+                <View style={styles.container}>
+                    <View>
+                        {image && <Image source={{ uri: image }} style={styles.gameImage} />}
+                        <Text style={styles.gameName}>{name}</Text>
+                        <Text style={styles.gameRating}>Rating: {rating}</Text>
+                    </View>
+                    <TextInput
+                        style={[styles.input, styles.multilineInput]}
+                        placeholder="Digite seu comentário..."
+                        placeholderTextColor="#000"
+                        value={comentario}
+                        onChangeText={setComantario}
+                        multiline={true}
+                        numberOfLines={4}
+                        textAlignVertical="top"
+                    />
+
+                    <Picker
+                        selectedValue={nota}
+                        style={[styles.picker,
+                            //  { backgroundColor: cor }
+                        ]}
+                        onValueChange={handlePickerChange}
+                    >
+                        <Picker.Item label="Nota..."/>
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                        <Picker.Item label="7" value="7" />
+                        <Picker.Item label="8" value="8" />
+                        <Picker.Item label="9" value="9" />
+                        <Picker.Item label="10" value="10" />
+                    </Picker>
+
+                    {nota != "Nota..." && (
+                        <View style={[styles.textView, { backgroundColor: cor }]}>
+                            <Text style={styles.textNota}>{`${nota}`}</Text>
+                        </View>
+                    )}
+
+                    <TouchableOpacity style={styles.button} onPress={handleForm}>
+                        <Text style={[styles.red, styles.contorno]}>Enviar</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </ImageBackground>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        width: '80%',
+        height: '85%',
+        backgroundColor: '#D9D9D9',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        borderRadius: 5,
+    },
+
+    containerRola: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    background: {
+        flex: 1,
+        resizeMode: 'cover',
+    },
+
+    input: {
+        padding: 4,
+        marginTop: 7,
+        marginBottom: 12,
+        borderRadius: 10,
+        fontSize: 16,
+        borderWidth: 2,
+        width: 250,
+        backgroundColor: "#fff"
+    },
+    multilineInput: {
+        height: 100,
+        textAlignVertical: 'top',
+    },
+    contorno: {
+        textShadowColor: '#000000',
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 2,
+    },
+    red: {
+        color: '#FAFF19',
+        fontSize: 22,
+    },
+    red2: {
+        marginTop: 15,
+        fontSize: 16,
+    },
+
+    title: {
+        color: '#FAFF19',
+        fontSize: 22,
+        marginBottom: 20,
+    },
+
+    ou: {
+        fontSize: 10,
+    },
+
+    gameImage: {
+        width: 150,
+        height: 200,
+        borderRadius: 10,
+        marginBottom: 10,
+        borderColor: '#000',
+        borderWidth: 3,
+    },
+    gameName: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    gameRating: {
+        fontSize: 16,
+    },
+    picker: {
+        width: 250,
+        height: 40,
+        marginBottom: 12,
+        borderRadius: 10,
+        borderWidth: 2,
+    },
+    button: {
+        marginTop: 15,
+        backgroundColor: '#D9D9D9',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+    },
+    textView: {
+        marginTop: 15,
+        padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        borderWidth: 2,
+    },
+    textNota: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#000',
+        width: 100,
+        textAlign: "center",
+    },
+});
+
+export default Review;
