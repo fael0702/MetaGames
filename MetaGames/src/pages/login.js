@@ -193,7 +193,7 @@ function Profile({ user }) {
 }
 
 const styles = StyleSheet.create({
-  
+
   imageContainer: {
     flexDirection: 'row',
     marginBottom: 10,
