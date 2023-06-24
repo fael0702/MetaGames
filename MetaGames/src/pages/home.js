@@ -11,42 +11,6 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function Home() {
   const navigation = useNavigation();
-  const [gameList, setGameList] = useState([]);
-  const [visibleCards, setVisibleCards] = useState(3);
-
-  const handleLista = () => {
-    navigation.navigate('Home');
-  };
-
-  useEffect(() => {
-    getGamesList();
-  }, []);
-
-  const getGamesList = () => {
-    apiGames.getAllGames.then((resp) => {
-      setGameList(resp.data.results);
-    });
-  };
-
-  const renderGameCard = ({ item }) => {
-    return (
-      <TouchableOpacity style={styles.card}>
-        <Text style={styles.gameTitle}>{item.name}</Text>
-        <Image
-          source={{ uri: item.background_image }}
-          style={styles.cardImage}
-        />
-        <Text style={styles.gameDescription}>{item.description}</Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const handleShowMore = () => {
-    setVisibleCards((prevVisibleCards) => prevVisibleCards + 3);
-  };
-
-  const visibleGameList = gameList.slice(0, visibleCards);
-
   const handleHome = () => navigation.navigate("Home");
   const handlePerfil = () => navigation.navigate("Perfil");
   return (
