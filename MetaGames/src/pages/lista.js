@@ -31,20 +31,17 @@ export default function Lista() {
 
   const getDetail = (id) => {
     apiGames.getDetails(id).then((resp) => {
-      console.log(resp);
       setDetailList(resp.data.results);
     });
   };
 
   const getGamesList = () => {
     apiGames.getAllGames.then((resp) => {
-      console.log(resp.data.results);
       setGameList(resp.data.results);
     });
   };
 
   const handleNavigate = (item) => {
-    console.log(item);
     navigation.navigate('Review', {
       parametro: {
         image: item?.background_image,

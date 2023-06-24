@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image, Picker } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Review = ({ route }) => {
     const navigation = useNavigation();
@@ -11,9 +12,13 @@ const Review = ({ route }) => {
 
     const { image, name, rating } = route.params?.parametro || {};
 
-    const handleForm = () => {
-        console.log('Nota:', nota);
-        console.log('Comentario:', comentario);
+    const handleForm = async () => {
+        // await AsyncStorage.setItem('@asyncStorage:notaUser', nota);
+        // await AsyncStorage.setItem('@asyncStorage:comentarioUser', comentario);
+        // await AsyncStorage.setItem('@asyncStorage:gameNameUser', name);
+        // await AsyncStorage.setItem('@asyncStorage:ImageGameUser', image);
+        // let teste = await AsyncStorage.getItem('@asyncStorage:notaUser')
+        // console.log(teste);
         navigation.navigate('Historico');
     };
 
@@ -51,7 +56,7 @@ const Review = ({ route }) => {
                         ]}
                         onValueChange={handlePickerChange}
                     >
-                        <Picker.Item label="Nota..."/>
+                        <Picker.Item label="Nota..." />
                         <Picker.Item label="1" value="1" />
                         <Picker.Item label="2" value="2" />
                         <Picker.Item label="3" value="3" />
