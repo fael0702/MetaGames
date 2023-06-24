@@ -171,21 +171,18 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
-
   imageContainer: {
     flexDirection: 'row',
     marginBottom: 10,
   },
-
   container: {
-    maxWidth: 500,
-    maxHeight: 700,
+    width: '80%',
+    height: '75%',
     backgroundColor: '#D9D9D9',
     alignItems: 'center',
     justifyContent: 'center',
     opacity: 0.7,
     borderRadius: 5,
-    padding: 50,
   },
 
   inputContainer: {
