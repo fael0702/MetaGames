@@ -2,8 +2,10 @@
 
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image, Picker } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Picker } from '@react-native-picker/picker';
+
 
 const Review = ({ route }) => {
     const navigation = useNavigation();

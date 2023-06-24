@@ -20,7 +20,7 @@ export default function Lista() {
   const navigation = useNavigation();
   const [gameList, setGameList] = useState([]);
   const [detailList, setDetailList] = useState([]);
-  const [visibleCards, setVisibleCards] = useState(6);
+  const [visibleCards, setVisibleCards] = useState(3);
 
   const handleLista = () => {
     navigation.navigate('Home');

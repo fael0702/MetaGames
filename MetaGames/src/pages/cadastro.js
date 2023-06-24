@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { TextInputMask } from 'react-native-masked-text';
 
 const Cadastro = () => {
     const navigation = useNavigation();
@@ -97,7 +98,10 @@ const Cadastro = () => {
                                 color="#000"
                             />
                         </TouchableOpacity>
-                        <View style={styles.senhaForcaContainer}>
+
+                    </View>
+
+                    <View style={styles.senhaForcaContainer}>
                             {senhaForca === 'fraca' && (
                                 <Text style={styles.senhaForcaFraca}>Senha fraca</Text>
                             )}
@@ -107,10 +111,7 @@ const Cadastro = () => {
                             {senhaForca === 'forte' && (
                                 <Text style={styles.senhaForcaForte}>Senha forte</Text>
                             )}
-                        </View>
-
                     </View>
-
 
                     <Text>Confirme sua Senha</Text>
                     <View style={styles.inputContainer}>
@@ -133,14 +134,21 @@ const Cadastro = () => {
                         </TouchableOpacity>
                     </View>
 
-                    <Text>Data de Nascimento</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholderTextColor={'#000'}
-                        secureTextEntry={true}
-                        value={dataNasc}
-                        onChangeText={setDataNasc}
-                    />
+                    <View>
+                        <Text>Data de Nascimento</Text>
+                        <TextInputMask
+                            style={styles.input}
+                            type={'datetime'}
+                            options={{
+                            format: 'DD/MM/YYYY'
+                            }}
+                            value={dataNasc}
+                            onChangeText={setDataNasc}
+                            keyboardType="numeric"
+                            maxLength={10}
+                            placeholder="DD/MM/YYYY"
+                        />
+                    </View>
 
                     <TouchableOpacity style={styles.button} onPress={handleCadastro}>
                         <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
@@ -185,7 +193,8 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginRight: 10,
     },
     inputContainer2: {
         flexDirection: 'row',
@@ -195,7 +204,6 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        flex: 1,
         padding: 4,
         marginTop: 7,
         marginBottom: 12,
@@ -203,8 +211,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderWidth: 2,
         width: 250,
-        height: 40,
-    },
+      },
     iconContainer: {
         marginLeft: -30,
     },
@@ -213,6 +220,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         alignItems: 'center',
         justifyContent: 'center',
+        marginRight: 180,
     },
     senhaForcaFraca: {
         color: 'red',

@@ -53,7 +53,7 @@ const Historico = ({ route }) => {
         style={styles.background}
       >
         <View style={styles.container}>
-          <View style={styles.logoContainer}>
+          {/* <View style={styles.logoContainer}>
             <TouchableOpacity onPress={handleHistorico}>
               <Image
                 source={require('../../assets/logo.png')}
@@ -61,7 +61,7 @@ const Historico = ({ route }) => {
                 resizeMode="contain"
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View style={styles.cardsContainer}>
             {gameList.length > 0 ? (
               <FlatList
@@ -91,9 +91,8 @@ const Historico = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Define um fundo transparente para o container
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    maxwidth: '100%',
   },
   logoContainer: {
     position: 'absolute',
@@ -112,26 +111,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20,
+    paddingBottom: 16,
+    marginTop: 125,
   },
   card: {
-    width: 200,
-    height: 200,
-    backgroundColor: 'white',
-    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 20,
+    padding: 5,
+    margin: 38,
+    height: 151,
+    width: 298,
     justifyContent: 'center',
-    alignItems: 'center',
-    margin: 10,
   },
   gameTitle: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: 'bold',
-    marginBottom: 10,
+    textAlign: 'center',
   },
   cardImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
+    width: 80,
+    height: 80,
+    marginBottom: 8,
+    borderRadius: 20,
   },
   noGameText: {
     fontSize: 16,
