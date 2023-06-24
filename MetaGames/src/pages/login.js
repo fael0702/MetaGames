@@ -7,12 +7,23 @@ import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiGames from "../service/apiGames";
 import { Image } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 WebBrowser.maybeCompleteAuthSession();
 
 const Login = () => {
   const [userInfo, setUserInfo] = React.useState(null);
   const [user, setUser] = React.useState(null);
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
+  const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
+
+  const toggleSenhaVisivel = () => {
+    setSenhaVisivel(!senhaVisivel);
+  };
+
+  const toggleConfirmarSenhaVisivel = () => {
+    setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
+  };
 
   const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
     clientId: "222572750606789"
@@ -109,7 +120,22 @@ const Login = () => {
             <Text style={styles.label}>Username</Text>
             <TextInput style={styles.input} />
             <Text style={styles.label}>Senha</Text>
-            <TextInput style={styles.input} secureTextEntry={true} />
+
+            <View style={styles.inputContainer}>
+              <TextInput style={styles.input} secureTextEntry={true} />
+              <TouchableOpacity
+                style={styles.iconContainer}
+                onPress={toggleConfirmarSenhaVisivel}
+              >
+                <Icon
+                  name={confirmarSenhaVisivel ? 'eye-slash' : 'eye'}
+                  size={20}
+                  color="#000"
+                />
+              </TouchableOpacity>
+
+            </View>
+
           </View>
           <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => {
             navigation.navigate('MainTabs');
@@ -180,6 +206,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     opacity: 0.7,
     borderRadius: 5,
+  },
+
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center'
+  },
+  iconContainer: {
+    marginLeft: -30,
   },
 
   containerRola: {

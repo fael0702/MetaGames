@@ -1,4 +1,4 @@
-  import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
@@ -34,7 +34,7 @@ export default function Lista() {
     });
   };
 
-  const handleNavigate = ({ item }) => {
+  const handleNavigate = (item) => {
     console.log(item);
     navigation.navigate('Review', {
       parametro: {
@@ -44,11 +44,10 @@ export default function Lista() {
       },
     });
   };
-  
 
   const renderGameCard = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.card} onPress={handleNavigate}>
+      <TouchableOpacity style={styles.card} onPress={() => handleNavigate(item)}>
         <Text style={styles.gameTitle}>{item.name}</Text>
         <Image
           source={{ uri: item.background_image }}
