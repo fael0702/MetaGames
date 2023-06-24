@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function Perfil() {
   const navigation = useNavigation();
@@ -40,15 +41,15 @@ export default function Perfil() {
     >
       <View style={styles.container}>
         <Text>IMAGENS</Text>
-
-        <TouchableOpacity onPress={handleImagePicker}>
+        <LinearGradient colors={["#4c669f", "#3b5998", "#192f6a"]} style={styles.perfilctn}>
           <Image
             source={{ uri: image }}
-            style={{ width: 180, height: 180 }}
+            onPress={handleImagePicker}
+            style={styles.perfil}
           ></Image>
+        </LinearGradient>
 
-          
-        </TouchableOpacity>
+        <Button title="Escolha uma foto" onPress={handleImagePicker} />
 
         <StatusBar style="auto" />
       </View>
@@ -69,13 +70,10 @@ const styles = StyleSheet.create({
     left: 10,
   },
   perfilctn: {
-    position: "absolute",
-    top: 45,
-    left: 300,
+    borderRadius: 160 , padding: 10
   },
   perfil: {
-    width: 80,
-    height: 80,
+    width: 240, height: 240,borderRadius: 160,
   },
   logo: {
     width: 100,
