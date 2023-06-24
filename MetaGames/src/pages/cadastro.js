@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
 
   iconContainer: {
-    marginLeft: -30,
+    marginRight: -40,
   },
   inputContainer2: {
     flexDirection: "row",
@@ -200,9 +200,8 @@ const styles = StyleSheet.create({
     width: 250,
   },
 
-  iconContainer: {
-    marginLeft: -10,
-  },
+ 
+
   senhaForcaContainer: {
     width: 100,
     marginLeft: 10,
