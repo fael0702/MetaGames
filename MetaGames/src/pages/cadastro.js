@@ -2,11 +2,12 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Cadastro = () => {
     const navigation = useNavigation();
 
-    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [authPassword, setAuthPassword] = useState('');
     const [dataNasc, setDataNasc] = useState('');
@@ -30,9 +31,8 @@ const Cadastro = () => {
             console.log('Senha forte');
         }
 
-        console.log('Nome:', name);
-        console.log('Senha:', password);
-        console.log('Data de Nascimento:', dataNasc);
+        AsyncStorage.setItem('email', email);
+        AsyncStorage.setItem('password', password);
 
         navigation.navigate('Login');
     };
@@ -71,12 +71,12 @@ const Cadastro = () => {
             <View style={styles.containerRola}>
                 <View style={styles.container}>
                     <Text style={[styles.title, styles.contorno]}>Cadastro</Text>
-                    <Text>Username</Text>
+                    <Text>Email</Text>
                     <TextInput
                         style={styles.input}
                         placeholderTextColor={'#000'}
-                        value={name}
-                        onChangeText={setName}
+                        value={email}
+                        onChangeText={setEmail}
                     />
                     <Text>Senha</Text>
                     <View style={styles.inputContainer}>

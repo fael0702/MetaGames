@@ -62,7 +62,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
-  let logs;
 
   React.useEffect(() => {
     loginGoogle();
@@ -100,8 +99,18 @@ const Login = () => {
     }
   }
 
-  const handleLogin = () => {
-    if (email === '' && password === '') {
+  const handleLogin = async () => {
+    let emailStorage = '';
+    let passwordStorage = '';
+    await AsyncStorage.getItem('email').then((item) => {
+      emailStorage = item;
+    })
+    await AsyncStorage.getItem('password').then((item) => {
+      passwordStorage = item;
+    })
+    console.log(AsyncStorage.getItem('email'));
+    console.log(AsyncStorage.getItem('password'));
+    if (email === emailStorage && password === passwordStorage) {
       navigation.navigate('MainTabs');
     } else {
       alert('E-mail ou senha inválidos!');
@@ -117,12 +126,12 @@ const Login = () => {
         <View style={styles.container}>
           <Text style={[styles.title, styles.contorno]}>Login</Text>
           <View>
-            <Text style={styles.label}>Username</Text>
-            <TextInput style={styles.input} />
+            <Text style={styles.label}>Email</Text>
+            <TextInput style={styles.input} value={email} onChangeText={setEmail}/>
             <Text style={styles.label}>Senha</Text>
 
             <View style={styles.inputContainer}>
-              <TextInput style={styles.input} secureTextEntry={true} />
+              <TextInput style={styles.input} secureTextEntry={true} value={password} onChangeText={setPassword}/>
               <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={toggleConfirmarSenhaVisivel}
@@ -137,9 +146,7 @@ const Login = () => {
             </View>
 
           </View>
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => {
-            navigation.navigate('MainTabs');
-          }}>
+          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={handleLogin}>
             <Text style={[styles.red, styles.contorno]}>Entrar</Text>
           </TouchableOpacity>
 
