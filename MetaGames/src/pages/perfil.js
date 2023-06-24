@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function Perfil() {
   const navigation = useNavigation();
@@ -39,14 +40,18 @@ export default function Perfil() {
       style={styles.background}
     >
       <View style={styles.container}>
-        <Text>IMAGENS</Text>
-
-        <TouchableOpacity onPress={handleImagePicker} >
-          <Image
-            source={{ uri: image }}
-            style={{ width: 180, height: 180 }}
-          />
+        <TouchableOpacity onPress={handleImagePicker}>
+          <LinearGradient
+            colors={["#1B30EB", "white", "#F4C622"]}
+            style={styles.Perfilctn}
+          >
+            <Image source={{ uri: image }} style={styles.imagemPerfil} />
+          </LinearGradient>
         </TouchableOpacity>
+
+        <View style={styles.infoPerfil}>
+          <Text></Text>
+        </View>
 
         <StatusBar style="auto" />
       </View>
@@ -55,6 +60,27 @@ export default function Perfil() {
 }
 
 const styles = StyleSheet.create({
+
+  infoPerfil: {
+    marginTop: 40,
+    width: 300,
+    height: 200,
+    backgroundColor: "#D9D9D9",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0.8,
+    borderRadius: 35,
+  },
+
+  Perfilctn: {
+    width: 280,
+    height: 280,
+    borderRadius: 160,
+    borderColor: "black",
+    borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -66,14 +92,13 @@ const styles = StyleSheet.create({
     top: 35,
     left: 10,
   },
-  perfilctn: {
-    position: "absolute",
-    top: 45,
-    left: 300,
-  },
-  perfil: {
-    width: 80,
-    height: 80,
+
+  imagemPerfil: {
+    width: 250,
+    height: 250,
+    borderRadius: 160,
+    borderWidth: 2,
+    borderColor: "black",
   },
   logo: {
     width: 100,
