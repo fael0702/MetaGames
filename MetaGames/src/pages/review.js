@@ -1,3 +1,5 @@
+
+
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image, Picker } from "react-native";
@@ -10,17 +12,33 @@ const Review = ({ route }) => {
     const [comentario, setComantario] = useState('');
     const [cor, setCor] = useState('#000000');
 
-    const { image, name, rating } = route.params?.parametro || {};
+    const { id, image, name, rating } = route.params?.parametro || {};
 
-    const handleForm = async () => {
-        // await AsyncStorage.setItem('@asyncStorage:notaUser', nota);
-        // await AsyncStorage.setItem('@asyncStorage:comentarioUser', comentario);
-        // await AsyncStorage.setItem('@asyncStorage:gameNameUser', name);
-        // await AsyncStorage.setItem('@asyncStorage:ImageGameUser', image);
-        // let teste = await AsyncStorage.getItem('@asyncStorage:notaUser')
-        // console.log(teste);
-        navigation.navigate('Historico');
-    };
+    const handleNavigate = async () => {
+        const reviewedGame = {
+          id: id,
+          image: image,
+          name: name,
+          rating: nota,
+          comentario: comentario,
+        };
+      
+        try {
+          const storedGames = await AsyncStorage.getItem('reviewedGames');
+          let gameList = [];
+          if (storedGames) {
+            gameList = JSON.parse(storedGames);
+          }
+          gameList.push(reviewedGame);
+          await AsyncStorage.setItem('reviewedGames', JSON.stringify(gameList));
+          navigation.navigate('Historico', {
+            parametro: reviewedGame,
+          });
+        } catch (error) {
+          console.log('Erro ao salvar jogo revisado:', error);
+        }
+      };
+      
 
     const handlePickerChange = (itemValue) => {
         setNota(itemValue);
@@ -75,7 +93,7 @@ const Review = ({ route }) => {
                         </View>
                     )}
 
-                    <TouchableOpacity style={styles.button} onPress={handleForm}>
+                    <TouchableOpacity style={styles.button} onPress={handleNavigate}>
                         <Text style={[styles.red, styles.contorno]}>Enviar</Text>
                     </TouchableOpacity>
                 </View>
