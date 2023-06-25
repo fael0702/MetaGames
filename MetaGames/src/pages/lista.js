@@ -81,15 +81,15 @@ export default function Lista() {
         <View style={styles.container}>
           <View style={styles.logoContainer}>
             <TouchableOpacity onPress={handleLista}>
-              <Image
+              {/* <Image
                 source={require('../../assets/logo.png')}
                 style={styles.logo}
                 resizeMode="contain"
-              />
+              /> */}
             </TouchableOpacity>
           </View>
           <View style={styles.cardsContainer}>
-            
+
             <FlatList
               data={visibleGameList}
               renderItem={renderGameCard}
@@ -97,10 +97,12 @@ export default function Lista() {
             />
             {visibleCards < gameList.length && (
               <TouchableOpacity
-                style={styles.showMoreButton}
                 onPress={handleShowMore}
               >
-                <Text style={styles.showMoreButtonText}>Mostrar Mais</Text>
+                <Image
+                  source={require('../../assets/mostrarMais.svg')}
+                  style={styles.mostrarMais}
+                />
               </TouchableOpacity>
             )}
           </View>
@@ -160,16 +162,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderRadius: 20,
   },
-  showMoreButton: {
-    backgroundColor: '#FFF',
-    borderRadius: 20,
-    padding: 10,
-    margin: 8,
-    alignItems: 'center',
-  },
-  showMoreButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  mostrarMais: {
+    width: 50,
+    height: 50,
+  }
 });
-
