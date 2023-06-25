@@ -23,21 +23,27 @@ const Historico = ({ route }) => {
   )
 
   useEffect(() => {
+    storageReview();
+  }, []);  
+
+  const storageReview = () => {
     AsyncStorage.getItem('reviewedGames').then(reviewedGames => {
       if (reviewedGames) {
         setGameList(prevGameList => [...prevGameList, ...JSON.parse(reviewedGames)]);
       }
     });
-  }, []);  
+  }
 
   const renderGameCard = ({ item }) => {
     return (
       <TouchableOpacity style={styles.card}>
         <Text style={styles.gameTitle}>{item?.name}</Text>
+        <Text>{item?.rating}</Text>
         <Image
           source={{ uri: item?.image }}
           style={styles.cardImage}
         />
+        <Text>{item?.comentario}</Text>
       </TouchableOpacity>
     );
   };

@@ -12,6 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import apiGames from "../service/apiGames";
 import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -23,7 +24,16 @@ export default function Home() {
 
   useEffect(() => {
     loadingGames();
+    storageReview();
   }, []);
+
+  const storageReview = () => {
+    AsyncStorage.getItem('reviewedGames').then(reviewedGames => {
+      if (reviewedGames) {
+        setGameList(prevGameList => [...prevGameList, ...JSON.parse(reviewedGames)]);
+      }
+    });
+  }
 
   async function loadingGames() {
     if (loading) return;
