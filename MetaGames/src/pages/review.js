@@ -1,9 +1,9 @@
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
-import { HeaderBackButton } from "@react-navigation/stack";
 
 const Review = ({ route, navigation }) => {
   const [nota, setNota] = useState('');
@@ -12,16 +12,9 @@ const Review = ({ route, navigation }) => {
 
   const { id, image, name, rating } = route.params?.parametro || {};
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <HeaderBackButton
-          onPress={() => navigation.goBack()}
-          tintColor="#FAFF19"
-        />
-      ),
-    });
-  }, [navigation]);
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
 
   const handleNavigate = async () => {
     const reviewedGame = {
@@ -58,12 +51,19 @@ const Review = ({ route, navigation }) => {
       source={require('../../assets/FundoMetaGames.png')}
       style={styles.background}
     >
+
       <View style={styles.containerRola}>
         <View style={styles.container}>
+          <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+            <Image
+              source={require('../../assets/voltar.png')}
+              style={styles.voltar}
+            />
+          </TouchableOpacity>
           <View>
             {image && <Image source={{ uri: image }} style={styles.gameImage} />}
             <Text style={styles.gameName}>{name}</Text>
-            <Text style={styles.gameRating}>Rating: {rating}</Text>
+            <Text style={styles.gameRating}>Metacritic: {rating}</Text>
           </View>
           <TextInput
             style={[styles.input, styles.multilineInput]}
@@ -94,7 +94,7 @@ const Review = ({ route, navigation }) => {
             <Picker.Item label="10" value="10" />
           </Picker>
 
-          {nota !== "Nota..." && (
+          {nota && (
             <View style={[styles.textView, { backgroundColor: cor }]}>
               <Text style={styles.textNota}>{`${nota}`}</Text>
             </View>
@@ -214,6 +214,16 @@ const styles = StyleSheet.create({
     width: 100,
     textAlign: "center",
   },
+  backButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 1,
+  },
+  voltar: {
+    width: 50,
+    height: 50,
+  }
 });
 
 export default Review;

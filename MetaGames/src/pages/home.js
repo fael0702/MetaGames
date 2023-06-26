@@ -44,7 +44,7 @@ export default function Home() {
       parametro: {
         image: item?.background_image,
         name: item?.name,
-        rating: item?.rating,
+        rating: item?.metacritic,
       },
     });
   };

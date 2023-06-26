@@ -34,12 +34,22 @@ export default function Perfil() {
     }
   };
 
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <ImageBackground
       source={require("../../assets/FundoMetaGames.png")}
       style={styles.background}
     >
       <View style={styles.container}>
+      <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+            <Image
+              source={require('../../assets/voltar.png')}
+              style={styles.voltar}
+            />
+          </TouchableOpacity>
         <TouchableOpacity onPress={handleImagePicker}>
           <LinearGradient
             colors={["#1B30EB", "white", "#F4C622"]}
@@ -108,4 +118,15 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
   },
+  backButton: {
+    position: 'absolute',
+    top: 35
+    ,
+    left: 20,
+    zIndex: 1,
+  },
+  voltar: {
+    width: 50,
+    height: 50,
+  }
 });
