@@ -19,21 +19,26 @@ export default function Home() {
   const handleHome = () => navigation.navigate("Home");
   const handlePerfil = () => navigation.navigate("Perfil");
   const [jogosDisp, setJogosDisp] = useState([]);
+  const [gameList, setGameList] = useState([]);
   const [visible, setVisible] = useState(3);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadingGames();
-    storageReview();
-  }, []);
-
-  const storageReview = () => {
-    AsyncStorage.getItem('reviewedGames').then(reviewedGames => {
+    AsyncStorage.getItem("reviewedGames").then((reviewedGames) => {
       if (reviewedGames) {
-        setGameList(prevGameList => [...prevGameList, ...JSON.parse(reviewedGames)]);
+        setGameList([...JSON.parse(reviewedGames)]);
       }
     });
-  }
+  }, []);
+
+  const handleRefresh = () => {
+    AsyncStorage.getItem("reviewedGames").then((reviewedGames) => {
+      if (reviewedGames) {
+        setGameList([...JSON.parse(reviewedGames)]);
+      }
+    });
+  };
 
   async function loadingGames() {
     if (loading) return;
@@ -54,7 +59,7 @@ export default function Home() {
       parametro: {
         image: item?.background_image,
         name: item?.name,
-        rating: item?.rating,
+        rating: item?.metacritic,
       },
     });
   };
@@ -67,13 +72,25 @@ export default function Home() {
       >
         <Image
           source={{ uri: item.background_image }}
-          style={styles.imagemGame}
+          style={styles.imagemGameDisp}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const jogosAvaliados = ({ item }) => {
+    return (
+      <TouchableOpacity style={styles.card}>
+        <Image 
+          source={{ uri: item?.image }} 
+          style={styles.imagemGameAv} 
         />
       </TouchableOpacity>
     );
   };
 
   const visibleJogosDisp = jogosDisp.slice(0, visible);
+  const visibleAvaliados = [...gameList.slice(0, visible)].reverse();
 
   return (
     <ImageBackground
@@ -102,17 +119,26 @@ export default function Home() {
               horizontal={true}
               data={visibleJogosDisp}
               renderItem={JogosDisponiveis}
-              keyExtractor={(item) => item.id.toString()}
               onEndReached={loadingGames}
               onEndReachedThreshold={0.1}
             />
           </View>
         </View>
 
-        <View style={styles.jogosAvaliados}>
+        <View style={styles.jogosDisp}>
           <Text style={[styles.title, styles.contorno]}>Jogos Avaliados</Text>
           <View style={styles.dividerContainer}>
             <View style={styles.dividerLine}></View>
+          </View>
+
+          <View style={styles.cardsContainer}>
+            <FlatList
+              horizontal={true}
+              data={visibleAvaliados}
+              renderItem={jogosAvaliados}
+              onEndReached={loadingGames}
+              onEndReachedThreshold={0.1}
+            />
           </View>
         </View>
 
@@ -206,11 +232,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  imagemGame: {
+  imagemGameDisp: {
     width: 120,
     height: 120,
     marginRight: 8,
     borderWidth: 5,
     borderColor: "black",
+  },
+
+  imagemGameAv: {
+    width: 120,
+    height: 120,
+    marginRight: 8,
+    borderWidth: 5,
+    borderColor: "green",
   },
 });

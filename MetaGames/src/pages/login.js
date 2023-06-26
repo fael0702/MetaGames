@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiGames from "../service/apiGames";
 import { Image } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -154,14 +155,12 @@ const Login = () => {
 
           <View style={styles.imageContainer}>
             <TouchableOpacity disabled={!request2} style={[styles.red, styles.contorno]} onPress={() => handlePressAsync()}>
-              <Image
-                source={require('../../assets/LoginComFacebook.png')}
-              />
+              <FontAwesome5 name="facebook" size={47} color="#00f" />
             </TouchableOpacity>
+
             <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
-              <Image
-                source={require('../../assets/LoginComGoogle.png')}
-              />
+              <FontAwesome name="google" size={50} color="#f00" />
+
             </TouchableOpacity>
           </View>
         </View>
