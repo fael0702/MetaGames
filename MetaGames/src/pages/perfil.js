@@ -12,11 +12,10 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Perfil() {
   const navigation = useNavigation();
-  const handleHome = () => navigation.navigate("Home");
-  const handlePerfil = () => navigation.navigate("Perfil");
   const [image, setImage] = useState(
     "https://cdn-icons-png.flaticon.com/512/5953/5953527.png"
   );
