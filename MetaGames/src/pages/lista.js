@@ -1,5 +1,3 @@
-
-
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import {
@@ -12,6 +10,7 @@ import {
   FlatList,
   ScrollView,
   SafeAreaView,
+  TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import apiGames from '../service/apiGames';
@@ -20,7 +19,8 @@ export default function Lista() {
   const navigation = useNavigation();
   const [gameList, setGameList] = useState([]);
   const [detailList, setDetailList] = useState([]);
-  const [visibleCards, setVisibleCards] = useState(6);
+  const [visibleCards, setVisibleCards] = useState(3);
+  const [searchText, setSearchText] = useState('');
 
   const handleLista = () => {
     navigation.navigate('Home');
@@ -28,14 +28,7 @@ export default function Lista() {
 
   useEffect(() => {
     getGamesList();
-    // getDetail();
   }, []);
-
-  // const getDetail = (id) => {
-  //   apiGames.getDetails(id).then((resp) => {
-  //     setDetailList(resp.data.results);
-  //   });
-  // };
 
   const getGamesList = () => {
     apiGames.getAllGames.then((resp) => {
@@ -49,22 +42,50 @@ export default function Lista() {
         id: item?.id,
         image: item?.background_image,
         name: item?.name,
-        rating: item?.rating,
+        rating: item?.metacritic,
+        genres: item?.genres,
       },
     });
   };
 
+  const filteredGameList = gameList.filter((item) =>
+    item.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   const renderGameCard = ({ item }) => {
+    const genresToDisplay = item.genres.slice(0, 3); // Limita a exibição a 3 gêneros
+  
     return (
       <TouchableOpacity style={styles.card} onPress={() => handleNavigate(item)}>
-        <Text style={styles.gameTitle}>{item.name}</Text>
-        <Image
-          source={{ uri: item.background_image }}
-          style={styles.cardImage}
-        />
+        <View style={styles.cardContent}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={{ uri: item.background_image }}
+              style={styles.cardImage}
+            />
+          </View>
+          <View style={styles.detailsContainer}>
+            <Text style={styles.gameTitle}>{item.name}</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.genresContainer}
+            >
+              {genresToDisplay.map((genre) => (
+                <Text key={genre.id} style={styles.genreText}>
+                  {genre.name}
+                </Text>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
       </TouchableOpacity>
     );
   };
+  
+  
+  
+
 
   const handleShowMore = () => {
     setVisibleCards((prevVisibleCards) => prevVisibleCards + 6);
@@ -81,29 +102,38 @@ export default function Lista() {
         <View style={styles.container}>
           <View style={styles.logoContainer}>
             <TouchableOpacity onPress={handleLista}>
-              <Image
+              {/* <Image
                 source={require('../../assets/logo.png')}
                 style={styles.logo}
                 resizeMode="contain"
-              />
+              /> */}
             </TouchableOpacity>
           </View>
           <View style={styles.cardsContainer}>
-            
+            <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Digite o nome do jogo"
+                value={searchText}
+                onChangeText={setSearchText}
+              />
+            </View>
+
             <FlatList
-              data={visibleGameList}
+              data={filteredGameList}
               renderItem={renderGameCard}
               keyExtractor={(item) => item.id.toString()}
             />
-            {visibleCards < gameList.length && (
-              <TouchableOpacity
-                style={styles.showMoreButton}
-                onPress={handleShowMore}
-              >
-                <Text style={styles.showMoreButtonText}>Mostrar Mais</Text>
+            {/* {visibleCards < filteredGameList.length && (
+              <TouchableOpacity onPress={handleShowMore}>
+                <Image
+                  source={require('../../assets/mostrarMais.png')}
+                  style={styles.mostrarMais}
+                />
               </TouchableOpacity>
-            )}
+            )} */}
           </View>
+
         </View>
         <StatusBar style="auto" />
       </ImageBackground>
@@ -138,7 +168,7 @@ const styles = StyleSheet.create({
     marginTop: 125,
   },
   gameTitle: {
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -152,24 +182,57 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cardContent: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
   cardImage: {
     width: 80,
     height: 80,
-    marginBottom: 8,
     borderRadius: 20,
+    marginRight: 8,
   },
-  showMoreButton: {
+  detailsContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  genresContainer: {
+    flexDirection: 'row',
+    marginTop: 8,
+    height: 25,
+    justifyContent: 'center'
+  },
+  genreText: {
+    fontSize: 12,
+    marginLeft: 4,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 10,
+    marginBottom: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  
+  
+  mostrarMais: {
+    width: 50,
+    height: 50,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+    width: '85%',
+  },
+  searchInput: {
+    flex: 1,
     backgroundColor: '#FFF',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     borderRadius: 20,
-    padding: 10,
-    margin: 8,
-    alignItems: 'center',
-  },
-  showMoreButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+    marginRight: 10,
+  }
 });
-

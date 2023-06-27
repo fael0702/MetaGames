@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,102 +8,95 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  ScrollView,
   SafeAreaView,
+  TextInput,
 } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Historico = ({ route }) => {
   const navigation = useNavigation();
   const [gameList, setGameList] = useState([]);
-  const [visibleCards, setVisibleCards] = useState(3);
-  const handleHistorico = () => (
-    navigation.navigate("Home")
-  )
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    AsyncStorage.getItem('reviewedGames').then(reviewedGames => {
+    AsyncStorage.getItem('reviewedGames').then((reviewedGames) => {
       if (reviewedGames) {
-        setGameList(prevGameList => [...prevGameList, ...JSON.parse(reviewedGames)]);
+        setGameList([...JSON.parse(reviewedGames)]);
       }
     });
-  }, []);  
+  }, []);
+
+  const handleDelete = (item) => {
+    const updatedGameList = gameList.filter((game) => game.id !== item.id);
+    setGameList(updatedGameList);
+    AsyncStorage.setItem('reviewedGames', JSON.stringify(updatedGameList));
+  };
+
+  const handleRefresh = () => {
+    AsyncStorage.getItem('reviewedGames').then((reviewedGames) => {
+      if (reviewedGames) {
+        setGameList([...JSON.parse(reviewedGames)]);
+      }
+    });
+  };
 
   const renderGameCard = ({ item }) => {
     return (
       <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item)}>
+          <Text style={styles.deleteButtonText}>Excluir</Text>
+        </TouchableOpacity>
         <Text style={styles.gameTitle}>{item?.name}</Text>
-        <Image
-          source={{ uri: item?.image }}
-          style={styles.cardImage}
-        />
+        <Image source={{ uri: item?.image }} style={styles.cardImage} />
+        <Text style={styles.gameTitle}>{item?.rating}</Text>
+        <Text style={styles.gameTitle}>{item?.comentario}</Text>
       </TouchableOpacity>
     );
   };
 
-  const handleShowMore = () => {
-    setVisibleCards(prevVisibleCards => prevVisibleCards + 3);
-  };
+  const filteredGameList = [...gameList]
+  .reverse()
+  .filter((item) => {
+    const gameName = item?.name?.toLowerCase() || '';
+    const searchTextLower = searchText.toLowerCase();
+    return gameName.includes(searchTextLower);
+  });
 
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground
-        source={require('../../assets/FundoMetaGames.png')}
-        style={styles.background}
-      >
+      <ImageBackground source={require('../../assets/FundoMetaGames.png')} style={styles.background}>
         <View style={styles.container}>
-          <View style={styles.logoContainer}>
-            <TouchableOpacity onPress={handleHistorico}>
-              <Image
-                source={require('../../assets/logo.png')}
-                style={styles.logo}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          </View>
           <View style={styles.cardsContainer}>
-            {gameList.length > 0 ? (
-              <FlatList
-                data={gameList}
-                renderItem={renderGameCard}
-                keyExtractor={item => item.id.toString()}
+            <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Digite o nome do jogo"
+                value={searchText}
+                onChangeText={setSearchText}
               />
-            ) : (
-              <Text style={styles.noGameText}>Nenhum jogo encontrado</Text>
-            )}
-            {/* {visibleCards < gameList.length && (
-              <TouchableOpacity
-                style={styles.showMoreButton}
-                onPress={handleShowMore}
-              >
-                <Text style={styles.showMoreButtonText}>Mostrar Mais</Text>
-              </TouchableOpacity>
-            )} */}
+            </View>
+            <FlatList
+              data={filteredGameList}
+              renderItem={renderGameCard}
+              keyExtractor={(item) => item.id}
+            />
+            <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+              <Text style={styles.refreshButtonText}>Atualizar</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <StatusBar style="auto" />
       </ImageBackground>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Define um fundo transparente para o container
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logoContainer: {
-    position: 'absolute',
-    top: 35,
-    left: 10,
-  },
-  logo: {
-    width: 100,
-    height: 100,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    maxWidth: '100%',
   },
   background: {
     flex: 1,
@@ -112,30 +106,67 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20,
+    paddingBottom: 16,
+    marginTop: 125,
   },
   card: {
-    width: 200,
-    height: 200,
-    backgroundColor: 'white',
-    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 20,
+    padding: 5,
+    margin: 15,
+    height: 151,
+    width: 298,
     justifyContent: 'center',
-    alignItems: 'center',
-    margin: 10,
+    position: 'relative',
   },
   gameTitle: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: 'bold',
-    marginBottom: 10,
+    textAlign: 'center',
   },
   cardImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
+    width: 80,
+    height: 80,
+    marginBottom: 8,
+    borderRadius: 20,
   },
-  noGameText: {
-    fontSize: 16,
+  searchContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+    width: '85%',
+  },
+  searchInput: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  deleteButton: {
+    position: 'absolute',
+    bottom: 5,
+    right: 5,
+    backgroundColor: 'red',
+    padding: 5,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
     color: 'white',
+    fontWeight: 'bold',
+    height: 20,
+  },
+  refreshButton: {
+    backgroundColor: '#333',
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 40
+  },
+  refreshButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiGames from "../service/apiGames";
 import { Image } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -46,8 +47,7 @@ const Login = () => {
     if (result.type !== "success") {
       alert("Uh oh, something went wrong");
       return;
-    }
-    else {
+    } else {
       navigation.navigate('MainTabs');
     }
   };
@@ -131,18 +131,17 @@ const Login = () => {
             <Text style={styles.label}>Senha</Text>
 
             <View style={styles.inputContainer}>
-              <TextInput style={styles.input} secureTextEntry={true} value={password} onChangeText={setPassword}/>
+              <TextInput style={styles.input} secureTextEntry={!senhaVisivel} value={password} onChangeText={setPassword}/>
               <TouchableOpacity
                 style={styles.iconContainer}
-                onPress={toggleConfirmarSenhaVisivel}
+                onPress={toggleSenhaVisivel}
               >
                 <Icon
-                  name={confirmarSenhaVisivel ? 'eye-slash' : 'eye'}
+                  name={senhaVisivel ? 'eye-slash' : 'eye'}
                   size={20}
                   color="#000"
                 />
               </TouchableOpacity>
-
             </View>
 
           </View>
@@ -163,42 +162,19 @@ const Login = () => {
 
           <View style={styles.imageContainer}>
             <TouchableOpacity disabled={!request2} style={[styles.red, styles.contorno]} onPress={() => handlePressAsync()}>
-              <Image
-                source={require('../../assets/LoginComFacebook.png')}
-              />
+              <FontAwesome5 name="facebook" size={47} color="#00f" />
             </TouchableOpacity>
+
             <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
-              <Image
-                source={require('../../assets/LoginComGoogle.png')}
-              />
+              <FontAwesome name="google" size={50} color="#f00" />
+
             </TouchableOpacity>
           </View>
-
-
-          {/* <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => AsyncStorage.removeItem("@user")}>
-            <Text style={[styles.red, styles.contorno]}>Deletar local storage</Text>
-          </TouchableOpacity>
-          <Text>{JSON.stringify(userInfo)}</Text>
-          <Text>{logs}</Text>
-          <Text>{logs}</Text>
-          {user ? (
-            <Profile user={user} />
-          ) : ("")} */}
         </View>
       </View>
     </ImageBackground>
   );
 };
-
-function Profile({ user }) {
-  return (
-    <View style={styles.profile}>
-      <Image source={{ uri: user.picture.data.url }} style={styles.image} />
-      <Text style={styles.name}>{user.name}</Text>
-      <Text>ID: {user.id}</Text>
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   imageContainer: {
@@ -218,7 +194,8 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginRight: 10,
   },
   iconContainer: {
     marginLeft: -30,
