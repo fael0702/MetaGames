@@ -27,13 +27,25 @@ const Login = () => {
     setSenhaVisivel(!senhaVisivel);
   };
 
+  useEffect(() => {
+    if (response2 && response2.type === "success" && response2.authentication) {
+      (async () => {
+        const userInfoResponse = await fetch(
+          `https://graph.facebook.com/me?access_token=${response2.authentication.accessToken}&fields=id,name,picture.type(large)`
+        );
+        const userInfo = await userInfoResponse.json();
+        setUser(userInfo);
+      })();
+    }
+  }, [response2]);
+
   const toggleConfirmarSenhaVisivel = () => {
     setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
   };
 
   const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
-    clientId: "222572750606789",
-  });
+    clientId: "222572750606789"
+  })
 
   const handlePressAsync = async () => {
     const result = await promptAsync2();

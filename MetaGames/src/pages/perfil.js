@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -19,6 +19,18 @@ export default function Perfil() {
   const [image, setImage] = useState(
     "https://cdn-icons-png.flaticon.com/512/5953/5953527.png"
   );
+  const [ nome , setNome ] = useState()
+
+  useEffect(() => {
+    handleUsuario();
+  }, []);
+
+  const handleUsuario = async () => {
+    const usuarioString = await AsyncStorage.getItem("usuario");
+    const usuario = JSON.parse(usuarioString);
+
+    setNome(usuario.name)
+  };
 
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -43,12 +55,12 @@ export default function Perfil() {
       style={styles.background}
     >
       <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-            <Image
-              source={require('../../assets/voltar.png')}
-              style={styles.voltar}
-            />
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+          <Image
+            source={require('../../assets/voltar.png')}
+            style={styles.voltar}
+          />
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleImagePicker}>
           <LinearGradient
             colors={["#1B30EB", "white", "#F4C622"]}
@@ -59,7 +71,7 @@ export default function Perfil() {
         </TouchableOpacity>
 
         <View style={styles.infoPerfil}>
-          <Text></Text>
+          <Text style={[styles.title , styles.contorno]}>{nome}</Text>
         </View>
 
         <StatusBar style="auto" />
@@ -69,7 +81,15 @@ export default function Perfil() {
 }
 
 const styles = StyleSheet.create({
-
+  contorno: {
+    textShadowColor: "#000000",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 2,
+  },
+  title: {
+    color: "#FAFF19",
+    fontSize: 22,
+  },
   infoPerfil: {
     marginTop: 40,
     width: 300,
@@ -119,8 +139,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 35
-    ,
+    top: 35,
     left: 20,
     zIndex: 1,
   },
