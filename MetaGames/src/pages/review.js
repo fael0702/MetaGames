@@ -36,6 +36,9 @@ const Review = ({ route, navigation }) => {
       navigation.navigate('Historico', {
         parametro: reviewedGame,
       });
+      navigation.navigate('Home',{
+        parametro: reviewedGame,
+      });
     } catch (error) {
       console.log('Erro ao salvar jogo revisado:', error);
     }

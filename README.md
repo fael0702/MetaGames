@@ -2,6 +2,8 @@
 🎮 MetaGames  🎮
 </h1>
 
+
+
 ##Colocar imagens e videos do projeto
 
 <h3 align="center">
@@ -20,6 +22,14 @@ O App é composto por (NUMERO DE SEÇÕES) seções:
 - **Perfil:** Tela para usuário alterar informações pessoais e configurações;
  
 ---
+
+## ▶️ Iniciar Projeto
+```html
+<p>texto</p>
+```
+```js
+
+```
 
 ## 📱 Tecnologias utilizadas
 
