@@ -1,11 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
-import { BaseEntityDatas } from "../bases/baseEntityDatas"
+import { Entity, Column } from "typeorm"
+import { BaseEntityColumns } from "../bases/baseEntityColumns"
 
 @Entity()
-export class Jogo extends BaseEntityDatas {
-
-    @PrimaryGeneratedColumn()
-    id: number
+export class Jogo extends BaseEntityColumns {
 
     @Column()
     nome: string

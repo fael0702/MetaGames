@@ -1,20 +1,29 @@
-import { AppDataSource } from "./data-source"
-import { Usuario } from "./entities/Usuario"
+import express from 'express';
+import { AppDataSource } from './data-source';
+import Rotas from './projeto/rotas';
 
-AppDataSource.initialize().then(async () => {
+const iniciarServidor = async () => {
+  try {
+    // conexão com o banco de dados
+    await AppDataSource.initialize();
+    console.log('Conectado ao banco de dados');
 
-    // console.log("Inserting a new user into the database...")
-    // const user = new Usuario()
-    // user.firstName = "Timber"
-    // user.lastName = "Saw"
-    // user.age = 25
-    // await AppDataSource.manager.save(user)
-    // console.log("Saved a new user with id: " + user.id)
+    const app = express();
+    app.use(express.json());
 
-    // console.log("Loading users from the database...")
-    // const users = await AppDataSource.manager.find(User)
-    // console.log("Loaded users: ", users)
+    // instância de Rotas e configurar as rotas
+    const rotasDoProjeto = new Rotas(app);
+    rotasDoProjeto.configurarRotas();
 
-    // console.log("Here you can setup and run express / fastify / any other framework.")
+    // iniciar o servidor
+    const porta = process.env.PORT || 3000;
+    app.listen(porta, () => {
+      console.log(`Servidor rodando na porta ${porta}`);
+    });
+  } catch (error) {
+    console.log('Erro ao conectar no banco de dados: ');
+    console.error(error);
+  }
+};
 
-}).catch(error => console.log(error))
+iniciarServidor();

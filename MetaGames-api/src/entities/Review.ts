@@ -1,16 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm"
-import { BaseEntityDatas } from "../bases/baseEntityDatas"
+import { Entity, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm"
+import { BaseEntityColumns } from "../bases/baseEntityColumns"
 import { Usuario } from "./Usuario"
 import { Jogo } from "./Jogo"
 
 @Entity()
-export class Review extends BaseEntityDatas {
-
-    @PrimaryGeneratedColumn()
-    id: number
+export class Review extends BaseEntityColumns {
 
     @Column()
     comentario: string
+
+    @Column()
+    background_image: string
 
     @Column({ type: 'decimal', precision: 5, scale: 1 })
     nota: number

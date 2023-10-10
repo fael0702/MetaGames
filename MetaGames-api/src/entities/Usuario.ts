@@ -1,12 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
-import { BaseEntityDatas } from "../bases/baseEntityDatas"
+import { Entity, Column, OneToMany } from "typeorm"
+import { BaseEntityColumns } from "../bases/baseEntityColumns"
 import { Review } from "./Review"
 
 @Entity()
-export class Usuario extends BaseEntityDatas {
-
-    @PrimaryGeneratedColumn()
-    id: number
+export class Usuario extends BaseEntityColumns {
 
     @Column()
     nome: string
