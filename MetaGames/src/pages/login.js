@@ -5,7 +5,6 @@ import * as WebBrowser from "expo-web-browser";
 import * as Facebook from 'expo-auth-session/providers/facebook'
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiGames from "../service/apiGames";
 import { Image } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
@@ -27,7 +26,7 @@ const Login = () => {
   };
 
   const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
-    clientId: "222572750606789"
+    clientId: process.env.CLIENT_ID
   })
 
   useEffect(() => {
@@ -53,10 +52,10 @@ const Login = () => {
   };
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: "70917160074-s1qriiq7gculsok7vjpvpedhfpcrblvi.apps.googleusercontent.com",
-    webClientId: "70917160074-5nlm5o251q9epbncq4geqegolcr23ud8.apps.googleusercontent.com",
-    expoClientId: "70917160074-frph8sskggdpenhrfsd44jivgi34u3h1.apps.googleusercontent.com",
-    redirectUri: "https://auth.expo.io/@gabriel_caldeira/MetaGames",
+    androidClientId: process.env.ANDROID_CLIENT_ID,
+    webClientId: process.env.WEB_CLIENT_ID,
+    expoClientId: process.env.EXPO_CLIENT_ID,
+    redirectUri: process.env.REDIRECT_URI,
   });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

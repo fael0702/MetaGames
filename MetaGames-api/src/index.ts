@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { AppDataSource } from './data-source';
 import Rotas from './projeto/rotas';
 
@@ -10,6 +11,7 @@ const iniciarServidor = async () => {
 
     const app = express();
     app.use(express.json());
+    app.use(cors());
 
     // instância de Rotas e configurar as rotas
     const rotasDoProjeto = new Rotas(app);

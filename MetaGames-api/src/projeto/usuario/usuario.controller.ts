@@ -19,9 +19,10 @@ class usuarioController {
     try {
       const email = req.body.email;
       const nome = req.body.nome;
+      const data = new Date(req.body.dataNasc);
       const senha = await bcrypt.hash(req.body.senha, 10);
 
-      await usuarioService.criarUsuario(email, nome, senha);
+      await usuarioService.criarUsuario(email, nome, senha, data);
 
       return res.status(200).json({ message: 'Usuario cadastrado com sucesso' });
     } catch (error) {

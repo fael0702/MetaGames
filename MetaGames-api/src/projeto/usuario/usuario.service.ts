@@ -10,12 +10,13 @@ class usuarioService {
         return usuario;
     }
 
-    public async criarUsuario(email: string, nome: string, senha: string) {
+    public async criarUsuario(email: string, nome: string, senha: string, data: Date) {
         let usuario = new Usuario();
 
         usuario.email = email;
         usuario.nome = nome;
         usuario.senha = senha;
+        usuario.data_nascimento = data;
 
         usuarioRepositorio.salvar(usuario);
     }

@@ -14,6 +14,9 @@ export class Usuario extends BaseEntityColumns {
     @Column()
     senha: string
 
+    @Column()
+    data_nascimento: Date
+
     @OneToMany(type => Review, type => type.usuario)
     reviews: Review[]
 

@@ -13,7 +13,7 @@ import {
   TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import apiGames from '../service/apiGames';
+import apiGames from '../services/apiGames';
 
 export default function Lista() {
   const navigation = useNavigation();

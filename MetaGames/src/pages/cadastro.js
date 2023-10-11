@@ -11,10 +11,12 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { TextInputMask } from "react-native-masked-text";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "../services/api";
 
 const Cadastro = () => {
   const navigation = useNavigation();
 
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [authPassword, setAuthPassword] = useState("");
@@ -39,23 +41,55 @@ const Cadastro = () => {
       console.log("Senha forte");
     }
 
-        AsyncStorage.setItem('email', email);
-        AsyncStorage.setItem('password', password);
-
-    const usuario = {
-      name,
-      password,
-      dataNasc,
-    };
+    AsyncStorage.setItem('email', email);
+    AsyncStorage.setItem('password', password);
 
     try {
-      await AsyncStorage.setItem("usuario", JSON.stringify(usuario));
+      if (dataValida(dataNasc)) {
+        console.log(dataNasc)
+        const dataConvertida = converterDataSql(dataNasc);
+        console.log(dataConvertida)
+        await api.cadastro(name, email, password, dataConvertida);
+        navigation.navigate("Login");
+      } else {
+        throw new Error('Insira uma data valida');
+      }
     } catch (error) {
-      console.log("Erro ao salvar os dados:", error);
+      console.log("Erro ao salvar os dados: ", error);
     }
 
-    navigation.navigate("Login");
   };
+
+  function dataValida(data) {
+    const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+  
+    if (!dateRegex.test(data)) {
+      return false;
+    }
+  
+    const parts = data.split('/');
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+  
+    const dateObject = new Date(year, month - 1, day);
+  
+    return (
+      dateObject.getFullYear() === year &&
+      dateObject.getMonth() === month - 1 &&
+      dateObject.getDate() === day
+    );
+  }
+
+  function converterDataSql(data) {
+    const partes = data.split('/');
+  
+    const dd = partes[0];
+    const mm = partes[1];
+    const yyyy = partes[2];
+  
+    return `${mm}-${dd}-${yyyy}`;
+  }
 
   const toggleSenhaVisivel = () => {
     setSenhaVisivel(!senhaVisivel);
@@ -98,6 +132,13 @@ const Cadastro = () => {
             placeholderTextColor={"#000"}
             value={name}
             onChangeText={setName}
+          />
+          <Text>Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholderTextColor={"#000"}
+            value={email}
+            onChangeText={setEmail}
           />
           <Text>Senha</Text>
           <View style={styles.inputContainer}>
