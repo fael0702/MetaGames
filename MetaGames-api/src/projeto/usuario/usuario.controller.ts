@@ -1,35 +1,39 @@
 import { Response, Request } from 'express';
-import usuarioService from './usuario.service';
-const bcrypt = require('bcrypt');
+import UsuarioService from './usuario.service';
+import * as bcrypt from 'bcrypt';
 
-class usuarioController {
+export default class UsuarioController {
+  private usuarioService: UsuarioService;
 
-  public async buscarPorId(req: Request, res: Response) {
+  constructor() {
+    this.usuarioService = new UsuarioService();
+  }
+
+  public buscarPorId = async (req: Request, res: Response) => {
     try {
       const id = +req.params.id;
-      const usuario = await usuarioService.buscarPorId(id);
-      
+      const usuario = await this.usuarioService.buscarPorId(id);
       return res.status(200).json(usuario);
     } catch (error) {
       console.error(error);
+      return res.status(500).json({ message: 'Erro ao buscar usuário por ID' });
     }
   }
 
-  public async criarUsuario(req: Request, res: Response) {
+  public criarUsuario = async (req: Request, res: Response) => {
     try {
       const email = req.body.email;
       const nome = req.body.nome;
-      const data = new Date(req.body.dataNasc);
+      const dataNasc = new Date(req.body.dataNasc);
       const senha = await bcrypt.hash(req.body.senha, 10);
 
-      await usuarioService.criarUsuario(email, nome, senha, data);
+      await this.usuarioService.criarUsuario(email, nome, senha, dataNasc);
 
-      return res.status(200).json({ message: 'Usuario cadastrado com sucesso' });
+      return res.status(200).json({ message: 'Usuário cadastrado com sucesso' });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Erro interno do servidor' });
+      return res.status(500).json({ message: 'Erro ao criar usuário' });
     }
   }
-}
 
-export default new usuarioController();
+}

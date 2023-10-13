@@ -1,8 +1,21 @@
 import { Router } from 'express';
-import reviewController from './review.controller';
+import ReviewController from './review.controller';
 
-const router = Router();
+export default class ReviewRota {
+  private router: Router;
+  private controller: ReviewController;
 
-router.get('/:id', reviewController.reviewsUsuario);
+  constructor() {
+    this.router = Router();
+    this.controller = new ReviewController();
+    this.initializeRoutes();
+  }
 
-export default router;
+  private initializeRoutes() {
+    this.router.get('/:id', this.controller.reviewsUsuario);
+  }
+
+  getRouter() {
+    return this.router;
+  }
+}

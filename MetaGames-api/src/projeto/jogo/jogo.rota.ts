@@ -1,7 +1,20 @@
-
 import { Router } from 'express';
+import JogoController from './jogo.controller';
 
-const router = Router();
+export default class JogoRota {
+  private router: Router;
+  private controller: JogoController;
 
+  constructor() {
+    this.router = Router();
+    this.controller = new JogoController();
+    this.initializeRoutes();
+  }
 
-export default router;
+  private initializeRoutes() {
+  }
+
+  getRouter() {
+    return this.router;
+  }
+}

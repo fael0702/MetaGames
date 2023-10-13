@@ -5,7 +5,6 @@ import Rotas from './projeto/rotas';
 
 const iniciarServidor = async () => {
   try {
-    // conexão com o banco de dados
     await AppDataSource.initialize();
     console.log('Conectado ao banco de dados');
 
@@ -13,11 +12,9 @@ const iniciarServidor = async () => {
     app.use(express.json());
     app.use(cors());
 
-    // instância de Rotas e configurar as rotas
     const rotasDoProjeto = new Rotas(app);
     rotasDoProjeto.configurarRotas();
 
-    // iniciar o servidor
     const porta = process.env.PORT || 3000;
     app.listen(porta, () => {
       console.log(`Servidor rodando na porta ${porta}`);

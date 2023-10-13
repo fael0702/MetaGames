@@ -1,11 +1,16 @@
-import { Review } from "../../entities/Review";
-import reviewRepositorio from "./review.repositorio";
+import { Review } from '../../entities/Review';
+import ReviewRepositorio from './review.repositorio';
 
-class reviewService {
+export default class ReviewService {
+    private reviewRepositorio: ReviewRepositorio;
+
+    constructor() {
+        this.reviewRepositorio = new ReviewRepositorio();
+    }
 
     public async reviewsUsuario(id: number) {
         try {
-            const review: Review[] = await reviewRepositorio.reviewsUsuario(id);
+            const review: Review[] = await this.reviewRepositorio.reviewsUsuario(id);
 
             return review;
         } catch (error) {
@@ -13,5 +18,3 @@ class reviewService {
         }
     }
 }
-
-export default new reviewService();

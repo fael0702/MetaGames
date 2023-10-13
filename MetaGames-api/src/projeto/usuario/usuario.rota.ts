@@ -1,9 +1,22 @@
 import { Router } from 'express';
-import usuarioController from './usuario.controller';
+import UsuarioController from './usuario.controller';
 
-const router = Router();
+export default class UsuarioRota {
+  private router: Router;
+  private controller: UsuarioController;
 
-router.get('/buscar/:id', usuarioController.buscarPorId);
-router.post('/criar', usuarioController.criarUsuario);
+  constructor() {
+    this.router = Router();
+    this.controller = new UsuarioController();
+    this.initializeRoutes();
+  }
 
-export default router;
+  private initializeRoutes() {
+    this.router.get('/buscar/:id', this.controller.buscarPorId);
+    this.router.post('/criar', this.controller.criarUsuario);
+  }
+
+  getRouter() {
+    return this.router;
+  }
+}
