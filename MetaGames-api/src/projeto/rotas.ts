@@ -18,8 +18,8 @@ export default class Rotas {
   }
 
   configurarRotas(): void {
-    this.app.use(authMiddleware);
     this.app.use('/usuario', this.usuarioRota.getRouter());
+    this.app.use(authMiddleware);
     this.app.use('/review', this.reviewRota.getRouter());
     this.app.use('/jogo', this.jogoRota.getRouter());
   }
