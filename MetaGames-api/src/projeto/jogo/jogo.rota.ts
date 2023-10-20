@@ -12,6 +12,8 @@ export default class JogoRota {
   }
 
   private initializeRoutes() {
+    this.router.post('/criar', this.controller.criarJogo);
+    this.router.get('/buscar/:nome', this.controller.buscarPorNome);
   }
 
   getRouter() {

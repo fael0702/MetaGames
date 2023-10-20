@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import apiGames from "../services/apiGames";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import apiService from '../services/api'
 
 export default function Home() {
   const navigation = useNavigation();
@@ -25,21 +25,23 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    loadingGames();
-    AsyncStorage.getItem("reviewedGames").then((reviewedGames) => {
-      if (reviewedGames) {
-        setGameList([...JSON.parse(reviewedGames)]);
+    const fetchData = async () => {
+      try {
+        loadingGames();
+  
+        const usuarioJson = await AsyncStorage.getItem("@usuario");
+        const usuario = JSON.parse(usuarioJson);
+  
+        const reviews = await apiService.buscarReviewUsuario(usuario.id);
+        if (reviews.length) {
+          setGameList([...reviews]);
+        }
+      } catch (error) {
+        console.error("Houve um erro: ", error);
       }
-    });
+    };
+    fetchData();
   }, []);
-
-  const handleRefresh = () => {
-    AsyncStorage.getItem("reviewedGames").then((reviewedGames) => {
-      if (reviewedGames) {
-        setGameList([...JSON.parse(reviewedGames)]);
-      }
-    });
-  };
 
   async function loadingGames() {
     if (loading) return;
@@ -61,6 +63,7 @@ export default function Home() {
         image: item?.background_image,
         name: item?.name,
         rating: item?.metacritic,
+        lancamento: item?.released
       },
     });
   };
@@ -83,7 +86,7 @@ export default function Home() {
     return (
       <TouchableOpacity style={styles.card}>
         <Image 
-          source={{ uri: item?.image }} 
+          source={{ uri: item.jogo.background_image }} 
           style={styles.imagemGameAv} 
         />
       </TouchableOpacity>

@@ -39,11 +39,11 @@ export default function Lista() {
   const handleNavigate = (item) => {
     navigation.navigate('Review', {
       parametro: {
-        id: item?.id,
         image: item?.background_image,
         name: item?.name,
         rating: item?.metacritic,
-        genres: item?.genres,
+        lancamento: item?.released,
+        genres: item?.genres
       },
     });
   };

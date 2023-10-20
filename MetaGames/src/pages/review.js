@@ -4,40 +4,42 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
+import apiService from '../services/api'
 
 const Review = ({ route, navigation }) => {
   const [nota, setNota] = useState('');
   const [comentario, setComantario] = useState('');
   const [cor, setCor] = useState('#000000');
 
-  const { id, image, name, rating } = route.params?.parametro || {};
+  const { image, name, rating, lancamento } = route.params?.parametro || {};
 
   const handleGoBack = () => {
     navigation.goBack();
   };
 
   const handleNavigate = async () => {
-    const reviewedGame = {
-      id: id,
-      image: image,
-      name: name,
-      rating: nota,
-      comentario: comentario,
-    };
 
     try {
-      const storedGames = await AsyncStorage.getItem('reviewedGames');
-      let gameList = [];
-      if (storedGames) {
-        gameList = JSON.parse(storedGames);
+      const usuarioJson = await AsyncStorage.getItem("@usuario");
+      const usuario = JSON.parse(usuarioJson);
+      let jogoCadastrado;
+      let reviewCadastrado
+      const jogoJaCadastrado = await apiService.buscarJogo(name);
+
+      if (!jogoJaCadastrado) {
+        jogoCadastrado = await apiService.cadastroJogo(name, image, lancamento);
+        if (jogoCadastrado) {
+          reviewCadastrado = await apiService.cadastroReview(comentario, nota, jogoCadastrado.id, user.id)
+        }
+      } else {
+        reviewCadastrado = await apiService.cadastroReview(comentario, nota, jogoJaCadastrado.id, usuario.id)
       }
-      gameList.push(reviewedGame);
-      await AsyncStorage.setItem('reviewedGames', JSON.stringify(gameList));
+
       navigation.navigate('Historico', {
-        parametro: reviewedGame,
+        parametro: reviewCadastrado,
       });
-      navigation.navigate('Home',{
-        parametro: reviewedGame,
+      navigation.navigate('Home', {
+        parametro: reviewCadastrado,
       });
     } catch (error) {
       console.log('Erro ao salvar jogo revisado:', error);

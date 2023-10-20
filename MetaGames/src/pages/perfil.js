@@ -29,10 +29,10 @@ export default function Perfil() {
 
   useEffect(() => {
     const getUserInfoFromStorage = async () => {
-      const storedUserInfo = await AsyncStorage.getItem("@userInfo");
-      if (storedUserInfo) {
-        const userInfoData = JSON.parse(storedUserInfo);
-        setUserInfo(userInfoData);
+      const usuarioJson = await AsyncStorage.getItem("@usuario");
+      if (usuarioJson) {
+        const usuario = JSON.parse(usuarioJson);
+        setUserInfo(usuario);
       }
     };
 
@@ -40,10 +40,10 @@ export default function Perfil() {
   }, []);
 
   const handleUsuario = async () => {
-    const usuarioString = await AsyncStorage.getItem("usuario");
-    const usuario = JSON.parse(usuarioString);
+    const usuarioJson = await AsyncStorage.getItem("@usuario");
+    const usuario = JSON.parse(usuarioJson);
 
-    setNome(usuario.name);
+    setNome(usuario.nome);
   };
 
   const handleImagePicker = async () => {
@@ -53,6 +53,7 @@ export default function Perfil() {
       aspect: [4, 3],
       quality: 1,
     });
+    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);

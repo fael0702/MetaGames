@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { TextInputMask } from "react-native-masked-text";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../services/api";
 
 const Cadastro = () => {
@@ -41,16 +40,13 @@ const Cadastro = () => {
       console.log("Senha forte");
     }
 
-    AsyncStorage.setItem('email', email);
-    AsyncStorage.setItem('password', password);
-
     try {
       if (dataValida(dataNasc)) {
-        console.log(dataNasc)
         const dataConvertida = converterDataSql(dataNasc);
-        console.log(dataConvertida)
-        await api.cadastro(name, email, password, dataConvertida);
-        navigation.navigate("Login");
+        const cadastrado = await api.cadastroUsuario(name, email, password, dataConvertida);
+        if (cadastrado) {
+          navigation.navigate("Login");
+        }
       } else {
         throw new Error('Insira uma data valida');
       }

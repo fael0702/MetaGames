@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import apiService from '../services/api'
 
 const Historico = ({ route }) => {
   const navigation = useNavigation();
@@ -20,25 +21,36 @@ const Historico = ({ route }) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    AsyncStorage.getItem("reviewedGames").then((reviewedGames) => {
-      if (reviewedGames) {
-        setGameList([...JSON.parse(reviewedGames)]);
+    const fetchData = async () => {
+      try {
+        const usuarioString = await AsyncStorage.getItem("@usuario");
+        const usuario = JSON.parse(usuarioString);
+  
+        const reviews = await apiService.buscarReviewUsuario(usuario.id);
+        if (reviews.length) {
+          setGameList([...reviews]);
+        }
+      } catch (error) {
+        console.error("Houve um erro: ", error);
       }
-    });
+    };
+    fetchData();
   }, []);
 
-  const handleDelete = (item) => {
+  const handleDelete = async (item) => {
     const updatedGameList = gameList.filter((game) => game.id !== item.id);
     setGameList(updatedGameList);
-    AsyncStorage.setItem("reviewedGames", JSON.stringify(updatedGameList));
+    await apiService.apagarReview(item.id);
   };
 
-  const handleRefresh = () => {
-    AsyncStorage.getItem("reviewedGames").then((reviewedGames) => {
-      if (reviewedGames) {
-        setGameList([...JSON.parse(reviewedGames)]);
-      }
-    });
+  const handleRefresh = async () => {
+    const usuarioJson = await AsyncStorage.getItem("@usuario");
+    const usuario = JSON.parse(usuarioJson);
+
+    const reviews = await apiService.buscarReviewUsuario(usuario.id);
+    if (reviews.length) {
+      setGameList([...reviews]);
+    }
   };
 
   const renderGameCard = ({ item }) => {
@@ -50,16 +62,16 @@ const Historico = ({ route }) => {
         >
           <Text style={styles.deleteButtonText}>Excluir</Text>
         </TouchableOpacity>
-        <Text style={styles.gameTitle}>{item?.name}</Text>
-        <Image source={{ uri: item?.image }} style={styles.cardImage} />
-        <Text style={styles.gameTitle}>{item?.rating}</Text>
+        <Text style={styles.gameTitle}>{item?.jogo.nome}</Text>
+        <Image source={{ uri: item?.jogo.background_image }} style={styles.cardImage} />
+        <Text style={styles.gameTitle}>{item?.nota}</Text>
         <Text style={styles.gameTitle}>{item?.comentario}</Text>
       </TouchableOpacity>
     );
   };
 
   const filteredGameList = [...gameList].reverse().filter((item) => {
-    const gameName = item?.name?.toLowerCase() || "";
+    const gameName = item?.nome?.toLowerCase() || "";
     const searchTextLower = searchText.toLowerCase();
     return gameName.includes(searchTextLower);
   });

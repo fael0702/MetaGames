@@ -8,6 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
+import apiService from '../services/api'
+import jwt_decode from 'jwt-decode';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -39,6 +41,21 @@ const Login = () => {
         setUser(userInfo);
       })();
     }
+    const fetchData = async () => {
+      const token = await AsyncStorage.getItem('token');
+
+      if (token) {
+        const decodedToken = jwt_decode(token);
+        const expirationDate = new Date(decodedToken.exp * 28800);
+        
+        const usuario = await apiService.buscarUsuario(decodedToken.id);
+        await AsyncStorage.setItem("@usuario", JSON.stringify(usuario));
+        if (expirationDate > new Date()) {
+          navigation.navigate('MainTabs');
+        } 
+      }
+    }
+    fetchData();
   }, [response2]);
 
   const handlePressAsync = async () => {
@@ -99,17 +116,10 @@ const Login = () => {
   }
 
   const handleLogin = async () => {
-    let emailStorage = '';
-    let passwordStorage = '';
-    await AsyncStorage.getItem('email').then((item) => {
-      emailStorage = item;
-    })
-    await AsyncStorage.getItem('password').then((item) => {
-      passwordStorage = item;
-    })
-    console.log(AsyncStorage.getItem('email'));
-    console.log(AsyncStorage.getItem('password'));
-    if (email === emailStorage && password === passwordStorage) {
+    const data = await apiService.login(email, password);
+    await AsyncStorage.setItem('token', data.token);
+    await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
+    if (data.usuario) {
       navigation.navigate('MainTabs');
     } else {
       alert('E-mail ou senha inválidos!');

@@ -12,7 +12,9 @@ export default class ReviewRota {
   }
 
   private initializeRoutes() {
-    this.router.get('/:id', this.controller.reviewsUsuario);
+    this.router.post('/criar', this.controller.criarReview);
+    this.router.get('/buscar/:id', this.controller.reviewsUsuario);
+    this.router.delete('/apagar/:id', this.controller.apagarReview);
   }
 
   getRouter() {

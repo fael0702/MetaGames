@@ -1,5 +1,6 @@
-import { Entity, Column } from "typeorm"
+import { Entity, Column, OneToMany } from "typeorm"
 import { BaseEntityColumns } from "../bases/baseEntityColumns"
+import { Review } from "./Review"
 
 @Entity()
 export class Jogo extends BaseEntityColumns {
@@ -8,6 +9,12 @@ export class Jogo extends BaseEntityColumns {
     nome: string
 
     @Column()
+    background_image: string
+
+    @Column()
     data_lancamento: Date
+
+    @OneToMany(type => Review, type => type.jogo)
+    reviews: Review[]
 
 }
