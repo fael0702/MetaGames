@@ -92,4 +92,31 @@ export default class UsuarioController {
       console.error(error);
     }
   }
+
+  public async enviarCodigo(req: Request, res: Response) {
+    try {
+      const email = req.params.email;
+
+      const usuarioService = new UsuarioService();
+      await usuarioService.enviarCodigo(email);
+      return res.status(200).json({ message: 'Nome alterado com sucesso' });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  public async alterarSenha(req: Request, res: Response) {
+    try {
+      const email = req.params.email;
+      const senha = await bcrypt.hash(req.body.senha, 10);
+      const codigo = req.params.codigo;
+
+      const usuarioService = new UsuarioService();
+      await usuarioService.alterarSenha(email, senha, codigo);
+      return res.status(200).json({ message: 'Nome alterado com sucesso' });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 }

@@ -20,6 +20,7 @@ export default class UsuarioRepositorio extends Repository<Usuario>{
       console.error(error);
     }
   }
+
   public async buscarPorId(id: number) {
     try {
       const usuario = this.repositorio.findOneBy({ id })
@@ -50,6 +51,15 @@ export default class UsuarioRepositorio extends Repository<Usuario>{
   public async alterarImg(id: number, uri: string) {
     try {
       return this.repositorio.update({ id }, { imagem: uri });
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  }
+
+  public async alterarSenha(email: string, senha: string) {
+    try {
+      return this.repositorio.update({ email }, { senha });
     } catch (error) {
       console.error(error);
       throw new Error(error);

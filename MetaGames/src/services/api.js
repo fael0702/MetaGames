@@ -158,6 +158,35 @@ class ApiService {
       return false;
     }
   }
+
+  async enviarCodigo(email) {
+    try {
+      await this.setAuthorizationHeader();
+
+      await this.axiosInstance.put(`/usuario/enviar-codigo/${email}`);
+
+      console.log('Código enviado com sucesso!');
+      return true;
+    } catch (error) {
+      console.error('Erro ao enviar código: ', error);
+      return false;
+    }
+  }
+
+  async alterarSenha(email, senha, codigo) {
+    try {
+      await this.setAuthorizationHeader();
+
+      await this.axiosInstance.put(`/usuario/alterar-senha/${email}/${senha}/${codigo}`);
+
+      console.log('Código enviado com sucesso!');
+      return true;
+    } catch (error) {
+      console.error('Erro ao enviar código: ', error);
+      return false;
+    }
+  }
+
 }
 
 export default new ApiService();
