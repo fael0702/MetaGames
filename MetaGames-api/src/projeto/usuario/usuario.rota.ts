@@ -20,7 +20,7 @@ export default class UsuarioRota {
     this.router.put('/alterar-nome/:nome/:id', this.controller.alterarNome);
     this.router.put('/alterar-img/:id/:uri', this.controller.alterarImg);
     this.router.post('/enviar-codigo/:email', this.controller.enviarCodigo);
-    this.router.post('/alterar-senha/:email/:senha/:codigo', this.controller.alterarSenha);
+    this.router.put('/alterar-senha/:email/:senha/:codigo', this.controller.alterarSenha);
   }
 
   getRouter() {
