@@ -1,6 +1,5 @@
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 class ApiService {
   
   constructor() {
@@ -130,6 +129,32 @@ class ApiService {
       return true;
     } catch (error) {
       console.error('Erro ao buscar as reviews: ', error);
+      return false;
+    }
+  }
+
+  async alterarNome(nome, id) {
+    try {
+      await this.setAuthorizationHeader();
+
+      await this.axiosInstance.put(`/usuario/alterar-nome/${nome}/${id}`);
+      return true;
+    } catch (error) {
+      console.error('Erro ao alterar nome: ', error);
+      return false;
+    }
+  }
+
+  async alterarImagem(id, uri) {
+    try {
+      await this.setAuthorizationHeader();
+
+      await this.axiosInstance.put(`/usuario/alterar-img/${id}/${uri}`);
+
+      console.log('Imagem alterada com sucesso!');
+      return true;
+    } catch (error) {
+      console.error('Erro ao alterar a imagem: ', error);
       return false;
     }
   }

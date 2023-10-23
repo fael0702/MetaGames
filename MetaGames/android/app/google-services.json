@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "819890346625",
+    "project_id": "metagames-uploads",
+    "storage_bucket": "metagames-uploads.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819890346625:android:d35ed984443bd72be78b80",
+        "android_client_info": {
+          "package_name": "meta.games"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlN-hMsXPkQK4nq4AhwXVaEhqoEsHV91w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

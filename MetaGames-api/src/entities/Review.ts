@@ -7,14 +7,14 @@ import { Jogo } from "./Jogo"
 export class Review extends BaseEntityColumns {
 
     @Column()
-    comentario: string
+    comentario: string;
 
     @Column({ type: 'decimal', precision: 5, scale: 1 })
-    nota: number
+    nota: number;
 
     @ManyToOne(type => Usuario)
     @JoinColumn({name: 'usuario_id'})
-    usuario: Usuario
+    usuario: Usuario;
 
     @ManyToOne(type => Jogo)
     @JoinColumn({name: 'jogo_id'})

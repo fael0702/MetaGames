@@ -66,4 +66,30 @@ export default class UsuarioController {
       console.error(error);
     }
   }
+
+  public async alterarNome(req: Request, res: Response) {
+    try {
+      const nome = req.params.nome;
+      const id = +req.params.id;
+
+      const usuarioService = new UsuarioService();
+      await usuarioService.alterarNome(nome, id);
+      return res.status(200).json({ message: 'Nome alterado com sucesso' });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  public async alterarImg(req: Request, res: Response) {
+    try {
+      const id = +req.params.id;
+      const uri = req.params.uri;
+
+      const usuarioService = new UsuarioService();
+      await usuarioService.alterarImg(id, uri);
+      return res.status(200).json({ message: 'Nome alterado com sucesso' });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

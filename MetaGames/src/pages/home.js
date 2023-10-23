@@ -57,7 +57,6 @@ export default function Home() {
   }
 
   const handleNavigate = (item) => {
-    console.log(item);
     navigation.navigate("Review", {
       parametro: {
         image: item?.background_image,

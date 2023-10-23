@@ -4,7 +4,7 @@ import { Usuario } from "../../entities/Usuario";
 
 export default class UsuarioRepositorio extends Repository<Usuario>{
   private repositorio: Repository<Usuario>;
-  
+
   constructor(
     private entityManager?: EntityManager
   ) {
@@ -13,34 +13,46 @@ export default class UsuarioRepositorio extends Repository<Usuario>{
   }
 
   public async buscarPorEmail(email: string) {
-
     try {
-      const usuario = this.repositorio.findOneBy({ email: email })
+      const usuario = this.repositorio.findOneBy({ email })
       return usuario;
     } catch (error) {
       console.error(error);
     }
-
   }
   public async buscarPorId(id: number) {
-
     try {
-      const usuario = this.repositorio.findOneBy({ id: id })
+      const usuario = this.repositorio.findOneBy({ id })
       return usuario;
     } catch (error) {
       console.error(error);
     }
-
   }
 
   public async salvar(usuario: Usuario): Promise<Usuario> {
-
     try {
       return this.repositorio.save(usuario);
     } catch (error) {
       console.error(error);
       throw new Error(error);
     }
+  }
 
+  public async alterarNome(nome: string, id: number) {
+    try {
+      return this.repositorio.update({ id }, { nome });
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  }
+
+  public async alterarImg(id: number, uri: string) {
+    try {
+      return this.repositorio.update({ id }, { imagem: uri });
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
   }
 }

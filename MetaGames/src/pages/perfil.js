@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-
 import {
   StyleSheet,
   Text,
@@ -14,6 +13,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import apiService from '../services/api';
 
 export default function Perfil() {
   const navigation = useNavigation();
@@ -28,16 +28,22 @@ export default function Perfil() {
   }, []);
 
   useEffect(() => {
-    const getUserInfoFromStorage = async () => {
+    const initializeAppAndUserInfo = async () => {
       const usuarioJson = await AsyncStorage.getItem("@usuario");
+  
       if (usuarioJson) {
         const usuario = JSON.parse(usuarioJson);
         setUserInfo(usuario);
+  
+        if (usuario.imagem) {
+          setImage(usuario.imagem);
+        }
       }
     };
-
-    getUserInfoFromStorage();
+  
+    initializeAppAndUserInfo();
   }, []);
+  
 
   const handleUsuario = async () => {
     const usuarioJson = await AsyncStorage.getItem("@usuario");
@@ -48,15 +54,21 @@ export default function Perfil() {
 
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    console.log(result);
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      const usuarioJson = await AsyncStorage.getItem("@usuario");
+      const usuario = JSON.parse(usuarioJson);
+
+      const img = await apiService.alterarImagem(usuario.id, result.assets[0].uri)
+      const usuarioComImg = await apiService.buscarUsuario(usuario.id);
+      if (img) {
+        setImage(usuarioComImg.imagem);
+      }
     }
   };
 
@@ -65,6 +77,7 @@ export default function Perfil() {
   };
 
   const handleSair = () => {
+    localStorage.clear();
     navigation.navigate('Login')
   }
 

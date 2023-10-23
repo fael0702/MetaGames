@@ -6,18 +6,21 @@ import { Review } from "./Review"
 export class Usuario extends BaseEntityColumns {
 
     @Column()
-    nome: string
+    nome: string;
 
     @Column()
-    email: string
+    email: string;
 
     @Column()
-    senha: string
+    senha: string;
 
     @Column('date')
-    data_nascimento: Date
+    data_nascimento: Date;
+
+    @Column({ nullable: true })
+    imagem: string;
 
     @OneToMany(type => Review, type => type.usuario)
-    reviews: Review[]
+    reviews: Review[];
 
 }

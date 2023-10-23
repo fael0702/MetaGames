@@ -37,4 +37,24 @@ export default class UsuarioService {
             throw new Error('Erro ao buscar usuário');
         }
     }
+
+    public async alterarNome(nome: string, id: number) {
+        try {
+            const usuarioRepositorio = new UsuarioRepositorio();
+            await usuarioRepositorio.alterarNome(nome, id);
+        } catch (error) {
+            console.error(error);
+            throw new Error('Erro ao alterar nome do usuário');
+        }
+    }
+
+    public async alterarImg(id: number, uri: string) {
+        try {
+            const usuarioRepositorio = new UsuarioRepositorio();
+            await usuarioRepositorio.alterarImg(id, uri);
+        } catch (error) {
+            console.error(error);
+            throw new Error('Erro ao alterar nome do usuário');
+        }
+    }
 }

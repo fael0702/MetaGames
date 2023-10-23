@@ -15,7 +15,7 @@ export default class JogoRepositorio extends Repository<Jogo>{
 
   public async buscarPorNome(nome: string): Promise<Jogo> {
     try {
-      const jogo = this.repositorio.findOneBy({ nome: nome })
+      const jogo = this.repositorio.findOneBy({ nome })
       return jogo;
     } catch (error) {
       console.error(error);
@@ -24,7 +24,7 @@ export default class JogoRepositorio extends Repository<Jogo>{
 
   public async buscarPorId(id: number): Promise<Jogo> {
     try {
-      const jogo = this.repositorio.findOneBy({ id: id })
+      const jogo = this.repositorio.findOneBy({ id })
       return jogo;
     } catch (error) {
       console.error(error);

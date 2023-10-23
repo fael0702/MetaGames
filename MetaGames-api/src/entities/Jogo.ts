@@ -6,15 +6,15 @@ import { Review } from "./Review"
 export class Jogo extends BaseEntityColumns {
 
     @Column()
-    nome: string
+    nome: string;
 
     @Column()
-    background_image: string
+    background_image: string;
 
     @Column()
-    data_lancamento: Date
+    data_lancamento: Date;
 
     @OneToMany(type => Review, type => type.jogo)
-    reviews: Review[]
+    reviews: Review[];
 
 }

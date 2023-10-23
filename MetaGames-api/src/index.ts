@@ -9,7 +9,7 @@ const iniciarServidor = async () => {
     console.log('Conectado ao banco de dados');
 
     const app = express();
-    app.use(express.json());
+    app.use(express.json({ limit: '5mb' }));
     app.use(cors());
 
     const rotasDoProjeto = new Rotas(app);

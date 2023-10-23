@@ -7,7 +7,6 @@ export default class ReviewRepositorio extends Repository<Review>{
   private repositorio: Repository<Review>;
 
   constructor(
-    private dataSource?: DataSource,
     private entityManager?: EntityManager
   ) {
     super(Review, entityManager);
@@ -20,7 +19,7 @@ export default class ReviewRepositorio extends Repository<Review>{
         .innerJoinAndSelect('r.usuario', 'u')
         .innerJoinAndSelect('r.jogo', 'j')
         .where('r.usuario_id = :id')
-        .setParameters({ id: id })
+        .setParameters({ id })
 
       return await qb.getMany()
     } catch (error) {
@@ -33,7 +32,7 @@ export default class ReviewRepositorio extends Repository<Review>{
       const qb = this.repositorio.createQueryBuilder('r')
         .innerJoinAndSelect('r.jogo', 'j')
         .where('r.jogo_id = :id')
-        .setParameters({ id: id })
+        .setParameters({ id })
 
       return await qb.getMany()
     } catch (error) {
@@ -52,7 +51,7 @@ export default class ReviewRepositorio extends Repository<Review>{
 
   public async excluir(id: number) {
     try {
-      const result = await this.repositorio.delete({ id: id });
+      const result = await this.repositorio.delete({ id });
       return result;
     } catch (error) {
       console.error(error);
