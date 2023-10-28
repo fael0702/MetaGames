@@ -18,7 +18,7 @@ export default class UsuarioRota {
     this.router.use(authMiddleware);
     this.router.get('/buscar/:id', this.controller.buscarPorId);
     this.router.put('/alterar-nome/:nome/:id', this.controller.alterarNome);
-    this.router.put('/alterar-img/:id/:uri', this.controller.alterarImg);
+    this.router.put('/alterar-img', this.controller.alterarImg);
     this.router.post('/enviar-codigo/:email', this.controller.enviarCodigo);
     this.router.put('/alterar-senha/:email/:senha/:codigo', this.controller.alterarSenha);
   }

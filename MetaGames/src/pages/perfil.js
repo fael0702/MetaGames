@@ -36,7 +36,7 @@ export default function Perfil() {
         setUserInfo(usuario);
   
         if (usuario.imagem) {
-          setImage(usuario.imagem);
+          setImage(`https://drive.google.com/uc?export=view&id=${usuario.imagem}`);
         }
       }
     };
@@ -67,7 +67,7 @@ export default function Perfil() {
       const img = await apiService.alterarImagem(usuario.id, result.assets[0].uri)
       const usuarioComImg = await apiService.buscarUsuario(usuario.id);
       if (img) {
-        setImage(usuarioComImg.imagem);
+        setImage(`https://drive.google.com/uc?export=view&id=${usuarioComImg.imagem}`);
       }
     }
   };
