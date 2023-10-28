@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 class ApiService {
-  
+
   constructor() {
     this.axiosInstance = axios.create({
       baseURL: 'http://localhost:3000',
@@ -149,7 +149,7 @@ class ApiService {
     try {
       await this.setAuthorizationHeader();
 
-      await this.axiosInstance.put(`/usuario/alterar-img/${id}/${uri}`);
+      await this.axiosInstance.put(`/usuario/alterar-img`, { id, uri });
 
       console.log('Imagem alterada com sucesso!');
       return true;

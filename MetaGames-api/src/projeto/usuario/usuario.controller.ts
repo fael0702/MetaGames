@@ -82,8 +82,8 @@ export default class UsuarioController {
 
   public async alterarImg(req: Request, res: Response) {
     try {
-      const id = +req.params.id;
-      const uri = req.params.uri;
+      const id = +req.body.id;
+      const uri = req.body.uri;
 
       const usuarioService = new UsuarioService();
       await usuarioService.alterarImg(id, uri);

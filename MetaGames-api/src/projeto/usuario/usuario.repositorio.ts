@@ -48,9 +48,9 @@ export default class UsuarioRepositorio extends Repository<Usuario>{
     }
   }
 
-  public async alterarImg(id: number, uri: string) {
+  public async alterarImg(id: number, idGoogle: string) {
     try {
-      return this.repositorio.update({ id }, { imagem: uri });
+      return this.repositorio.update({ id }, { imagem: idGoogle });
     } catch (error) {
       console.error(error);
       throw new Error(error);
