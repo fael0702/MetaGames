@@ -41,6 +41,7 @@ Para o desenvolvimento deste App mobile utilizamos as seguintes tecnologias:
 - PostgreSQL;
 - Clever Cloud;
 - Expo GO;
+- TypeORM;
 
 ---
 
