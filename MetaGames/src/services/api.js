@@ -18,7 +18,6 @@ class ApiService {
 
   async cadastroUsuario(nome, email, senha, dataNasc) {
     try {
-      await this.setAuthorizationHeader();
 
       await this.axiosInstance.post('/usuario/criar', {
         nome,
@@ -36,7 +35,6 @@ class ApiService {
 
   async login(email, senha) {
     try {
-      await this.setAuthorizationHeader();
 
       const response = await this.axiosInstance.post('/usuario/login', {
         email,
@@ -47,6 +45,18 @@ class ApiService {
     } catch (error) {
       console.error('Erro ao efetuar login: ', error);
       return null;
+    }
+  }
+
+  async verificarToken() {
+    try {
+      await this.setAuthorizationHeader();
+
+      const response = await this.axiosInstance.get(`/usuario/verificar`);
+      return true;
+    } catch (error) {
+      console.error('Erro ao verificar token: ', error);
+      return false;
     }
   }
 

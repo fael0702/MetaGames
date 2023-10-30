@@ -42,17 +42,10 @@ const Login = () => {
       })();
     }
     const fetchData = async () => {
-      const token = await AsyncStorage.getItem('token');
+      const valido = await apiService.verificarToken();
 
-      if (token) {
-        const decodedToken = jwt_decode(token);
-        const expirationDate = new Date(decodedToken.exp * 28800);
-        
-        const usuario = await apiService.buscarUsuario(decodedToken.id);
-        await AsyncStorage.setItem("@usuario", JSON.stringify(usuario));
-        if (expirationDate > new Date()) {
-          navigation.navigate('MainTabs');
-        } 
+      if (valido) {
+        navigation.navigate('MainTabs');
       }
     }
     fetchData();

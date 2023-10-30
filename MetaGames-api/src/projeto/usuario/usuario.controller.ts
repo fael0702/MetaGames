@@ -119,4 +119,13 @@ export default class UsuarioController {
     }
   }
 
+  public async verificarToken(req: Request, res: Response) {
+    try {
+      res.status(200).json({ message: "Token válido." });
+  } catch (error) {
+      console.error(error);
+      res.status(401).json({ message: "Token inválido." });
+  }
+  }
+
 }
