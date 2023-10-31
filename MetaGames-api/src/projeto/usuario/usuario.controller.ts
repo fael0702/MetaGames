@@ -25,7 +25,7 @@ export default class UsuarioController {
 
   public async login(req: Request, res: Response) {
     try {
-      
+
       const usuarioRepositorio = new UsuarioRepositorio();
       const usuario = await usuarioRepositorio.buscarPorEmail(req.body.email);
 
@@ -39,7 +39,7 @@ export default class UsuarioController {
         throw new Error('email ou senha inválidos');
       }
 
-      const token = jwt.sign({ id: usuario.id }, process.env.JWT_TOKEN, { expiresIn: '8h' });
+      const token = jwt.sign({ id: usuario.id }, process.env.JWT_TOKEN, { expiresIn: '2m' });
 
       delete usuario.senha;
 
@@ -60,7 +60,7 @@ export default class UsuarioController {
       const usuario = await usuarioService.buscarPorId(id);
 
       if (usuario) {
-        return res.status(200).json(usuario); 
+        return res.status(200).json(usuario);
       }
     } catch (error) {
       console.error(error);
@@ -122,10 +122,24 @@ export default class UsuarioController {
   public async verificarToken(req: Request, res: Response) {
     try {
       res.status(200).json({ message: "Token válido." });
-  } catch (error) {
+    } catch (error) {
       console.error(error);
       res.status(401).json({ message: "Token inválido." });
+    }
   }
+
+  public async logoff(req: Request, res: Response) {
+    try {
+      const token = req.params.token;
+
+      const usuarioService = new UsuarioService();
+      await usuarioService.logoff(token);
+
+      return res.status(200).json({ message: 'Usuário deslogado sucesso' });
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ message: "Token inválido." });
+    }
   }
 
 }

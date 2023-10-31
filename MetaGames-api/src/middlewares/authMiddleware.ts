@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import UsuarioRepositorio from '../projeto/usuario/usuario.repositorio';
+import TokenInvalidoRepositorio from '../projeto/tokenInvalido/tokenInvalido.repositorio';
+import { TokenInvalido } from '../entities/TokenInvalido';
 
 type JwtPayload = {
   id: number;
@@ -20,18 +22,28 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     const { id, exp } = jwt.verify(token, process.env.JWT_TOKEN || '') as JwtPayload;
     const usuarioRepositorio = new UsuarioRepositorio();
     const usuario = await usuarioRepositorio.buscarPorId(id);
-
+    
     if (!usuario) {
       return res.status(401).json({ error: 'Não autorizado' });
     }
+    delete usuario.senha;
 
-    // Verifique a expiração do token
+    const tokenInvalidoRepositorio = new TokenInvalidoRepositorio();
+    const tokenInvalido = await tokenInvalidoRepositorio.buscarToken(token);
+
     const now = Math.floor(Date.now() / 1000);
-    if (exp <= now) {
+    if (exp <= now || tokenInvalido) {
+      if (!tokenInvalido) {
+        const novoTokenInvalido = new TokenInvalido();
+        novoTokenInvalido.token = token;
+        novoTokenInvalido.exp = exp;
+        novoTokenInvalido.usuario = usuario;
+    
+        await tokenInvalidoRepositorio.salvar(novoTokenInvalido);
+      }
+    
       return res.status(401).json({ error: 'Token expirado' });
     }
-
-    delete usuario.senha;
 
     req.usuario = usuario;
 

@@ -76,9 +76,15 @@ export default function Perfil() {
     navigation.goBack();
   };
 
-  const handleSair = () => {
-    localStorage.clear();
-    navigation.navigate('Login')
+  const handleSair = async () => {
+    const token = await AsyncStorage.getItem("token");
+
+    const logoff = await apiService.logoff(token);
+
+    if (logoff) {
+      localStorage.clear();
+      navigation.navigate('Login')
+    }
   }
 
   return (

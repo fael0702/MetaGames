@@ -6,6 +6,14 @@ import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
 import fs from 'fs';
 import base64js from 'base64-js';
+import jwt from 'jsonwebtoken';
+import { TokenInvalido } from '../../entities/TokenInvalido';
+import TokenInvalidoRepositorio from '../tokenInvalido/tokenInvalido.repositorio';
+
+type JwtPayload = {
+    id: number;
+    exp: number;
+  };
 
 export default class UsuarioService {
 
@@ -170,6 +178,27 @@ export default class UsuarioService {
         } catch (error) {
             console.error(error);
             throw new Error('Erro ao alterar senha do usuário');
+        }
+    }
+
+    public async logoff(token: string) {
+        try {
+            const { id, exp } = jwt.verify(token, process.env.JWT_TOKEN || '') as JwtPayload;
+            
+            const usuarioRepositorio = new UsuarioRepositorio();
+            const usuario = await usuarioRepositorio.buscarPorId(id);
+
+            const tokenInvalidoRepositorio = new TokenInvalidoRepositorio();
+            const novoTokenInvalido = new TokenInvalido();
+
+            novoTokenInvalido.token = token;
+            novoTokenInvalido.exp = exp;
+            novoTokenInvalido.usuario = usuario;
+        
+            await tokenInvalidoRepositorio.salvar(novoTokenInvalido);
+        } catch (error) {
+            console.error(error);
+            throw new Error('Erro ao fazer logoff');
         }
     }
 }

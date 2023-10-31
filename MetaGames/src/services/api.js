@@ -52,10 +52,22 @@ class ApiService {
     try {
       await this.setAuthorizationHeader();
 
-      const response = await this.axiosInstance.get(`/usuario/verificar`);
+      await this.axiosInstance.get(`/usuario/verificar`);
       return true;
     } catch (error) {
       console.error('Erro ao verificar token: ', error);
+      return false;
+    }
+  }
+
+  async logoff(token) {
+    try {
+      await this.setAuthorizationHeader();
+
+      await this.axiosInstance.get(`/usuario/logoff/${token}`);
+      return true;
+    } catch (error) {
+      console.error('Erro ao fazer logoff: ', error);
       return false;
     }
   }
