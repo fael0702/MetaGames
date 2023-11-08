@@ -155,7 +155,6 @@ export default function Home() {
           </TouchableOpacity>
         </View>
 
-        <Text></Text>
         <StatusBar style="auto" />
       </View>
     </ImageBackground>

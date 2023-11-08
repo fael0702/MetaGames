@@ -18,18 +18,13 @@ const Login = () => {
   const [user, setUser] = React.useState(null);
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
+  const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const toggleSenhaVisivel = () => {
-    setSenhaVisivel(!senhaVisivel);
-  };
-
-  const toggleConfirmarSenhaVisivel = () => {
-    setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
-  };
-
-  const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
-    clientId: process.env.CLIENT_ID
-  })
+  React.useEffect(() => {
+    loginGoogle();
+  }, [response]);
 
   useEffect(() => {
     if (response2 && response2.type === "success" && response2.authentication) {
@@ -51,6 +46,18 @@ const Login = () => {
     fetchData();
   }, [response2]);
 
+  const toggleSenhaVisivel = () => {
+    setSenhaVisivel(!senhaVisivel);
+  };
+  const toggleConfirmarSenhaVisivel = () => {
+    setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
+  };
+
+  const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
+    clientId: process.env.CLIENT_ID
+  })
+
+  
   const handlePressAsync = async () => {
     const result = await promptAsync2();
     if (result.type !== "success") {
@@ -60,21 +67,6 @@ const Login = () => {
       navigation.navigate('MainTabs');
     }
   };
-
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: process.env.ANDROID_CLIENT_ID,
-    webClientId: process.env.WEB_CLIENT_ID,
-    expoClientId: process.env.EXPO_CLIENT_ID,
-    redirectUri: process.env.REDIRECT_URI,
-  });
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const navigation = useNavigation();
-
-  React.useEffect(() => {
-    loginGoogle();
-  }, [response]);
 
   async function loginGoogle() {
     const user = await AsyncStorage.getItem("@user");
@@ -88,6 +80,14 @@ const Login = () => {
       setUserInfo(JSON.parse(user));
     }
   }
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: process.env.ANDROID_CLIENT_ID,
+    webClientId: process.env.WEB_CLIENT_ID,
+    expoClientId: process.env.EXPO_CLIENT_ID,
+    redirectUri: process.env.REDIRECT_URI,
+  });
+  
 
   const getUserInfo = async (token) => {
     if (!token) return;
@@ -126,6 +126,7 @@ const Login = () => {
     >
       <View style={styles.containerRola}>
         <View style={styles.container}>
+          
           <Text style={[styles.title, styles.contorno]}>Login</Text>
           <View>
             <Text style={styles.label}>Email</Text>
@@ -145,8 +146,8 @@ const Login = () => {
                 />
               </TouchableOpacity>
             </View>
-
           </View>
+
           <TouchableOpacity style={[styles.red, styles.contorno]} onPress={handleLogin}>
             <Text style={[styles.red, styles.contorno]}>Entrar</Text>
           </TouchableOpacity>
@@ -169,9 +170,9 @@ const Login = () => {
 
             <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
               <FontAwesome name="google" size={50} color="#f00" />
-
             </TouchableOpacity>
-          </View>
+          </View> 
+
         </View>
       </View>
     </ImageBackground>

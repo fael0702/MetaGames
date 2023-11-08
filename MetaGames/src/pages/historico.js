@@ -101,7 +101,7 @@ const Historico = ({ route }) => {
               style={styles.refreshButton}
               onPress={handleRefresh}
             >
-              <Text style={styles.refreshButtonText}>Atualizaar</Text>
+              <Text style={styles.refreshButtonText}>Atualizar</Text>
             </TouchableOpacity>
           </View>
         </View>
