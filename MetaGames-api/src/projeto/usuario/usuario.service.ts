@@ -13,14 +13,19 @@ import TokenInvalidoRepositorio from '../tokenInvalido/tokenInvalido.repositorio
 type JwtPayload = {
     id: number;
     exp: number;
-  };
+};
 
 export default class UsuarioService {
 
+    private repositorio: UsuarioRepositorio;
+
+    constructor() {
+        this.repositorio = new UsuarioRepositorio();
+    }
+
     public async criarUsuario(email: string, nome: string, senha: string, data: Date): Promise<void> {
         try {
-            const usuarioRepositorio = new UsuarioRepositorio();
-            const jaExiste = await usuarioRepositorio.buscarPorEmail(email);
+            const jaExiste = await this.repositorio.buscarPorEmail(email);
 
             if (jaExiste) {
                 throw new Error('Já existe um usuário com esse email!');
@@ -32,7 +37,7 @@ export default class UsuarioService {
             usuario.senha = senha;
             usuario.data_nascimento = data;
 
-            await usuarioRepositorio.salvar(usuario);
+            await this.repositorio.salvar(usuario);
         } catch (error) {
             console.error(error);
             throw new Error('Erro ao criar usuário');
@@ -42,8 +47,7 @@ export default class UsuarioService {
 
     public async buscarPorId(id: number) {
         try {
-            const usuarioRepositorio = new UsuarioRepositorio();
-            const usuario = await usuarioRepositorio.buscarPorId(id);
+            const usuario = await this.repositorio.buscarPorId(id);
             delete usuario.senha;
             return usuario;
         } catch (error) {
@@ -54,8 +58,7 @@ export default class UsuarioService {
 
     public async alterarNome(nome: string, id: number) {
         try {
-            const usuarioRepositorio = new UsuarioRepositorio();
-            await usuarioRepositorio.alterarNome(nome, id);
+            await this.repositorio.alterarNome(nome, id);
         } catch (error) {
             console.error(error);
             throw new Error('Erro ao alterar nome do usuário');
@@ -64,61 +67,59 @@ export default class UsuarioService {
 
     public async alterarImg(id: number, uri: string) {
         try {
-          const binario = base64js.toByteArray(uri.replace(/^data:image\/[a-zA-Z]+;base64,/, ''));
-      
-          const formatoMatch = uri.match(/data:image\/([a-zA-Z]+)/);
-          let formato: string;
-      
-          if (formatoMatch && formatoMatch.length === 2) {
-            formato = formatoMatch[1];
-          } else {
-            throw new Error('Formato da imagem não detectado');
-          }
-      
-          const imageTemp = `./tempImage.${formato}`;
-      
-          fs.writeFileSync(imageTemp, Buffer.from(binario));
-      
-          const auth = new google.auth.GoogleAuth({
-            keyFile: process.env.GOOGLE_JSON,
-            scopes: ['https://www.googleapis.com/auth/drive']
-          });
-      
-          const driveService = google.drive({
-            version: 'v3',
-            auth
-          });
-      
-          const fileMetaData = {
-            name: `usuario_${id}.${formato}`,
-            parents: [process.env.GOOGLE_DRIVE_ID]
-          };
-      
-          const media = {
-            mimeType: `image/${formato}`,
-            body: fs.createReadStream(imageTemp)
-          };
-      
-          const response = await driveService.files.create({
-            requestBody: fileMetaData,
-            media: media,
-            fields: 'id'
-          });
-      
-          fs.unlinkSync(imageTemp);
-      
-          const usuarioRepositorio = new UsuarioRepositorio();
-          await usuarioRepositorio.alterarImg(id, response.data.id);
+            const binario = base64js.toByteArray(uri.replace(/^data:image\/[a-zA-Z]+;base64,/, ''));
+
+            const formatoMatch = uri.match(/data:image\/([a-zA-Z]+)/);
+            let formato: string;
+
+            if (formatoMatch && formatoMatch.length === 2) {
+                formato = formatoMatch[1];
+            } else {
+                throw new Error('Formato da imagem não detectado');
+            }
+
+            const imageTemp = `./tempImage.${formato}`;
+
+            fs.writeFileSync(imageTemp, Buffer.from(binario));
+
+            const auth = new google.auth.GoogleAuth({
+                keyFile: process.env.GOOGLE_JSON,
+                scopes: ['https://www.googleapis.com/auth/drive']
+            });
+
+            const driveService = google.drive({
+                version: 'v3',
+                auth
+            });
+
+            const fileMetaData = {
+                name: `usuario_${id}.${formato}`,
+                parents: [process.env.GOOGLE_DRIVE_ID]
+            };
+
+            const media = {
+                mimeType: `image/${formato}`,
+                body: fs.createReadStream(imageTemp)
+            };
+
+            const response = await driveService.files.create({
+                requestBody: fileMetaData,
+                media: media,
+                fields: 'id'
+            });
+
+            fs.unlinkSync(imageTemp);
+
+            await this.repositorio.alterarImg(id, response.data.id);
         } catch (error) {
-          console.error(error);
-          throw new Error('Erro ao alterar imagem do usuário');
+            console.error(error);
+            throw new Error('Erro ao alterar imagem do usuário');
         }
-      }
+    }
 
     public async enviarCodigo(email: string) {
         try {
-            const usuarioRepositorio = new UsuarioRepositorio();
-            const usuario = usuarioRepositorio.buscarPorEmail(email);
+            const usuario = this.repositorio.buscarPorEmail(email);
 
             if (!usuario) {
                 throw new Error('Usuário não encontrado');
@@ -172,8 +173,7 @@ export default class UsuarioService {
             }
             await passwordResetRepositorio.remove(passwordReset);
 
-            const usuarioRepositorio = new UsuarioRepositorio();
-            await usuarioRepositorio.alterarSenha(email, senha);
+            await this.repositorio.alterarSenha(email, senha);
 
         } catch (error) {
             console.error(error);
@@ -184,9 +184,8 @@ export default class UsuarioService {
     public async logoff(token: string) {
         try {
             const { id, exp } = jwt.verify(token, process.env.JWT_TOKEN || '') as JwtPayload;
-            
-            const usuarioRepositorio = new UsuarioRepositorio();
-            const usuario = await usuarioRepositorio.buscarPorId(id);
+
+            const usuario = await this.repositorio.buscarPorId(id);
 
             const tokenInvalidoRepositorio = new TokenInvalidoRepositorio();
             const novoTokenInvalido = new TokenInvalido();
@@ -194,7 +193,7 @@ export default class UsuarioService {
             novoTokenInvalido.token = token;
             novoTokenInvalido.exp = exp;
             novoTokenInvalido.usuario = usuario;
-        
+
             await tokenInvalidoRepositorio.salvar(novoTokenInvalido);
         } catch (error) {
             console.error(error);

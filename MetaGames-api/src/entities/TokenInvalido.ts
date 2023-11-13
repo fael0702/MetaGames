@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm"
-import { BaseEntityColumns } from "../bases/baseEntityColumns"
+import { BaseEntityColumns } from "../bases/BaseEntityColumns"
 import { Usuario } from "./Usuario"
 import { Jogo } from "./Jogo"
 

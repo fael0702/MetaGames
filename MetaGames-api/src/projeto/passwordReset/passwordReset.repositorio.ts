@@ -2,10 +2,9 @@ import { EntityManager, Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { PasswordReset } from "../../entities/PasswordReset";
 
-
 export default class PasswordResetRepositorio extends Repository<PasswordReset>{
   private repositorio: Repository<PasswordReset>;
-  
+
   constructor(
     private entityManager?: EntityManager
   ) {

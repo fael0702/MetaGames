@@ -2,10 +2,9 @@ import { EntityManager, Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { TokenInvalido } from "../../entities/TokenInvalido";
 
-
 export default class TokenInvalidoRepositorio extends Repository<TokenInvalido>{
   private repositorio: Repository<TokenInvalido>;
-  
+
   constructor(
     private entityManager?: EntityManager
   ) {

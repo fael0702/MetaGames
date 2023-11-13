@@ -1,20 +1,22 @@
-import { Jogo } from '../../entities/Jogo';
 import { Review } from '../../entities/Review';
 import JogoRepositorio from '../jogo/jogo.repositorio';
 import UsuarioRepositorio from '../usuario/usuario.repositorio';
 import ReviewRepositorio from './review.repositorio';
 
 export default class ReviewService {
-    private reviewRepositorio: ReviewRepositorio;
+    private repositorio: ReviewRepositorio;
+    private jogoRepositorio: JogoRepositorio;
+    private usuarioRepositorio: UsuarioRepositorio
 
-    constructor(reviewRepositorio?: ReviewRepositorio) {
-        this.reviewRepositorio = reviewRepositorio;
+    constructor() {
+        this.repositorio = new ReviewRepositorio();
+        this.jogoRepositorio = new JogoRepositorio();
+        this.usuarioRepositorio = new UsuarioRepositorio();
     }
 
     public async reviewsUsuario(id: number) {
         try {
-            const reviewRepositorio = new ReviewRepositorio();
-            const review = await reviewRepositorio.reviewsUsuario(id);
+            const review = await this.repositorio.reviewsUsuario(id);
 
             return review;
         } catch (error) {
@@ -24,18 +26,15 @@ export default class ReviewService {
 
     public async criarReview(comentario: string, nota: number, idJogo: number, idUsuario: number): Promise<Review> {
         try {
-            const reviewRepositorio = new ReviewRepositorio();
-            const jaExiste = await reviewRepositorio.buscarPorJogo(idJogo);
+            const jaExiste = await this.repositorio.buscarPorJogo(idJogo);
 
             if (jaExiste.length) {
                 throw new Error('Já existe um usuário com esse email!');
             }
 
-            const jogoRepositorio = new JogoRepositorio();
-            const jogo = await jogoRepositorio.buscarPorId(idJogo);
+            const jogo = await this.jogoRepositorio.buscarPorId(idJogo);
 
-            const usuarioRepositorio = new UsuarioRepositorio();
-            const usuario = await usuarioRepositorio.buscarPorId(idUsuario);
+            const usuario = await this.usuarioRepositorio.buscarPorId(idUsuario);
 
             const review = new Review();
             review.comentario = comentario;
@@ -43,7 +42,7 @@ export default class ReviewService {
             review.jogo = jogo;
             review.usuario = usuario;
 
-            await reviewRepositorio.salvar(review);
+            await this.repositorio.salvar(review);
             return review;
         } catch (error) {
             console.error(error);
@@ -53,8 +52,7 @@ export default class ReviewService {
 
     public async apagarReview(id: number) {
         try {
-            const reviewRepositorio = new ReviewRepositorio();
-            await reviewRepositorio.excluir(id);
+            await this.repositorio.excluir(id);
         } catch (error) {
             console.error(error);
             throw new Error('Erro excluir review');

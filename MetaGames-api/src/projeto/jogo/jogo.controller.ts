@@ -1,35 +1,36 @@
 import { Response, Request } from 'express';
 import JogoService from './jogo.service';
+import BaseController from '../../bases/BaseController';
 
-export default class JogoController {
+export default class JogoController extends BaseController {
 
-  public async criarJogo(req: Request, res: Response) {
-    try {
+  private service: JogoService;
+
+  constructor() {
+    super();
+    this.service = new JogoService();
+    this.bindMethods();
+  }
+
+  public async criarJogo(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const nome = req.body.nome;
       const img = req.body.img;
       const dataLanc = req.body.data_lancamento;
 
-      const jogoService = new JogoService();
-      const jogo = await jogoService.criarJogo(nome, img, dataLanc);
+      const jogo = await this.service.criarJogo(nome, img, dataLanc);
 
-      return res.status(200).json(jogo);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Erro ao criar jogo' });
-    }
+      res.status(200).json(jogo);
+    }, req, res);
   }
 
-  public async buscarPorNome(req: Request, res: Response) {
-    try {
-      const jogoService = new JogoService();
+  public async buscarPorNome(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const nome = req.params.nome;
 
-      const jogo = await jogoService.buscarPorNome(nome);
-      return res.status(200).json(jogo);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Erro ao criar usuário' });
-    }
+      const jogo = await this.service.buscarPorNome(nome);
+      res.status(200).json(jogo);
+    }, req, res);
   }
 
 }

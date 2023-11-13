@@ -1,4 +1,4 @@
-import { DataSource, EntityManager, Repository } from "typeorm";
+import { EntityManager, Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Review } from "../../entities/Review";
 
@@ -57,5 +57,5 @@ export default class ReviewRepositorio extends Repository<Review>{
       console.error(error);
       throw new Error('Erro ao excluir review');
     }
-}
+  }
 }

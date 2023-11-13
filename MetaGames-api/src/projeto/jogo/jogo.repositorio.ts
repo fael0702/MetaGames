@@ -1,11 +1,11 @@
-import { DataSource, EntityManager, Repository } from "typeorm";
+import { EntityManager, Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Jogo } from "../../entities/Jogo";
 
 
 export default class JogoRepositorio extends Repository<Jogo>{
   private repositorio: Repository<Jogo>;
-  
+
   constructor(
     private entityManager?: EntityManager
   ) {
