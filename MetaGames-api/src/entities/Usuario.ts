@@ -1,5 +1,5 @@
 import { Entity, Column, OneToMany } from "typeorm"
-import { BaseEntityColumns } from "../bases/baseEntityColumns"
+import { BaseEntityColumns } from "../bases/BaseEntityColumns"
 import { Review } from "./Review"
 import { TokenInvalido } from "./TokenInvalido";
 

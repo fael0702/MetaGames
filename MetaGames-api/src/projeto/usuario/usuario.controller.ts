@@ -2,32 +2,37 @@ import { Response, Request } from 'express';
 import UsuarioService from './usuario.service';
 import UsuarioRepositorio from './usuario.repositorio';
 import * as bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
+import BaseController from '../../bases/BaseController';
 
-export default class UsuarioController {
+export default class UsuarioController extends BaseController {
 
-  public async criarUsuario(req: Request, res: Response) {
-    try {
+  private service: UsuarioService;
+  private repositorio: UsuarioRepositorio;
+
+  constructor() {
+    super();
+    this.service = new UsuarioService();
+    this.repositorio = new UsuarioRepositorio();
+    this.bindMethods();
+  }
+
+  public async criarUsuario(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const email = req.body.email;
       const nome = req.body.nome;
       const dataNasc = new Date(req.body.dataNasc);
       const senha = await bcrypt.hash(req.body.senha, 10);
 
-      const usuarioService = new UsuarioService();
-      await usuarioService.criarUsuario(email, nome, senha, dataNasc);
+      await this.service.criarUsuario(email, nome, senha, dataNasc);
 
-      return res.status(200).json({ message: 'Usuário cadastrado com sucesso' });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Erro ao criar usuário' });
-    }
+      res.status(200).json({ message: 'Usuário cadastrado com sucesso' });
+    }, req, res);
   }
 
-  public async login(req: Request, res: Response) {
-    try {
-
-      const usuarioRepositorio = new UsuarioRepositorio();
-      const usuario = await usuarioRepositorio.buscarPorEmail(req.body.email);
+  public async login(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
+      const usuario = await this.repositorio.buscarPorEmail(req.body.email);
 
       if (!usuario) {
         throw new Error('email ou senha inválidos');
@@ -36,110 +41,85 @@ export default class UsuarioController {
       const verificar = await bcrypt.compare(req.body.senha, usuario.senha);
 
       if (!verificar) {
-        throw new Error('email ou senha inválidos');
+        throw new Error('senha inválidos');
       }
 
-      const token = jwt.sign({ id: usuario.id }, process.env.JWT_TOKEN, { expiresIn: '2m' });
+      const token = jwt.sign({ id: usuario.id }, process.env.JWT_TOKEN, { expiresIn: '8h' });
 
       delete usuario.senha;
 
-      return res.json({
+      res.json({
         usuario,
         token
-      })
-    } catch (error) {
-      console.error(error);
-    }
+      });
+    }, req, res);
   }
 
-  public async buscarPorId(req: Request, res: Response) {
-    try {
+  public async buscarPorId(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const id = +req.params.id;
 
-      const usuarioService = new UsuarioService();
-      const usuario = await usuarioService.buscarPorId(id);
+      const usuario = await this.service.buscarPorId(id);
 
       if (usuario) {
-        return res.status(200).json(usuario);
+        res.status(200).json(usuario);
       }
-    } catch (error) {
-      console.error(error);
-    }
+    }, req, res);
   }
 
-  public async alterarNome(req: Request, res: Response) {
-    try {
+  public async alterarNome(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const nome = req.params.nome;
       const id = +req.params.id;
 
-      const usuarioService = new UsuarioService();
-      await usuarioService.alterarNome(nome, id);
-      return res.status(200).json({ message: 'Nome alterado com sucesso' });
-    } catch (error) {
-      console.error(error);
-    }
+      await this.service.alterarNome(nome, id);
+      res.status(200).json({ message: 'Nome alterado com sucesso' });
+    }, req, res);
   }
 
-  public async alterarImg(req: Request, res: Response) {
-    try {
+  public async alterarImg(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const id = +req.body.id;
       const uri = req.body.uri;
 
-      const usuarioService = new UsuarioService();
-      await usuarioService.alterarImg(id, uri);
-      return res.status(200).json({ message: 'Nome alterado com sucesso' });
-    } catch (error) {
-      console.error(error);
-    }
+      await this.service.alterarImg(id, uri);
+      res.status(200).json({ message: 'Imagem alterado com sucesso' });
+    }, req, res);
   }
 
-  public async enviarCodigo(req: Request, res: Response) {
-    try {
+  public async enviarCodigo(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const email = req.params.email;
 
-      const usuarioService = new UsuarioService();
-      await usuarioService.enviarCodigo(email);
-      return res.status(200).json({ message: 'Nome alterado com sucesso' });
-    } catch (error) {
-      console.error(error);
-    }
+      await this.service.enviarCodigo(email);
+      res.status(200).json({ message: 'Codigo enviado com sucesso' });
+    }, req, res);
   }
 
-  public async alterarSenha(req: Request, res: Response) {
-    try {
+  public async alterarSenha(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const email = req.params.email;
       const senha = await bcrypt.hash(req.body.senha, 10);
       const codigo = req.params.codigo;
 
-      const usuarioService = new UsuarioService();
-      await usuarioService.alterarSenha(email, senha, codigo);
-      return res.status(200).json({ message: 'Nome alterado com sucesso' });
-    } catch (error) {
-      console.error(error);
-    }
+      await this.service.alterarSenha(email, senha, codigo);
+      res.status(200).json({ message: 'Senha alterado com sucesso' });
+    }, req, res);
   }
 
-  public async verificarToken(req: Request, res: Response) {
-    try {
-      res.status(200).json({ message: "Token válido." });
-    } catch (error) {
-      console.error(error);
-      res.status(401).json({ message: "Token inválido." });
-    }
+  public async verificarToken(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
+      res.status(200).json({ message: 'Token válido.' });
+    }, req, res);
   }
 
-  public async logoff(req: Request, res: Response) {
-    try {
+  public async logoff(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const token = req.params.token;
 
-      const usuarioService = new UsuarioService();
-      await usuarioService.logoff(token);
+      await this.service.logoff(token);
 
-      return res.status(200).json({ message: 'Usuário deslogado sucesso' });
-    } catch (error) {
-      console.error(error);
-      res.status(401).json({ message: "Token inválido." });
-    }
+      res.status(200).json({ message: 'Usuário deslogado sucesso' });
+    }, req, res);
   }
-
 }

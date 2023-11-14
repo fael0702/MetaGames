@@ -1,57 +1,51 @@
 import { Response, Request } from 'express';
 import ReviewService from './review.service';
+import BaseController from '../../bases/BaseController';
 
-export default class ReviewController {
+export default class ReviewController extends BaseController {
 
-  public async criarReview(req: Request, res: Response) {
-    try {
+  private service: ReviewService;
+
+  constructor() {
+    super();
+    this.service = new ReviewService();
+    this.bindMethods();
+  }
+
+  public async criarReview(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const comentario = req.body.comentario;
       const nota = +req.body.nota;
       const idJogo = +req.body.idJogo;
       const idUsuario = +req.body.idUsuario;
 
-      const reviewService = new ReviewService();
-      const review = await reviewService.criarReview(comentario, nota, idJogo, idUsuario);
+      const review = await this.service.criarReview(comentario, nota, idJogo, idUsuario);
 
-      return res.status(200).json(review);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Erro ao criar review' });
-    }
+      res.status(200).json(review);
+    }, req, res);
   }
 
-  public async reviewsUsuario(req: Request, res: Response) {
-    try {
+  public async reviewsUsuario(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const usuarioId = +req.params.id;
 
-      const reviewService = new ReviewService();
-      const review = await reviewService.reviewsUsuario(usuarioId);
+      const review = await this.service.reviewsUsuario(usuarioId);
 
       if (review.length) {
-        return res.status(200).json(review);
-        
+        res.status(200).json(review);
       } else {
-        return res.status(404).json({ message: 'Não foi encontrado nenhuma review para esse usuário' });
+        res.status(404).json({ message: 'Não foi encontrado nenhuma review para esse usuário' });
       }
-      
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Erro interno do servidor' });
-    }
+    }, req, res);
   }
 
-  public async apagarReview(req: Request, res: Response) {
-    try {
+  public async apagarReview(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
       const id = +req.params.id;
 
-      const reviewService = new ReviewService();
-      await reviewService.apagarReview(id);
+      await this.service.apagarReview(id);
 
-      return res.status(200).json({ message: 'Review excluida com sucesso' });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Erro interno do servidor' });
-    }
+      res.status(200).json({ message: 'Review excluida com sucesso' });
+    }, req, res);
   }
-
 }
