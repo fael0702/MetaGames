@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Button,
+  TextInput,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -22,9 +23,11 @@ export default function novonome() {
   );
   const [nome, setNome] = useState();
   const [userInfo, setUserInfo] = useState(null);
+  const [email, setEmail] = useState();
 
   useEffect(() => {
     handleUsuario();
+    handleEmail();
   }, []);
 
   useEffect(() => {
@@ -54,6 +57,13 @@ export default function novonome() {
     setNome(usuario.nome);
   };
 
+  const handleEmail = async () => {
+    const usuarioJson = await AsyncStorage.getItem("@usuario");
+    const usuario = JSON.parse(usuarioJson);
+
+    setEmail(usuario.email);
+  };
+
   return (
     <ImageBackground
       source={require("../../assets/FundoMetaGames.png")}
@@ -61,7 +71,12 @@ export default function novonome() {
     >
       <View style={styles.container}>
         <View style={styles.ctnTroca}>
-
+          <View>
+            <Text style={[styles.title, styles.contorno]}>
+              {userInfo?.email || email}
+            </Text>
+            <TextInput style={styles.input} placeholderTextColor={"#000"} />
+          </View>
           <View>
             <TouchableOpacity style={styles.btn}>
               <Text>CANCELAR</Text>
@@ -70,7 +85,6 @@ export default function novonome() {
               <Text>TROCAR</Text>
             </TouchableOpacity>
           </View>
-
         </View>
 
         <StatusBar style="auto" />
@@ -80,6 +94,10 @@ export default function novonome() {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    color: "#000000",
+    fontSize: 22,
+  },
   contorno: {
     textShadowColor: "#FAFF19",
     textShadowOffset: { width: 2, height: 2 },
@@ -87,7 +105,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     borderRadius: 64,
-    borderColor: '#DFE321'
+    borderColor: "#DFE321",
   },
   ctnTroca: {
     marginTop: 40,
@@ -98,6 +116,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     opacity: 0.5,
     borderRadius: 35,
+  },
+  input: {
+    padding: 4,
+    marginTop: 7,
+    marginBottom: 12,
+    borderRadius: 10,
+    fontSize: 16,
+    borderWidth: 2,
+    width: 250,
   },
   container: {
     flex: 1,
