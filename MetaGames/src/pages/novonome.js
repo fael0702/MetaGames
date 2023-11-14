@@ -1,0 +1,112 @@
+import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+  Button,
+} from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
+import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import apiService from "../services/api";
+
+export default function novonome() {
+  const navigation = useNavigation();
+  const [image, setImage] = useState(
+    "https://cdn-icons-png.flaticon.com/512/5953/5953527.png"
+  );
+  const [nome, setNome] = useState();
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    handleUsuario();
+  }, []);
+
+  useEffect(() => {
+    const initializeAppAndUserInfo = async () => {
+      const usuarioJson = await AsyncStorage.getItem("@usuario");
+
+      if (usuarioJson) {
+        const usuario = JSON.parse(usuarioJson);
+        setUserInfo(usuario);
+
+        if (usuario.imagem) {
+          setImage(
+            `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
+          );
+        }
+      }
+    };
+
+    initializeAppAndUserInfo();
+  }, []);
+
+  //MUDAR PARA EMAIL
+  const handleUsuario = async () => {
+    const usuarioJson = await AsyncStorage.getItem("@usuario");
+    const usuario = JSON.parse(usuarioJson);
+
+    setNome(usuario.nome);
+  };
+
+  return (
+    <ImageBackground
+      source={require("../../assets/FundoMetaGames.png")}
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <View style={styles.ctnTroca}>
+
+          <View>
+            <TouchableOpacity style={styles.btn}>
+              <Text>CANCELAR</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btn}>
+              <Text>TROCAR</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
+
+        <StatusBar style="auto" />
+      </View>
+    </ImageBackground>
+  );
+}
+
+const styles = StyleSheet.create({
+  contorno: {
+    textShadowColor: "#FAFF19",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 1,
+  },
+  btn: {
+    borderRadius: 64,
+    borderColor: '#DFE321'
+  },
+  ctnTroca: {
+    marginTop: 40,
+    width: 300,
+    height: 300,
+    backgroundColor: "#D9D9D9",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0.5,
+    borderRadius: 35,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+});

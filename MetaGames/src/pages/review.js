@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import apiService from '../services/api'
 
+
 const Review = ({ route, navigation }) => {
   const [nota, setNota] = useState('');
   const [comentario, setComantario] = useState('');
@@ -109,6 +110,7 @@ const Review = ({ route, navigation }) => {
             <Text style={[styles.red, styles.contorno]}>Enviar</Text>
           </TouchableOpacity>
         </View>
+        
       </View>
     </ImageBackground>
   );

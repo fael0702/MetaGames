@@ -19,6 +19,7 @@ export default function Home() {
   const navigation = useNavigation();
   const handleHome = () => navigation.navigate("Home");
   const handlePerfil = () => navigation.navigate("Perfil");
+  const handleHistorico = () => navigation.navigate("Historico")
   const [jogosDisp, setJogosDisp] = useState([]);
   const [gameList, setGameList] = useState([]);
   const [visible, setVisible] = useState(3);
@@ -83,7 +84,7 @@ export default function Home() {
 
   const jogosAvaliados = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.card}>
+      <TouchableOpacity style={styles.card} onPress={handleHistorico}>
         <Image 
           source={{ uri: item.jogo.background_image }} 
           style={styles.imagemGameAv} 

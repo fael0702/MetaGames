@@ -9,6 +9,7 @@ import Home from './pages/home';
 import Cadastro from './pages/cadastro';
 import Review from './pages/review';
 import Perfil from './pages/perfil';
+import NovoNome from './pages/novoNome'
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -20,6 +21,8 @@ const CustomIcon = ({ focused, iconSource }) => (
     resizeMode="contain"
   />
 );
+
+
 
 function MainTabs() {
   return (
@@ -76,7 +79,6 @@ function MainTabs() {
           ),
         }}
       />
-      
     </Tab.Navigator>
   );
 }
@@ -121,6 +123,13 @@ export default function Routes() {
           <Stack.Screen
             name="Perfil"
             component={Perfil}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="novoNome"
+            component={NovoNome}
             options={{
               headerShown: false,
             }}
