@@ -164,11 +164,19 @@ const Login = () => {
 
           <View style={styles.imageContainer}>
             <TouchableOpacity disabled={!request2} style={[styles.red, styles.contorno]} onPress={() => handlePressAsync()}>
-              <FontAwesome5 name="facebook" size={47} color="#00f" />
+            <Image
+                source={require('../../assets/logo_facebook.png')}
+                style={{ width: 40, height: 40}}
+              />
             </TouchableOpacity>
 
+            <View style={{ marginHorizontal: 5 }} />
+
             <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
-              <FontAwesome name="google" size={50} color="#f00" />
+            <Image
+                source={require('../../assets/logo_google.png')}
+                style={{ width: 40, height: 40}}
+              />
 
             </TouchableOpacity>
           </View>
@@ -181,7 +189,6 @@ const Login = () => {
 const styles = StyleSheet.create({
   imageContainer: {
     flexDirection: 'row',
-    marginBottom: 10,
   },
   container: {
     width: '80%',
