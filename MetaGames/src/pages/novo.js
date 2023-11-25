@@ -16,51 +16,23 @@ import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiService from "../services/api";
 
-export default function novonome() {
+export default function NovoNome() {
   const navigation = useNavigation();
   const [image, setImage] = useState(
     "https://cdn-icons-png.flaticon.com/512/5953/5953527.png"
   );
-  const [nome, setNome] = useState();
   const [userInfo, setUserInfo] = useState(null);
   const [email, setEmail] = useState();
 
-  useEffect(() => {
-    handleUsuario();
+  useEffect(() => {    
     handleEmail();
   }, []);
 
-  useEffect(() => {
-    const initializeAppAndUserInfo = async () => {
-      const usuarioJson = await AsyncStorage.getItem("@usuario");
 
-      if (usuarioJson) {
-        const usuario = JSON.parse(usuarioJson);
-        setUserInfo(usuario);
-
-        if (usuario.imagem) {
-          setImage(
-            `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
-          );
-        }
-      }
-    };
-
-    initializeAppAndUserInfo();
-  }, []);
-
-  //MUDAR PARA EMAIL
-  const handleUsuario = async () => {
-    const usuarioJson = await AsyncStorage.getItem("@usuario");
-    const usuario = JSON.parse(usuarioJson);
-
-    setNome(usuario.nome);
-  };
-
+  //Puxa o email que está no json
   const handleEmail = async () => {
     const usuarioJson = await AsyncStorage.getItem("@usuario");
     const usuario = JSON.parse(usuarioJson);
-
     setEmail(usuario.email);
   };
 
@@ -77,12 +49,12 @@ export default function novonome() {
             </Text>
             <TextInput style={styles.input} placeholderTextColor={"#000"} />
           </View>
-          <View>
+          <View style={styles.ctnBotoes}>
             <TouchableOpacity style={styles.btn}>
-              <Text>CANCELAR</Text>
+              <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn}>
-              <Text>TROCAR</Text>
+              <Text style={styles.btnText}>TROCAR</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -96,16 +68,29 @@ export default function novonome() {
 const styles = StyleSheet.create({
   title: {
     color: "#000000",
-    fontSize: 22,
+    fontSize: 16,
+    marginBottom: 24,
   },
   contorno: {
     textShadowColor: "#FAFF19",
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
   },
+  ctnBotoes:{
+    marginTop: 16,
+    flexDirection: "row",
+  },
   btn: {
     borderRadius: 64,
-    borderColor: "#DFE321",
+    backgroundColor: "#000",
+    padding: 9,
+    borderColor: '#DFE321',
+    borderWidth: 2,
+    marginHorizontal: 10
+  },
+  btnText : {
+    textAlign: "center",
+    color: '#DFE321' 
   },
   ctnTroca: {
     marginTop: 40,
@@ -114,7 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D9D9D9",
     alignItems: "center",
     justifyContent: "center",
-    opacity: 0.5,
+    opacity: 0.7,
     borderRadius: 35,
   },
   input: {

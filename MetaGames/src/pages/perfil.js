@@ -26,26 +26,23 @@ export default function Perfil() {
 
   useEffect(() => {
     handleUsuario();
-  }, []);
-
-  useEffect(() => {
-    const initializeAppAndUserInfo = async () => {
-      const usuarioJson = await AsyncStorage.getItem("@usuario");
-
-      if (usuarioJson) {
-        const usuario = JSON.parse(usuarioJson);
-        setUserInfo(usuario);
-
-        if (usuario.imagem) {
-          setImage(
-            `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
-          );
-        }
-      }
-    };
-
     initializeAppAndUserInfo();
   }, []);
+
+  const initializeAppAndUserInfo = async () => {
+    const usuarioJson = await AsyncStorage.getItem("@usuario");
+
+    if (usuarioJson) {
+      const usuario = JSON.parse(usuarioJson);
+      setUserInfo(usuario);
+
+      if (usuario.imagem) {
+        setImage(
+          `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
+        );
+      }
+    }
+  };
 
   const handleUsuario = async () => {
     const usuarioJson = await AsyncStorage.getItem("@usuario");
