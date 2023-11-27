@@ -80,6 +80,10 @@ export default function Perfil() {
     navigation.navigate('novoNome');
   };
 
+  const hadleNovaSenha = () => {
+    navigation.navigate('Codigo')
+  }
+
   const handleGoBack = () => {
     navigation.goBack();
   };
@@ -123,7 +127,7 @@ export default function Perfil() {
           <TouchableOpacity onPress={handleNovoNome}>
             <Text style={styles.title}>ALTERAR NOME</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={hadleNovaSenha}>
             <Text style={styles.title}>ALTERAR SENHA</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleSair}>

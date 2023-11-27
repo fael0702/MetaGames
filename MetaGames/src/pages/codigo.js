@@ -60,7 +60,7 @@ export default function Codigo() {
             />
           </View>
           <View style={styles.ctnBotoes}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity onPress={navigation.navigate('Perfil')} style={styles.btn}>
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
 
@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
   btn: {
     borderRadius: 64,
     backgroundColor: "#000",
-    padding: 9,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderColor: "#DFE321",
     borderWidth: 2,
     marginHorizontal: 10,

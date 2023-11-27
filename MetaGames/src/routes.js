@@ -92,27 +92,6 @@ export default function Routes() {
     >
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
-            name="Codigo"
-            component={Codigo}
-            options={{
-              headerShown: false,
-            }}
-          />
-        <Stack.Screen
-            name="NovaSenha"
-            component={NovaSenha}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="novoNome"
-            component={NovoNome}
-            options={{
-              headerShown: false,
-            }}
-          />
           <Stack.Screen
             name="Login"
             component={Login}
@@ -144,6 +123,27 @@ export default function Routes() {
           <Stack.Screen
             name="Perfil"
             component={Perfil}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Codigo"
+            component={Codigo}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="NovaSenha"
+            component={NovaSenha}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="novoNome"
+            component={NovoNome}
             options={{
               headerShown: false,
             }}

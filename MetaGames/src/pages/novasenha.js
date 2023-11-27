@@ -35,6 +35,10 @@ export default function NovaSenha() {
     setEmail(usuario.email);
   };
 
+  const handleCancelar = () => {
+    navigation.navigate('Perfil')
+  };
+
   return (
     <ImageBackground
       source={require("../../assets/FundoMetaGames.png")}
@@ -50,7 +54,7 @@ export default function NovaSenha() {
             <TextInput style={styles.input} placeholder="Digite Novamente"  placeholderTextColor={"#000"} />
           </View>
           <View style={styles.ctnBotoes}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity onPress={navigation.navigate('Perfil')} style={styles.btn}>
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn}>

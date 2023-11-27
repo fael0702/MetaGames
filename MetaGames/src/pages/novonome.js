@@ -35,6 +35,7 @@ export default function NovoNome() {
     setEmail(usuario.email);
   };
 
+
   return (
     <ImageBackground
       source={require("../../assets/FundoMetaGames.png")}
@@ -49,7 +50,7 @@ export default function NovoNome() {
             <TextInput style={styles.input} placeholder="Digite um novo nome" placeholderTextColor={"#000"} />
           </View>
           <View style={styles.ctnBotoes}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity onPress={navigation.navigate('Perfil')} style={styles.btn}>
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn}>
