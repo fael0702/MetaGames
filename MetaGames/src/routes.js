@@ -9,7 +9,9 @@ import Home from "./pages/home";
 import Cadastro from "./pages/cadastro";
 import Review from "./pages/review";
 import Perfil from "./pages/perfil";
-import NovoNome from "./pages/novo";
+import NovoNome from "./pages/novonome";
+import NovaSenha from "./pages/novasenha";
+import Codigo from "./pages/codigo";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -90,6 +92,27 @@ export default function Routes() {
     >
       <NavigationContainer>
         <Stack.Navigator>
+        <Stack.Screen
+            name="Codigo"
+            component={Codigo}
+            options={{
+              headerShown: false,
+            }}
+          />
+        <Stack.Screen
+            name="NovaSenha"
+            component={NovaSenha}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="novoNome"
+            component={NovoNome}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="Login"
             component={Login}
@@ -121,13 +144,6 @@ export default function Routes() {
           <Stack.Screen
             name="Perfil"
             component={Perfil}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="novoNome"
-            component={NovoNome}
             options={{
               headerShown: false,
             }}

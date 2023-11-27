@@ -24,10 +24,9 @@ export default function NovoNome() {
   const [userInfo, setUserInfo] = useState(null);
   const [email, setEmail] = useState();
 
-  useEffect(() => {    
+  useEffect(() => {
     handleEmail();
   }, []);
-
 
   //Puxa o email que está no json
   const handleEmail = async () => {
@@ -47,7 +46,7 @@ export default function NovoNome() {
             <Text style={[styles.title, styles.contorno]}>
               {userInfo?.email || email}
             </Text>
-            <TextInput style={styles.input} placeholderTextColor={"#000"} />
+            <TextInput style={styles.input} placeholder="Digite um novo nome" placeholderTextColor={"#000"} />
           </View>
           <View style={styles.ctnBotoes}>
             <TouchableOpacity style={styles.btn}>
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
   },
-  ctnBotoes:{
+  ctnBotoes: {
     marginTop: 16,
     flexDirection: "row",
   },
@@ -84,13 +83,13 @@ const styles = StyleSheet.create({
     borderRadius: 64,
     backgroundColor: "#000",
     padding: 9,
-    borderColor: '#DFE321',
+    borderColor: "#DFE321",
     borderWidth: 2,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
-  btnText : {
+  btnText: {
     textAlign: "center",
-    color: '#DFE321' 
+    color: "#DFE321",
   },
   ctnTroca: {
     marginTop: 40,
@@ -110,6 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 2,
     width: 250,
+    textAlign: "center",
   },
   container: {
     flex: 1,
