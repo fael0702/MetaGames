@@ -1,16 +1,23 @@
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Picker } from '@react-native-picker/picker';
-import apiService from '../services/api'
-
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ImageBackground,
+  Image,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Picker } from "@react-native-picker/picker";
+import apiService from "../services/api";
 
 const Review = ({ route, navigation }) => {
-  const [nota, setNota] = useState('');
-  const [comentario, setComantario] = useState('');
-  const [cor, setCor] = useState('#000000');
+  const [nota, setNota] = useState("");
+  const [comentario, setComantario] = useState("");
+  const [cor, setCor] = useState("#000000");
 
   const { image, name, rating, lancamento } = route.params?.parametro || {};
 
@@ -19,55 +26,71 @@ const Review = ({ route, navigation }) => {
   };
 
   const handleNavigate = async () => {
-
     try {
       const usuarioJson = await AsyncStorage.getItem("@usuario");
       const usuario = JSON.parse(usuarioJson);
       let jogoCadastrado;
-      let reviewCadastrado
+      let reviewCadastrado;
       const jogoJaCadastrado = await apiService.buscarJogo(name);
 
       if (!jogoJaCadastrado) {
         jogoCadastrado = await apiService.cadastroJogo(name, image, lancamento);
         if (jogoCadastrado) {
-          reviewCadastrado = await apiService.cadastroReview(comentario, nota, jogoCadastrado.id, user.id)
+          reviewCadastrado = await apiService.cadastroReview(
+            comentario,
+            nota,
+            jogoCadastrado.id,
+            user.id
+          );
         }
       } else {
-        reviewCadastrado = await apiService.cadastroReview(comentario, nota, jogoJaCadastrado.id, usuario.id)
+        reviewCadastrado = await apiService.cadastroReview(
+          comentario,
+          nota,
+          jogoJaCadastrado.id,
+          usuario.id
+        );
       }
 
-      navigation.navigate('Historico', {
+      navigation.navigate("Historico", {
         parametro: reviewCadastrado,
       });
-      navigation.navigate('Home', {
+      navigation.navigate("Home", {
         parametro: reviewCadastrado,
       });
     } catch (error) {
-      console.log('Erro ao salvar jogo revisado:', error);
+      console.log("Erro ao salvar jogo revisado:", error);
     }
   };
 
   const handlePickerChange = (itemValue) => {
     setNota(itemValue);
-    setCor(itemValue <= 3 ? "#f00" : (itemValue > 3 && itemValue < 7 ? "#ffff00" : "#0f0"));
+    setCor(
+      itemValue <= 3
+        ? "#f00"
+        : itemValue > 3 && itemValue < 7
+        ? "#ffff00"
+        : "#0f0"
+    );
   };
 
   return (
     <ImageBackground
-      source={require('../../assets/FundoMetaGames.png')}
+      source={require("../../assets/FundoMetaGames.png")}
       style={styles.background}
     >
-
       <View style={styles.containerRola}>
         <View style={styles.container}>
           <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
             <Image
-              source={require('../../assets/voltar.png')}
+              source={require("../../assets/voltar.png")}
               style={styles.voltar}
             />
           </TouchableOpacity>
           <View>
-            {image && <Image source={{ uri: image }} style={styles.gameImage} />}
+            {image && (
+              <Image source={{ uri: image }} style={styles.gameImage} />
+            )}
             <Text style={styles.gameName}>{name}</Text>
             <Text style={styles.gameRating}>Metacritic: {rating}</Text>
           </View>
@@ -110,7 +133,6 @@ const Review = ({ route, navigation }) => {
             <Text style={[styles.red, styles.contorno]}>Enviar</Text>
           </TouchableOpacity>
         </View>
-        
       </View>
     </ImageBackground>
   );
@@ -118,23 +140,23 @@ const Review = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '80%',
-    height: '85%',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "80%",
+    height: "85%",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 5,
   },
 
   containerRola: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   background: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
 
   input: {
@@ -145,19 +167,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 2,
     width: 250,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   multilineInput: {
     height: 100,
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
   },
   contorno: {
-    textShadowColor: '#000000',
+    textShadowColor: "#000000",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 2,
   },
   red: {
-    color: '#FAFF19',
+    color: "#FAFF19",
     fontSize: 22,
   },
   red2: {
@@ -166,7 +188,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    color: '#FAFF19',
+    color: "#FAFF19",
     fontSize: 22,
     marginBottom: 20,
   },
@@ -180,12 +202,12 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     marginBottom: 10,
-    borderColor: '#000',
+    borderColor: "#000",
     borderWidth: 3,
   },
   gameName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   gameRating: {
@@ -200,7 +222,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 15,
-    backgroundColor: '#D9D9D9',
+    backgroundColor: "#D9D9D9",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -209,20 +231,20 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 10,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
     borderWidth: 2,
   },
   textNota: {
     fontSize: 30,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#000",
     width: 100,
     textAlign: "center",
   },
   backButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 20,
     left: 20,
     zIndex: 1,
@@ -230,7 +252,7 @@ const styles = StyleSheet.create({
   voltar: {
     width: 50,
     height: 50,
-  }
+  },
 });
 
 export default Review;

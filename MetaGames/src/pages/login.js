@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, ImageBackground, View, TextInput, TouchableOpacity, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  ImageBackground,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import * as WebBrowser from "expo-web-browser";
-import * as Facebook from 'expo-auth-session/providers/facebook'
+import * as Facebook from "expo-auth-session/providers/facebook";
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/FontAwesome";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
-import apiService from '../services/api'
-import jwt_decode from 'jwt-decode';
+import apiService from "../services/api";
+import jwt_decode from "jwt-decode";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -19,8 +27,8 @@ const Login = () => {
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   React.useEffect(() => {
     loginGoogle();
@@ -40,9 +48,9 @@ const Login = () => {
       const valido = await apiService.verificarToken();
 
       if (valido) {
-        navigation.navigate('MainTabs');
+        navigation.navigate("MainTabs");
       }
-    }
+    };
     fetchData();
   }, [response2]);
 
@@ -54,17 +62,16 @@ const Login = () => {
   };
 
   const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
-    clientId: process.env.CLIENT_ID
-  })
+    clientId: process.env.CLIENT_ID,
+  });
 
-  
   const handlePressAsync = async () => {
     const result = await promptAsync2();
     if (result.type !== "success") {
       alert("Uh oh, something went wrong");
       return;
     } else {
-      navigation.navigate('MainTabs');
+      navigation.navigate("MainTabs");
     }
   };
 
@@ -72,9 +79,9 @@ const Login = () => {
     const user = await AsyncStorage.getItem("@user");
 
     if (!user) {
-      if (response?.type === 'success') {
+      if (response?.type === "success") {
         await getUserInfo(response.authentication.accessToken);
-        navigation.navigate('MainTabs');
+        navigation.navigate("MainTabs");
       }
     } else {
       setUserInfo(JSON.parse(user));
@@ -87,7 +94,6 @@ const Login = () => {
     expoClientId: process.env.EXPO_CLIENT_ID,
     redirectUri: process.env.REDIRECT_URI,
   });
-  
 
   const getUserInfo = async (token) => {
     if (!token) return;
@@ -102,45 +108,52 @@ const Login = () => {
       const user = await response.json();
       await AsyncStorage.setItem("@user", JSON.stringify(user));
       setUserInfo(user);
-
     } catch (error) {
-      console.log('erro: ' + error);
+      console.log("erro: " + error);
     }
-  }
+  };
 
   const handleLogin = async () => {
     const data = await apiService.login(email, password);
-    await AsyncStorage.setItem('token', data.token);
+    await AsyncStorage.setItem("token", data.token);
     await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
     if (data.usuario) {
-      navigation.navigate('MainTabs');
+      navigation.navigate("MainTabs");
     } else {
-      alert('E-mail ou senha inválidos!');
+      alert("E-mail ou senha inválidos!");
     }
   };
 
   return (
     <ImageBackground
-      source={require('../../assets/FundoMetaGames.png')}
+      source={require("../../assets/FundoMetaGames.png")}
       style={styles.background}
     >
       <View style={styles.containerRola}>
         <View style={styles.container}>
-          
           <Text style={[styles.title, styles.contorno]}>Login</Text>
           <View>
             <Text style={styles.label}>Email</Text>
-            <TextInput style={styles.input} value={email} onChangeText={setEmail}/>
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+            />
             <Text style={styles.label}>Senha</Text>
 
             <View style={styles.inputContainer}>
-              <TextInput style={styles.input} secureTextEntry={!senhaVisivel} value={password} onChangeText={setPassword}/>
+              <TextInput
+                style={styles.input}
+                secureTextEntry={!senhaVisivel}
+                value={password}
+                onChangeText={setPassword}
+              />
               <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={toggleSenhaVisivel}
               >
                 <Icon
-                  name={senhaVisivel ? 'eye-slash' : 'eye'}
+                  name={senhaVisivel ? "eye-slash" : "eye"}
                   size={20}
                   color="#000"
                 />
@@ -148,12 +161,20 @@ const Login = () => {
             </View>
           </View>
 
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={handleLogin}>
+          <TouchableOpacity
+            style={[styles.red, styles.contorno]}
+            onPress={handleLogin}
+          >
             <Text style={[styles.red, styles.contorno]}>Entrar</Text>
           </TouchableOpacity>
 
           <Text style={styles.red2}>Ainda não cadastrado?</Text>
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { navigation.navigate('Cadastro') }}>
+          <TouchableOpacity
+            style={[styles.red, styles.contorno]}
+            onPress={() => {
+              navigation.navigate("Cadastro");
+            }}
+          >
             <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
           </TouchableOpacity>
 
@@ -164,15 +185,21 @@ const Login = () => {
           </View>
 
           <View style={styles.imageContainer}>
-            <TouchableOpacity disabled={!request2} style={[styles.red, styles.contorno]} onPress={() => handlePressAsync()}>
+            <TouchableOpacity
+              disabled={!request2}
+              style={[styles.red, styles.contorno]}
+              onPress={() => handlePressAsync()}
+            >
               <FontAwesome5 name="facebook" size={47} color="#00f" />
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
+            <TouchableOpacity
+              style={[styles.red, styles.contorno]}
+              onPress={() => promptAsync()}
+            >
               <FontAwesome name="google" size={50} color="#f00" />
             </TouchableOpacity>
-          </View> 
-
+          </View>
         </View>
       </View>
     </ImageBackground>
@@ -181,23 +208,23 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 10,
   },
   container: {
-    width: '80%',
-    height: '75%',
-    backgroundColor: '#D9D9D9',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "80%",
+    height: "75%",
+    backgroundColor: "#D9D9D9",
+    alignItems: "center",
+    justifyContent: "center",
     opacity: 0.7,
     borderRadius: 5,
   },
 
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
     marginRight: 10,
   },
   iconContainer: {
@@ -206,13 +233,13 @@ const styles = StyleSheet.create({
 
   containerRola: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   background: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
 
   input: {
@@ -226,14 +253,14 @@ const styles = StyleSheet.create({
   },
 
   contorno: {
-    textShadowColor: '#000000',
+    textShadowColor: "#000000",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 2,
     padding: 5,
   },
 
   red: {
-    color: '#FAFF19',
+    color: "#FAFF19",
     fontSize: 22,
   },
 
@@ -243,14 +270,14 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    color: '#FAFF19',
+    color: "#FAFF19",
     fontSize: 22,
     marginBottom: 20,
   },
 
   dividerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 10,
     width: 250,
   },
@@ -258,13 +285,13 @@ const styles = StyleSheet.create({
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
 
   dividerText: {
     paddingHorizontal: 10,
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   profile: {
     alignItems: "center",

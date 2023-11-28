@@ -13,13 +13,13 @@ import { useNavigation } from "@react-navigation/native";
 import apiGames from "../services/apiGames";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiService from '../services/api'
+import apiService from "../services/api";
 
 export default function Home() {
   const navigation = useNavigation();
   const handleHome = () => navigation.navigate("Home");
   const handlePerfil = () => navigation.navigate("Perfil");
-  const handleHistorico = () => navigation.navigate("Historico")
+  const handleHistorico = () => navigation.navigate("Historico");
   const [jogosDisp, setJogosDisp] = useState([]);
   const [gameList, setGameList] = useState([]);
   const [visible, setVisible] = useState(3);
@@ -29,10 +29,10 @@ export default function Home() {
     const fetchData = async () => {
       try {
         loadingGames();
-  
+
         const usuarioJson = await AsyncStorage.getItem("@usuario");
         const usuario = JSON.parse(usuarioJson);
-  
+
         const reviews = await apiService.buscarReviewUsuario(usuario.id);
         if (reviews.length) {
           setGameList([...reviews]);
@@ -63,7 +63,7 @@ export default function Home() {
         image: item?.background_image,
         name: item?.name,
         rating: item?.metacritic,
-        lancamento: item?.released
+        lancamento: item?.released,
       },
     });
   };
@@ -85,9 +85,9 @@ export default function Home() {
   const jogosAvaliados = ({ item }) => {
     return (
       <TouchableOpacity style={styles.card} onPress={handleHistorico}>
-        <Image 
-          source={{ uri: item.jogo.background_image }} 
-          style={styles.imagemGameAv} 
+        <Image
+          source={{ uri: item.jogo.background_image }}
+          style={styles.imagemGameAv}
         />
       </TouchableOpacity>
     );
@@ -250,6 +250,4 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: "green",
   },
-
-  
 });

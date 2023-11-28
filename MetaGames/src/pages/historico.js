@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiService from '../services/api'
+import apiService from "../services/api";
 
 const Historico = ({ route }) => {
   const navigation = useNavigation();
@@ -25,7 +25,7 @@ const Historico = ({ route }) => {
       try {
         const usuarioString = await AsyncStorage.getItem("@usuario");
         const usuario = JSON.parse(usuarioString);
-  
+
         const reviews = await apiService.buscarReviewUsuario(usuario.id);
         if (reviews.length) {
           setGameList([...reviews]);
@@ -63,7 +63,10 @@ const Historico = ({ route }) => {
           <Text style={styles.deleteButtonText}>Excluir</Text>
         </TouchableOpacity>
         <Text style={styles.gameTitle}>{item?.jogo.nome}</Text>
-        <Image source={{ uri: item?.jogo.background_image }} style={styles.cardImage} />
+        <Image
+          source={{ uri: item?.jogo.background_image }}
+          style={styles.cardImage}
+        />
         <Text style={styles.gameTitle}>{item?.nota}</Text>
         <Text style={styles.gameTitle}>{item?.comentario}</Text>
       </TouchableOpacity>
@@ -187,7 +190,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-
 });
 
 export default Historico;

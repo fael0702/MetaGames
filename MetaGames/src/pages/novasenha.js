@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 
 export default function NovaSenha() {
   const navigation = useNavigation();
@@ -44,11 +43,22 @@ export default function NovaSenha() {
             <Text style={[styles.title, styles.contorno]}>
               {userInfo?.email || email}
             </Text>
-            <TextInput style={styles.input} placeholder="Nova senha" placeholderTextColor={"#000"} />
-            <TextInput style={styles.input} placeholder="Digite Novamente"  placeholderTextColor={"#000"} />
+            <TextInput
+              style={styles.input}
+              placeholder="Nova senha"
+              placeholderTextColor={"#000"}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Digite Novamente"
+              placeholderTextColor={"#000"}
+            />
           </View>
           <View style={styles.ctnBotoes}>
-            <TouchableOpacity onPress={() => navigation.navigate("Perfil")} style={styles.btn}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Perfil")}
+              style={styles.btn}
+            >
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn}>

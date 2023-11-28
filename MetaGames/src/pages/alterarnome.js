@@ -16,7 +16,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiService from "../services/api";
 
-
 export default function AlterarNome() {
   const navigation = useNavigation();
   const [image, setImage] = useState(
@@ -36,7 +35,6 @@ export default function AlterarNome() {
     setEmail(usuario.email);
   };
 
-
   return (
     <ImageBackground
       source={require("../../assets/FundoMetaGames.png")}
@@ -48,10 +46,17 @@ export default function AlterarNome() {
             <Text style={[styles.title, styles.contorno]}>
               {userInfo?.email || email}
             </Text>
-            <TextInput style={styles.input} placeholder="Digite um novo nome" placeholderTextColor={"#000"} />
+            <TextInput
+              style={styles.input}
+              placeholder="Digite um novo nome"
+              placeholderTextColor={"#000"}
+            />
           </View>
           <View style={styles.ctnBotoes}>
-            <TouchableOpacity onPress={() => navigation.navigate("Perfil")} style={styles.btn}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Perfil")}
+              style={styles.btn}
+            >
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn}>
