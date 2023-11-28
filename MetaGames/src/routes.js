@@ -1,14 +1,17 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { ImageBackground, Image } from 'react-native';
-import Login from './pages/login';
-import Lista from './pages/lista';
-import Historico from './pages/historico';
-import Home from './pages/home';
-import Cadastro from './pages/cadastro';
-import Review from './pages/review';
-import Perfil from './pages/perfil';
+import { NavigationContainer } from "@react-navigation/native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import { ImageBackground, Image } from "react-native";
+import Login from "./pages/login";
+import Lista from "./pages/lista";
+import Historico from "./pages/historico";
+import Home from "./pages/home";
+import Cadastro from "./pages/cadastro";
+import Review from "./pages/review";
+import Perfil from "./pages/perfil";
+import NovoNome from "./pages/novonome";
+import NovaSenha from "./pages/novasenha";
+import Codigo from "./pages/codigo";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -16,7 +19,7 @@ const Stack = createStackNavigator();
 const CustomIcon = ({ focused, iconSource }) => (
   <Image
     source={iconSource}
-    style={{ width: 30, height: 30, tintColor: focused ? null : '#000' }}
+    style={{ width: 30, height: 30, tintColor: focused ? null : "#000" }}
     resizeMode="contain"
   />
 );
@@ -29,14 +32,14 @@ function MainTabs() {
         showIcon: true,
         showLabel: false,
         style: {
-          backgroundColor: '#d2d2d2',
-          position: 'absolute',
+          backgroundColor: "#d2d2d2",
+          position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
         },
         indicatorStyle: {
-          backgroundColor: 'blue',
+          backgroundColor: "blue",
         },
       }}
     >
@@ -47,7 +50,7 @@ function MainTabs() {
           tabBarIcon: ({ focused }) => (
             <CustomIcon
               focused={focused}
-              iconSource={require('../assets/lista.png')}
+              iconSource={require("../assets/lista.png")}
             />
           ),
         }}
@@ -59,7 +62,7 @@ function MainTabs() {
           tabBarIcon: ({ focused }) => (
             <CustomIcon
               focused={focused}
-              iconSource={require('../assets/home.png')}
+              iconSource={require("../assets/home.png")}
             />
           ),
         }}
@@ -71,12 +74,11 @@ function MainTabs() {
           tabBarIcon: ({ focused }) => (
             <CustomIcon
               focused={focused}
-              iconSource={require('../assets/historico.png')}
+              iconSource={require("../assets/historico.png")}
             />
           ),
         }}
       />
-      
     </Tab.Navigator>
   );
 }
@@ -84,7 +86,7 @@ function MainTabs() {
 export default function Routes() {
   return (
     <ImageBackground
-      source={require('../assets/FundoMetaGames.png')}
+      source={require("../assets/FundoMetaGames.png")}
       style={{ flex: 1 }}
       resizeMode="cover"
     >
@@ -121,6 +123,27 @@ export default function Routes() {
           <Stack.Screen
             name="Perfil"
             component={Perfil}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Codigo"
+            component={Codigo}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="NovaSenha"
+            component={NovaSenha}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="novoNome"
+            component={NovoNome}
             options={{
               headerShown: false,
             }}
