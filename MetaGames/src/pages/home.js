@@ -33,7 +33,7 @@ export default function Home() {
         const usuario = JSON.parse(usuarioJson);
   
         const reviews = await apiService.buscarReviewUsuario(usuario.id);
-        if (reviews.length) {
+        if (reviews?.length) {
           setGameList([...reviews]);
         }
       } catch (error) {

@@ -14,7 +14,9 @@ export default class UsuarioRota {
 
   private initializeRoutes() {
     this.router.post('/criar', this.controller.criarUsuario);
+    this.router.post('/criar-google', this.controller.criarUsuarioGoogle);
     this.router.post('/login', this.controller.login);
+    this.router.get('/buscar-email/:email', this.controller.buscarPorEmail);
     this.router.use(authMiddleware);
     this.router.get('/logoff/:token', this.controller.logoff);
     this.router.get('/verificar', this.controller.verificarToken);

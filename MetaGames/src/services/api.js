@@ -33,6 +33,23 @@ class ApiService {
     }
   }
 
+  async cadastroUsuarioGoogle(nome, email, idGoogle, img) {
+    try {
+
+      await this.axiosInstance.post('/usuario/criar-google', {
+        nome,
+        email,
+        idGoogle,
+        img,
+      });
+      console.log('Usuário cadastrado!');
+      return true;
+    } catch (error) {
+      console.error('Erro ao cadastrar usuário: ', error);
+      return false;
+    }
+  }
+
   async login(email, senha) {
     try {
 
@@ -127,6 +144,18 @@ class ApiService {
       return response.data;
     } catch (error) {
       console.error('Erro ao buscar jogo: ', error);
+      return null;
+    }
+  }
+
+  async buscarPorEmail(email) {
+    try {
+      await this.setAuthorizationHeader();
+
+      const response = await this.axiosInstance.get(`/usuario/buscar-email/${email}`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar usuario: ', error);
       return null;
     }
   }

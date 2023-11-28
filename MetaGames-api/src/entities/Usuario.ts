@@ -12,14 +12,17 @@ export class Usuario extends BaseEntityColumns {
     @Column()
     email: string;
 
-    @Column()
+    @Column({ nullable: true })
     senha: string;
 
-    @Column('date')
+    @Column('date', { nullable: true })
     data_nascimento: Date;
 
     @Column({ nullable: true })
     imagem: string;
+
+    @Column({ nullable: true, unique: true })
+    id_google: string;
 
     @OneToMany(type => Review, type => type.usuario)
     reviews: Review[];

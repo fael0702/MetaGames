@@ -5,11 +5,9 @@ import * as WebBrowser from "expo-web-browser";
 import * as Facebook from 'expo-auth-session/providers/facebook'
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Image } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
 import apiService from '../services/api'
-import jwt_decode from 'jwt-decode';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -77,15 +75,9 @@ const Login = () => {
   }, [response]);
 
   async function loginGoogle() {
-    const user = await AsyncStorage.getItem("@user");
-
-    if (!user) {
-      if (response?.type === 'success') {
-        await getUserInfo(response.authentication.accessToken);
-        navigation.navigate('MainTabs');
-      }
-    } else {
-      setUserInfo(JSON.parse(user));
+    if (response?.type === 'success') {
+      await getUserInfo(response.authentication.accessToken);
+      navigation.navigate('MainTabs');
     }
   }
 
@@ -99,10 +91,24 @@ const Login = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      const user = await response.json();
-      await AsyncStorage.setItem("@user", JSON.stringify(user));
-      setUserInfo(user);
 
+      const user = await response.json();
+      console.log(user);
+      const jaExiste = await apiService.buscarPorEmail(user.email);
+
+      if (jaExiste) {
+        const data = await apiService.login(user.email);
+        await AsyncStorage.setItem('token', data.token);
+        await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
+      } else {
+        const cadastro = await apiService.cadastroUsuarioGoogle(user.name, user.email, user.id, user.picture);
+        if (cadastro) {
+          const usuario = await apiService.buscarPorEmail(user.email);
+          const data = await apiService.login(usuario.email);
+          await AsyncStorage.setItem('token', data.token);
+          await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
+        }
+      }
     } catch (error) {
       console.log('erro: ' + error);
     }
@@ -129,11 +135,11 @@ const Login = () => {
           <Text style={[styles.title, styles.contorno]}>Login</Text>
           <View>
             <Text style={styles.label}>Email</Text>
-            <TextInput style={styles.input} value={email} onChangeText={setEmail}/>
+            <TextInput style={styles.input} value={email} onChangeText={setEmail} />
             <Text style={styles.label}>Senha</Text>
 
             <View style={styles.inputContainer}>
-              <TextInput style={styles.input} secureTextEntry={!senhaVisivel} value={password} onChangeText={setPassword}/>
+              <TextInput style={styles.input} secureTextEntry={!senhaVisivel} value={password} onChangeText={setPassword} />
               <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={toggleSenhaVisivel}

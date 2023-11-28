@@ -30,18 +30,33 @@ export default class UsuarioController extends BaseController {
     }, req, res);
   }
 
+  public async criarUsuarioGoogle(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
+      const email = req.body.email;
+      const nome = req.body.nome;
+      const idGoogle = req.body.idGoogle;
+      const img = req.body.img;
+
+      await this.service.criarUsuarioGoogle(email, nome, idGoogle, img);
+
+      res.status(200).json({ message: 'Usuário cadastrado com sucesso' });
+    }, req, res);
+  }
+
   public async login(req: Request, res: Response): Promise<void> {
     await this.executeMethod(async () => {
       const usuario = await this.repositorio.buscarPorEmail(req.body.email);
 
       if (!usuario) {
-        throw new Error('email ou senha inválidos');
+        throw new Error('email inválidos');
       }
 
-      const verificar = await bcrypt.compare(req.body.senha, usuario.senha);
-
-      if (!verificar) {
-        throw new Error('senha inválidos');
+      if (!usuario.id_google) {
+        const verificar = await bcrypt.compare(req.body.senha, usuario.senha);
+  
+        if (!verificar) {
+          throw new Error('senha inválidos');
+        }
       }
 
       const token = jwt.sign({ id: usuario.id }, process.env.JWT_TOKEN, { expiresIn: '8h' });
@@ -120,6 +135,16 @@ export default class UsuarioController extends BaseController {
       await this.service.logoff(token);
 
       res.status(200).json({ message: 'Usuário deslogado sucesso' });
+    }, req, res);
+  }
+
+  public async buscarPorEmail(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
+      const email = req.params.email;
+
+      const usuario = await this.repositorio.buscarPorEmail(email);
+
+      res.status(200).json(usuario);
     }, req, res);
   }
 }
