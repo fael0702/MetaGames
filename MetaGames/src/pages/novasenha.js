@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,10 +11,8 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import * as ImagePicker from "expo-image-picker";
-import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiService from "../services/api";
+
 
 export default function NovaSenha() {
   const navigation = useNavigation();
@@ -35,10 +33,6 @@ export default function NovaSenha() {
     setEmail(usuario.email);
   };
 
-  const handleCancelar = () => {
-    navigation.navigate('Perfil')
-  };
-
   return (
     <ImageBackground
       source={require("../../assets/FundoMetaGames.png")}
@@ -54,7 +48,7 @@ export default function NovaSenha() {
             <TextInput style={styles.input} placeholder="Digite Novamente"  placeholderTextColor={"#000"} />
           </View>
           <View style={styles.ctnBotoes}>
-            <TouchableOpacity onPress={navigation.navigate('Perfil')} style={styles.btn}>
+            <TouchableOpacity onPress={() => navigation.navigate("Perfil")} style={styles.btn}>
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn}>
