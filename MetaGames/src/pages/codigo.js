@@ -60,11 +60,17 @@ export default function Codigo() {
             />
           </View>
           <View style={styles.ctnBotoes}>
-            <TouchableOpacity onPress={navigation.navigate('Perfil')} style={styles.btn}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Perfil")}
+              style={styles.btn}
+            >
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("NovaSenha")}
+              style={styles.btn}
+            >
               <Text style={styles.btnText}>CONFIRMAR</Text>
             </TouchableOpacity>
           </View>

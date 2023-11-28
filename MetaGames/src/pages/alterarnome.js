@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,7 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiService from "../services/api";
 
-export default function NovoNome() {
+export default function AlterarNome() {
   const navigation = useNavigation();
   const [image, setImage] = useState(
     "https://cdn-icons-png.flaticon.com/512/5953/5953527.png"
@@ -35,7 +35,6 @@ export default function NovoNome() {
     setEmail(usuario.email);
   };
 
-
   return (
     <ImageBackground
       source={require("../../assets/FundoMetaGames.png")}
@@ -47,10 +46,17 @@ export default function NovoNome() {
             <Text style={[styles.title, styles.contorno]}>
               {userInfo?.email || email}
             </Text>
-            <TextInput style={styles.input} placeholder="Digite um novo nome" placeholderTextColor={"#000"} />
+            <TextInput
+              style={styles.input}
+              placeholder="Digite um novo nome"
+              placeholderTextColor={"#000"}
+            />
           </View>
           <View style={styles.ctnBotoes}>
-            <TouchableOpacity onPress={navigation.navigate('Perfil')} style={styles.btn}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Perfil")}
+              style={styles.btn}
+            >
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn}>

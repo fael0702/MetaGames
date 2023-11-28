@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -76,14 +76,6 @@ export default function Perfil() {
     }
   };
 
-  const handleNovoNome = () => {
-    navigation.navigate('novoNome');
-  };
-
-  const hadleNovaSenha = () => {
-    navigation.navigate('Codigo')
-  }
-
   const handleGoBack = () => {
     navigation.goBack();
   };
@@ -124,10 +116,10 @@ export default function Perfil() {
           <Text style={[styles.title, styles.contorno]}>
             {userInfo?.name || nome}
           </Text>
-          <TouchableOpacity onPress={handleNovoNome}>
+          <TouchableOpacity onPress={() => navigation.navigate("AlterarNome")}>
             <Text style={styles.title}>ALTERAR NOME</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={hadleNovaSenha}>
+          <TouchableOpacity onPress={() => navigation.navigate("Codigo")}>
             <Text style={styles.title}>ALTERAR SENHA</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleSair}>
