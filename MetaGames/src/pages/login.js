@@ -44,6 +44,10 @@ const Login = () => {
         );
         const userInfo = await userInfoResponse.json();
         setUser(userInfo);
+        // console.log('User Info:', userInfo);
+
+        // Gravar as informações do usuário no AsyncStorage
+        await AsyncStorage.setItem("@userInfo", JSON.stringify(userInfo));
       })();
     }
     const fetchData = async () => {
@@ -52,7 +56,7 @@ const Login = () => {
       if (valido) {
         navigation.navigate('MainTabs');
       }
-    }
+    };
     fetchData();
   }, [response2]);
 
@@ -62,14 +66,14 @@ const Login = () => {
   const toggleConfirmarSenhaVisivel = () => {
     setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
   };
-  
+
   const handlePressAsync = async () => {
     const result = await promptAsync2();
     if (result.type !== "success") {
       alert("Uh oh, something went wrong");
       return;
     } else {
-      navigation.navigate('MainTabs');
+      navigation.navigate('MainTabs')
     }
   };
 
@@ -79,9 +83,6 @@ const Login = () => {
       navigation.navigate('MainTabs');
     }
   }
-
-  
-  
 
   const getUserInfo = async (token) => {
     if (!token) return;
@@ -134,7 +135,7 @@ const Login = () => {
     >
       <View style={styles.containerRola}>
         <View style={styles.container}>
-          
+
           <Text style={[styles.title, styles.contorno]}>Login</Text>
           <View>
             <Text style={styles.label}>Email</Text>
@@ -179,7 +180,7 @@ const Login = () => {
             <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
               <FontAwesome name="google" size={50} color="#f00" />
             </TouchableOpacity>
-          </View> 
+          </View>
 
         </View>
       </View>
