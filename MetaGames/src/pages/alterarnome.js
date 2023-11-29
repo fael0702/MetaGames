@@ -23,6 +23,7 @@ export default function AlterarNome() {
   );
   const [userInfo, setUserInfo] = useState(null);
   const [email, setEmail] = useState();
+  const [novoNome, setNovoNome] = useState("");
 
   useEffect(() => {
     handleEmail();
@@ -34,6 +35,18 @@ export default function AlterarNome() {
     const usuario = JSON.parse(usuarioJson);
     setEmail(usuario.email);
   };
+
+  const alterarNome = async (nome) => {
+    const usuarioJson = await AsyncStorage.getItem("@usuario");
+    const usuario = JSON.parse(usuarioJson);
+
+    const nomeAlterado = await apiService.alterarNome(nome, usuario.id)
+
+    if (nomeAlterado) {
+      const usuarioAtualizado = await apiService.buscarUsuario(usuario.id);
+      await AsyncStorage.setItem("@usuario", JSON.stringify(usuarioAtualizado));
+    }
+  }
 
   return (
     <ImageBackground
@@ -48,6 +61,8 @@ export default function AlterarNome() {
             </Text>
             <TextInput
               style={styles.input}
+              value={novoNome}
+              onChangeText={setNovoNome}
               placeholder="Digite um novo nome"
               placeholderTextColor={"#000"}
             />
@@ -59,7 +74,10 @@ export default function AlterarNome() {
             >
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity 
+              onPress={() => alterarNome(novoNome)}
+              style={styles.btn}
+            >
               <Text style={styles.btnText}>TROCAR</Text>
             </TouchableOpacity>
           </View>

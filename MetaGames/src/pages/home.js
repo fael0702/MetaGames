@@ -9,39 +9,44 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import apiGames from "../services/apiGames";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiService from "../services/api";
+import apiService from '../services/api'
 
 export default function Home() {
   const navigation = useNavigation();
   const handleHome = () => navigation.navigate("Home");
   const handlePerfil = () => navigation.navigate("Perfil");
-  const handleHistorico = () => navigation.navigate("Historico");
+  const handleHistorico = () => navigation.navigate("Historico")
   const [jogosDisp, setJogosDisp] = useState([]);
   const [gameList, setGameList] = useState([]);
   const [visible, setVisible] = useState(3);
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(
+    "https://cdn-icons-png.flaticon.com/512/5953/5953527.png"
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         loadingGames();
-
+  
         const usuarioJson = await AsyncStorage.getItem("@usuario");
         const usuario = JSON.parse(usuarioJson);
-
+  
         const reviews = await apiService.buscarReviewUsuario(usuario.id);
-        if (reviews.length) {
+        if (reviews?.length) {
           setGameList([...reviews]);
         }
+
       } catch (error) {
         console.error("Houve um erro: ", error);
       }
     };
     fetchData();
+    handleImage();
   }, []);
 
   async function loadingGames() {
@@ -57,13 +62,29 @@ export default function Home() {
     setLoading(false);
   }
 
+  const handleImage = async () => {
+    const usuarioJson = await AsyncStorage.getItem("@usuario");
+    const usuario = JSON.parse(usuarioJson);
+
+
+    if (usuario.imagem) {
+      if (usuario.id_google) {
+        setImage(`${usuario.imagem}`)
+      } else {
+        setImage(
+          `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
+        );
+      }
+    }
+  }
+
   const handleNavigate = (item) => {
     navigation.navigate("Review", {
       parametro: {
         image: item?.background_image,
         name: item?.name,
         rating: item?.metacritic,
-        lancamento: item?.released,
+        lancamento: item?.released
       },
     });
   };
@@ -85,9 +106,9 @@ export default function Home() {
   const jogosAvaliados = ({ item }) => {
     return (
       <TouchableOpacity style={styles.card} onPress={handleHistorico}>
-        <Image
-          source={{ uri: item.jogo.background_image }}
-          style={styles.imagemGameAv}
+        <Image 
+          source={{ uri: item.jogo.background_image }} 
+          style={styles.imagemGameAv} 
         />
       </TouchableOpacity>
     );
@@ -149,7 +170,7 @@ export default function Home() {
         <View style={styles.perfilctn}>
           <TouchableOpacity onPress={handlePerfil}>
             <Image
-              source={require("../../assets/usercommun.png")}
+              source={{ uri: image }}
               style={styles.perfil}
               resizeMode="contain"
             />

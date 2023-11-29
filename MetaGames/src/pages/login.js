@@ -20,8 +20,20 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: process.env.ANDROID_CLIENT_ID,
+    webClientId: process.env.WEB_CLIENT_ID,
+    expoClientId: process.env.EXPO_CLIENT_ID,
+    redirectUri: process.env.REDIRECT_URI,
+  });
+
+  const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
+    clientId: process.env.CLIENT_ID
+  })
+
   React.useEffect(() => {
     loginGoogle();
+    console.log(response);
   }, [response]);
 
   useEffect(() => {
@@ -50,11 +62,6 @@ const Login = () => {
   const toggleConfirmarSenhaVisivel = () => {
     setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
   };
-
-  const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
-    clientId: process.env.CLIENT_ID
-  })
-
   
   const handlePressAsync = async () => {
     const result = await promptAsync2();
@@ -73,12 +80,7 @@ const Login = () => {
     }
   }
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: process.env.ANDROID_CLIENT_ID,
-    webClientId: process.env.WEB_CLIENT_ID,
-    expoClientId: process.env.EXPO_CLIENT_ID,
-    redirectUri: process.env.REDIRECT_URI,
-  });
+  
   
 
   const getUserInfo = async (token) => {

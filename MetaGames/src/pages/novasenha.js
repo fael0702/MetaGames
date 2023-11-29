@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import apiService from "../services/api";
 
 export default function NovaSenha() {
   const navigation = useNavigation();
@@ -31,6 +32,14 @@ export default function NovaSenha() {
     const usuario = JSON.parse(usuarioJson);
     setEmail(usuario.email);
   };
+
+  const enviarEmail = async (email) => {
+    const envio = await apiService.enviarCodigo(email);
+
+    if (envio) {
+      
+    }
+  }
 
   return (
     <ImageBackground

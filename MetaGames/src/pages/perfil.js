@@ -37,9 +37,13 @@ export default function Perfil() {
       setUserInfo(usuario);
 
       if (usuario.imagem) {
-        setImage(
-          `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
-        );
+        if (usuario.id_google) {
+          setImage(`${usuario.imagem}`)
+        } else {
+          setImage(
+            `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
+          );
+        }
       }
     }
   };
@@ -67,11 +71,17 @@ export default function Perfil() {
         usuario.id,
         result.assets[0].uri
       );
+
       const usuarioComImg = await apiService.buscarUsuario(usuario.id);
+      await AsyncStorage.setItem("@usuario", JSON.stringify(usuarioComImg));
       if (img) {
-        setImage(
-          `https://drive.google.com/uc?export=view&id=${usuarioComImg.imagem}`
-        );
+        if (usuario.id_google) {
+          setImage(`${usuarioComImg.imagem}`)
+        } else {
+          setImage(
+            `https://drive.google.com/uc?export=view&id=${usuarioComImg.imagem}`
+          );
+        }
       }
     }
   };

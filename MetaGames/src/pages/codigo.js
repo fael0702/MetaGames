@@ -23,6 +23,7 @@ export default function Codigo() {
   );
   const [userInfo, setUserInfo] = useState(null);
   const [email, setEmail] = useState();
+  const [confirmado, setConfimado] = useState(null);
 
   useEffect(() => {
     handleEmail();
@@ -34,6 +35,27 @@ export default function Codigo() {
     const usuario = JSON.parse(usuarioJson);
     setEmail(usuario.email);
   };
+
+  const enviarEmail = async (email) => {
+    const usuarioJson = await AsyncStorage.getItem("@usuario");
+    const usuario = JSON.parse(usuarioJson);
+
+    if (usuario.email === email) {
+      const envio = await apiService.enviarCodigo(email);
+
+      if (envio) {
+        setConfimado(true);
+      } else {
+        setConfimado(false);
+      }
+    }
+  }
+
+  const confirmar = () => {
+    if (confirmado) {
+      navigation.navigate("NovaSenha");
+    }
+  }
 
   return (
     <ImageBackground
@@ -47,6 +69,8 @@ export default function Codigo() {
               style={styles.input}
               placeholder="Digite o seu E-mail"
               placeholderTextColor={"#000"}
+              value={email}
+              onChangeText={setEmail}
             />
             <Text style={styles.txt}>⚠️PARA SUA SEGURANÇA⚠️</Text>
             <Text style={styles.txt}>
@@ -68,13 +92,15 @@ export default function Codigo() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate("NovaSenha")}
+              onPress={() => confirmar()}
               style={styles.btn}
             >
               <Text style={styles.btnText}>CONFIRMAR</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn}
+            onPress={() => enviarEmail(email)}
+          >
             <Text style={styles.btnText}>REENVIAR</Text>
           </TouchableOpacity>
         </View>

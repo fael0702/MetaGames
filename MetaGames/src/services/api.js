@@ -214,7 +214,7 @@ class ApiService {
     try {
       await this.setAuthorizationHeader();
 
-      await this.axiosInstance.put(`/usuario/enviar-codigo/${email}`);
+      await this.axiosInstance.post(`/usuario/enviar-codigo/${email}`);
 
       console.log('Código enviado com sucesso!');
       return true;
