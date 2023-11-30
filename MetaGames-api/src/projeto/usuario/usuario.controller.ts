@@ -114,10 +114,9 @@ export default class UsuarioController extends BaseController {
   public async alterarSenha(req: Request, res: Response): Promise<void> {
     await this.executeMethod(async () => {
       const email = req.params.email;
-      const senha = await bcrypt.hash(req.body.senha, 10);
-      const codigo = req.params.codigo;
+      const senha = await bcrypt.hash(req.params.senha, 10);
 
-      await this.service.alterarSenha(email, senha, codigo);
+      await this.service.alterarSenha(email, senha);
       res.status(200).json({ message: 'Senha alterado com sucesso' });
     }, req, res);
   }
