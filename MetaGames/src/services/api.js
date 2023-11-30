@@ -224,16 +224,29 @@ class ApiService {
     }
   }
 
-  async alterarSenha(email, senha, codigo) {
+  async confirmarCodigo(email, codigo) {
     try {
       await this.setAuthorizationHeader();
 
-      await this.axiosInstance.put(`/usuario/alterar-senha/${email}/${senha}/${codigo}`);
+      await this.axiosInstance.get(`/passwordReset/confirmar/${email}/${codigo}`)
 
-      console.log('Código enviado com sucesso!');
       return true;
     } catch (error) {
-      console.error('Erro ao enviar código: ', error);
+      console.error('Erro ao confirmar código: ', error);
+      return false;
+    }
+  }
+
+  async alterarSenha(email, senha) {
+    try {
+      await this.setAuthorizationHeader();
+
+      await this.axiosInstance.put(`/usuario/alterar-senha/${email}/${senha}`);
+
+      console.log('Senha alterada com sucesso!');
+      return true;
+    } catch (error) {
+      console.error('Erro ao alterar senha: ', error);
       return false;
     }
   }

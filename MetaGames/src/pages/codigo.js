@@ -23,6 +23,7 @@ export default function Codigo() {
   );
   const [userInfo, setUserInfo] = useState(null);
   const [email, setEmail] = useState();
+  const [codigo, setCodigo] = useState();
   const [confirmado, setConfimado] = useState(null);
 
   useEffect(() => {
@@ -43,16 +44,13 @@ export default function Codigo() {
     if (usuario.email === email) {
       const envio = await apiService.enviarCodigo(email);
 
-      if (envio) {
-        setConfimado(true);
-      } else {
-        setConfimado(false);
-      }
     }
   }
 
-  const confirmar = () => {
-    if (confirmado) {
+  const confirmar = async (email, codigo) => {
+    const confirmacao = await apiService.confirmarCodigo(email, codigo);
+
+    if (confirmacao) {
       navigation.navigate("NovaSenha");
     }
   }
@@ -81,6 +79,8 @@ export default function Codigo() {
               style={styles.input}
               placeholder="Código"
               placeholderTextColor={"#000"}
+              value={codigo}
+              onChangeText={setCodigo}
             />
           </View>
           <View style={styles.ctnBotoes}>
@@ -92,7 +92,7 @@ export default function Codigo() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => confirmar()}
+              onPress={() => confirmar(email, codigo)}
               style={styles.btn}
             >
               <Text style={styles.btnText}>CONFIRMAR</Text>

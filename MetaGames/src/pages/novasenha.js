@@ -21,6 +21,7 @@ export default function NovaSenha() {
   );
   const [userInfo, setUserInfo] = useState(null);
   const [email, setEmail] = useState();
+  const [senha, setSenha] = useState();
 
   useEffect(() => {
     handleEmail();
@@ -33,12 +34,8 @@ export default function NovaSenha() {
     setEmail(usuario.email);
   };
 
-  const enviarEmail = async (email) => {
-    const envio = await apiService.enviarCodigo(email);
-
-    if (envio) {
-      
-    }
+  const trocarSenha = async (senha) => {
+    await apiService.alterarSenha(userInfo?.email || email, senha);
   }
 
   return (
@@ -61,6 +58,8 @@ export default function NovaSenha() {
               style={styles.input}
               placeholder="Digite Novamente"
               placeholderTextColor={"#000"}
+              value={senha}
+              onChangeText={setSenha}
             />
           </View>
           <View style={styles.ctnBotoes}>
@@ -70,7 +69,9 @@ export default function NovaSenha() {
             >
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn}
+              onPress={() => trocarSenha(senha)}
+            >
               <Text style={styles.btnText}>TROCAR</Text>
             </TouchableOpacity>
           </View>

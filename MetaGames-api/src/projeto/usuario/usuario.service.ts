@@ -165,7 +165,7 @@ export default class UsuarioService {
             })
 
             const opcoes = {
-                from: process.env.EMAIL_SENDER,
+                from: process.env.EMAIL_FROM,
                 to: `${email}`,
                 subject: 'Código de Confirmação',
                 text: `Seu código de confirmação é: ${codigoConfirmacao}`
@@ -185,16 +185,8 @@ export default class UsuarioService {
         }
     }
 
-    public async alterarSenha(email: string, senha: string, codigo: string) {
+    public async alterarSenha(email: string, senha: string) {
         try {
-            const passwordResetRepositorio = new PasswordResetRepositorio();
-            const passwordReset = await passwordResetRepositorio.buscarCodigo(email, codigo);
-
-            if (!passwordReset) {
-                throw new Error(`Não existe codigo de vericação para o email: ${email}`);
-            }
-            await passwordResetRepositorio.remove(passwordReset);
-
             await this.repositorio.alterarSenha(email, senha);
 
         } catch (error) {
