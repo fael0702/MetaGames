@@ -33,20 +33,17 @@ const Login = () => {
 
   React.useEffect(() => {
     loginGoogle();
-    console.log(response);
   }, [response]);
 
   useEffect(() => {
     if (response2 && response2.type === "success" && response2.authentication) {
       (async () => {
         const userInfoResponse = await fetch(
-          `https://graph.facebook.com/me?access_token=${response2.authentication.accessToken}&fields=id,name,picture.type(large)`
+          `https://graph.facebook.com/me?access_token=${response2.authentication.accessToken}&fields=id,email,name,picture.type(large)`
         );
         const userInfo = await userInfoResponse.json();
         setUser(userInfo);
-        // console.log('User Info:', userInfo);
 
-        // Gravar as informações do usuário no AsyncStorage
         await AsyncStorage.setItem("@userInfo", JSON.stringify(userInfo));
       })();
     }
@@ -96,7 +93,6 @@ const Login = () => {
       );
 
       const user = await response.json();
-      console.log(user);
       const jaExiste = await apiService.buscarPorEmail(user.email);
 
       if (jaExiste) {
