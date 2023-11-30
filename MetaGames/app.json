@@ -27,6 +27,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": ["facebookLogin", "fb222572750606789"]
+    "scheme": ["MetaGames", "fb222572750606789"]
   }
 }
