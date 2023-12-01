@@ -14,6 +14,7 @@ import apiGames from "../services/apiGames";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiService from "../services/api";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -131,6 +132,24 @@ export default function Home() {
             />
           </TouchableOpacity>
         </View>
+        <View style={styles.perfilContainer}>
+          <TouchableOpacity onPress={handlePerfil}>
+            <LinearGradient
+              colors={["#1B30EB", "white", "#F4C622"]}
+              style={styles.Perfilctn}
+            >
+              <Image
+                source={
+                  image
+                    ? { uri: image }
+                    : require("../../assets/usercommun.png")
+                }
+                style={styles.perfil}
+                resizeMode="contain"
+              />
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.jogosDisp}>
           <Text style={[styles.title, styles.contorno]}>Jogos disp.</Text>
@@ -166,18 +185,6 @@ export default function Home() {
           </View>
         </View>
 
-        <View style={styles.perfilctn}>
-          <TouchableOpacity onPress={handlePerfil}>
-            <Image
-              source={
-                image ? { uri: image } : require("../../assets/usercommun.png")
-              }
-              style={styles.perfil}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
-
         <StatusBar style="auto" />
       </View>
     </ImageBackground>
@@ -201,19 +208,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  perfilContainer: { 
+    position: "absolute",
+    top: 44,
+    right: 10,
+  },
+  Perfilctn: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    borderColor: "black",
+    borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   logoContainer: {
     position: "absolute",
     top: 35,
     left: 10,
   },
-  perfilctn: {
-    position: "absolute",
-    top: 45,
-    left: 300,
-  },
   perfil: {
+    backgroundColor: "#D9D9D9",
     width: 80,
     height: 80,
+    borderRadius: 40,
+    backgroundColor: "black",
   },
   logo: {
     width: 100,
