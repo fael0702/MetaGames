@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, ImageBackground, View, TextInput, TouchableOpacity, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  ImageBackground,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import * as WebBrowser from "expo-web-browser";
-import * as Facebook from 'expo-auth-session/providers/facebook'
+import * as Facebook from "expo-auth-session/providers/facebook";
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/FontAwesome";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
-import apiService from '../services/api'
+import apiService from "../services/api";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -17,8 +25,8 @@ const Login = () => {
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: process.env.ANDROID_CLIENT_ID,
@@ -28,8 +36,8 @@ const Login = () => {
   });
 
   const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
-    clientId: process.env.CLIENT_ID
-  })
+    clientId: process.env.CLIENT_ID,
+  });
 
   React.useEffect(() => {
     loginGoogle();
@@ -54,7 +62,7 @@ const Login = () => {
       const valido = await apiService.verificarToken();
 
       if (valido) {
-        navigation.navigate('MainTabs');
+        navigation.navigate("MainTabs");
       }
     };
     fetchData();
@@ -73,14 +81,14 @@ const Login = () => {
       alert("Uh oh, something went wrong");
       return;
     } else {
-      navigation.navigate('MainTabs')
+      navigation.navigate("MainTabs");
     }
   };
 
   async function loginGoogle() {
-    if (response?.type === 'success') {
+    if (response?.type === "success") {
       await getUserInfo(response.authentication.accessToken);
-      navigation.navigate('MainTabs');
+      navigation.navigate("MainTabs");
     }
   }
 
@@ -101,70 +109,99 @@ const Login = () => {
 
       if (jaExiste) {
         const data = await apiService.login(user.email);
-        await AsyncStorage.setItem('token', data.token);
+        await AsyncStorage.setItem("token", data.token);
         await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
       } else {
-        const cadastro = await apiService.cadastroUsuarioGoogle(user.name, user.email, user.id, user.picture);
+        const cadastro = await apiService.cadastroUsuarioGoogle(
+          user.name,
+          user.email,
+          user.id,
+          user.picture
+        );
         if (cadastro) {
           const usuario = await apiService.buscarPorEmail(user.email);
           const data = await apiService.login(usuario.email);
-          await AsyncStorage.setItem('token', data.token);
+          await AsyncStorage.setItem("token", data.token);
           await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
         }
       }
     } catch (error) {
-      console.log('erro: ' + error);
+      console.log("erro: " + error);
     }
-  }
+  };
 
   const handleLogin = async () => {
     const data = await apiService.login(email, password);
-    await AsyncStorage.setItem('token', data.token);
+    await AsyncStorage.setItem("token", data.token);
     await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
     if (data.usuario) {
-      navigation.navigate('MainTabs');
+      navigation.navigate("MainTabs");
     } else {
-      alert('E-mail ou senha inválidos!');
+      alert("E-mail ou senha inválidos!");
     }
   };
 
   return (
     <ImageBackground
-      source={require('../../assets/FundoMetaGames.png')}
+      source={require("../../assets/FundoMetaGames.png")}
       style={styles.background}
     >
-      <View style={styles.containerRola}>
+      <View style={styles.mainContainer}>
         <View style={styles.container}>
-
           <Text style={[styles.title, styles.contorno]}>Login</Text>
           <View>
             <Text style={styles.label}>Email</Text>
-            <TextInput style={styles.input} value={email} onChangeText={setEmail} />
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+            />
             <Text style={styles.label}>Senha</Text>
 
             <View style={styles.inputContainer}>
-              <TextInput style={styles.input} secureTextEntry={!senhaVisivel} value={password} onChangeText={setPassword} />
+              <TextInput
+                style={styles.input}
+                secureTextEntry={!senhaVisivel}
+                value={password}
+                onChangeText={setPassword}
+              />
+
               <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={toggleSenhaVisivel}
               >
                 <Icon
-                  name={senhaVisivel ? 'eye-slash' : 'eye'}
+                  name={senhaVisivel ? "eye-slash" : "eye"}
                   size={20}
                   color="#000"
                 />
               </TouchableOpacity>
             </View>
           </View>
+          <TouchableOpacity onPress={() => navigation.navigate("Codigo")}>
+            <Text style={[styles.esquecisenha, styles.contorno]}>
+              Esqueci minha senha
+            </Text>
+          </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={handleLogin}>
+          <TouchableOpacity
+            style={[styles.red, styles.contorno]}
+            onPress={handleLogin}
+          >
             <Text style={[styles.red, styles.contorno]}>Entrar</Text>
           </TouchableOpacity>
 
-          <Text style={styles.red2}>Ainda não cadastrado?</Text>
-          <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => { navigation.navigate('Cadastro') }}>
-            <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
-          </TouchableOpacity>
+          <View style={styles.cadastro}>
+            <Text style={styles.textCadastro}>Ainda não cadastrado?</Text>
+            <TouchableOpacity
+              style={[styles.red, styles.contorno]}
+              onPress={() => {
+                navigation.navigate("Cadastro");
+              }}
+            >
+              <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.dividerContainer}>
             <View style={styles.dividerLine}></View>
@@ -173,15 +210,21 @@ const Login = () => {
           </View>
 
           <View style={styles.imageContainer}>
-            <TouchableOpacity disabled={!request2} style={[styles.red, styles.contorno]} onPress={() => handlePressAsync()}>
+            <TouchableOpacity
+              disabled={!request2}
+              style={[styles.red, styles.contorno]}
+              onPress={() => handlePressAsync()}
+            >
               <FontAwesome5 name="facebook" size={47} color="#00f" />
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.red, styles.contorno]} onPress={() => promptAsync()}>
+            <TouchableOpacity
+              style={[styles.red, styles.contorno]}
+              onPress={() => promptAsync()}
+            >
               <FontAwesome name="google" size={50} color="#f00" />
             </TouchableOpacity>
           </View>
-
         </View>
       </View>
     </ImageBackground>
@@ -190,90 +233,92 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 10,
   },
   container: {
-    width: '80%',
-    height: '75%',
-    backgroundColor: '#D9D9D9',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: 320,
+    height: 550,
+    backgroundColor: "#D9D9D9",
+    alignItems: "center",
+    justifyContent: "center",
     opacity: 0.7,
-    borderRadius: 5,
+    borderRadius: 64,
+    margin: 10,
   },
-
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
     marginRight: 10,
   },
   iconContainer: {
-    marginLeft: -30,
+    marginLeft: -35,
   },
-
-  containerRola: {
+  label: {
+    marginLeft: 10,
+    marginTop: 10,
+  },
+  mainContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
-
+  cadastro: {
+    flexDirection: "row",
+  },
   background: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
-
   input: {
-    padding: 4,
+    padding: 8,
     marginTop: 7,
     marginBottom: 12,
-    borderRadius: 10,
+    borderRadius: 64,
     fontSize: 16,
     borderWidth: 2,
     width: 250,
   },
-
   contorno: {
-    textShadowColor: '#000000',
+    textShadowColor: "#000000",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 2,
     padding: 5,
   },
-
   red: {
-    color: '#FAFF19',
-    fontSize: 22,
+    color: "#FAFF19",
+    fontSize: 20,
   },
-
-  red2: {
+  textCadastro: {
     marginTop: 15,
-    fontSize: 16,
+    fontSize: 14,
   },
-
+  esquecisenha: {
+    fontSize: 16,
+    color: "#000",
+    textDecorationLine: 'underline',
+  },
   title: {
-    color: '#FAFF19',
-    fontSize: 22,
+    color: "#FAFF19",
+    fontSize: 32,
     marginBottom: 20,
   },
-
   dividerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 10,
     width: 250,
   },
-
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
-
   dividerText: {
     paddingHorizontal: 10,
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   profile: {
     alignItems: "center",
