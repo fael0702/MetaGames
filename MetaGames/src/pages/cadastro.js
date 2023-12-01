@@ -119,7 +119,7 @@ const Cadastro = () => {
       source={require("../../assets/FundoMetaGames.png")}
       style={styles.background}
     >
-      <View style={styles.containerRola}>
+      <View style={styles.mainContainer}>
         <View style={styles.container}>
           <Text style={[styles.title, styles.contorno]}>Cadastro</Text>
           <Text>Username</Text>
@@ -159,13 +159,13 @@ const Cadastro = () => {
 
           <View style={styles.senhaForcaContainer}>
             {senhaForca === "fraca" && (
-              <Text style={styles.senhaForcaFraca}>Senha fraca</Text>
+              <Text style={styles.senhaFraca}>Senha fraca</Text>
             )}
             {senhaForca === "média" && (
-              <Text style={styles.senhaForcaMedia}>Senha média</Text>
+              <Text style={styles.senhaMedia}>Senha média</Text>
             )}
             {senhaForca === "forte" && (
-              <Text style={styles.senhaForcaForte}>Senha forte</Text>
+              <Text style={styles.senhaForte}>Senha forte</Text>
             )}
           </View>
 
@@ -190,30 +190,28 @@ const Cadastro = () => {
             </TouchableOpacity>
           </View>
 
-          <View>
-            <Text>Data de Nascimento</Text>
-            <TextInputMask
-              style={styles.input}
-              type={"datetime"}
-              options={{
-                format: "DD/MM/YYYY",
-              }}
-              value={dataNasc}
-              onChangeText={setDataNasc}
-              keyboardType="numeric"
-              maxLength={10}
-              placeholder="DD/MM/YYYY"
-            />
-          </View>
+          <Text>Data de Nascimento</Text>
+          <TextInputMask
+            style={styles.input}
+            type={"datetime"}
+            options={{
+              format: "DD/MM/YYYY",
+            }}
+            value={dataNasc}
+            onChangeText={setDataNasc}
+            keyboardType="numeric"
+            maxLength={10}
+            placeholder="DD/MM/YYYY"
+          />
 
           <TouchableOpacity style={styles.button} onPress={handleCadastro}>
-            <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
+            <Text style={[styles.text, styles.contorno]}>Cadastre-se</Text>
           </TouchableOpacity>
 
-          <View style={styles.inputContainer2}>
+          <View style={styles.btnLogin}>
             <Text>Já cadastrado?</Text>
             <TouchableOpacity onPress={handleLogin}>
-              <Text style={[styles.red, styles.contorno2]}>Login</Text>
+              <Text style={[styles.textLogin, styles.contorno]}>Login</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -224,50 +222,46 @@ const Cadastro = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "85%",
-    height: "70%",
+    width: 320,
+    height: 550,
     backgroundColor: "#D9D9D9",
     alignItems: "center",
     justifyContent: "center",
     opacity: 0.7,
-    borderRadius: 5,
+    borderRadius: 64,
   },
-
-  containerRola: {
+  mainContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-
   background: {
     flex: 1,
     resizeMode: "cover",
   },
-
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "center",
     marginRight: 10,
   },
-  inputContainer2: {
+  btnLogin: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
   },
-
   input: {
     padding: 4,
     marginTop: 7,
     marginBottom: 12,
-    borderRadius: 10,
+    borderRadius: 64,
     fontSize: 16,
     borderWidth: 2,
     width: 250,
   },
   iconContainer: {
-    marginLeft: -30,
+    marginLeft: -35,
   },
   senhaForcaContainer: {
     width: 100,
@@ -276,15 +270,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 180,
   },
-  senhaForcaFraca: {
+  senhaFraca: {
     color: "red",
     fontSize: 14,
   },
-  senhaForcaMedia: {
+  senhaMedia: {
     color: "yellow",
     fontSize: 14,
   },
-  senhaForcaForte: {
+  senhaForte: {
     color: "green",
     fontSize: 14,
   },
@@ -293,30 +287,22 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 2,
   },
-  contorno2: {
-    textShadowColor: "#000000",
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 2,
-    marginLeft: 5,
+  text: {
+    color: "#FAFF19",
     fontSize: 20,
   },
-  red: {
+  textLogin: {
     color: "#FAFF19",
-    fontSize: 22,
-  },
-  red2: {
-    marginTop: 15,
     fontSize: 16,
+    marginLeft: 10,
   },
-
+  button: {
+    marginTop: 16,
+  },
   title: {
     color: "#FAFF19",
-    fontSize: 22,
+    fontSize: 32,
     marginBottom: 20,
-  },
-
-  ou: {
-    fontSize: 10,
   },
 });
 

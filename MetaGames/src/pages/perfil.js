@@ -129,9 +129,6 @@ export default function Perfil() {
           <TouchableOpacity onPress={() => navigation.navigate("AlterarNome")}>
             <Text style={styles.title}>ALTERAR NOME</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Codigo")}>
-            <Text style={styles.title}>ALTERAR SENHA</Text>
-          </TouchableOpacity>
           <TouchableOpacity onPress={handleSair}>
             <Text style={styles.title}>SAIR</Text>
           </TouchableOpacity>
