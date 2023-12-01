@@ -24,6 +24,9 @@ export class Usuario extends BaseEntityColumns {
     @Column({ nullable: true, unique: true })
     id_google: string;
 
+    @Column({ nullable: true, unique: true })
+    id_facebook: string;
+
     @OneToMany(type => Review, type => type.usuario)
     reviews: Review[];
 

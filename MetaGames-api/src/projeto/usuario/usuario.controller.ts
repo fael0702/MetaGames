@@ -43,6 +43,19 @@ export default class UsuarioController extends BaseController {
     }, req, res);
   }
 
+  public async criarUsuarioFacebook(req: Request, res: Response): Promise<void> {
+    await this.executeMethod(async () => {
+      const email = req.body.email;
+      const nome = req.body.nome;
+      const idFacebook = req.body.idFacebook;
+      const img = req.body.img;
+
+      await this.service.criarUsuarioFacebook(email, nome, idFacebook, img);
+
+      res.status(200).json({ message: 'Usuário cadastrado com sucesso' });
+    }, req, res);
+  }
+
   public async login(req: Request, res: Response): Promise<void> {
     await this.executeMethod(async () => {
       const usuario = await this.repositorio.buscarPorEmail(req.body.email);

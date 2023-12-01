@@ -67,6 +67,28 @@ export default class UsuarioService {
 
     }
 
+    public async criarUsuarioFacebook(email: string, nome: string, idFacebook: string, img: string): Promise<void> {
+        try {
+            const jaExiste = await this.repositorio.buscarPorEmail(email);
+
+            if (jaExiste) {
+                throw new Error('Já existe um usuário com esse email!');
+            }
+
+            const usuario = new Usuario();
+            usuario.email = email;
+            usuario.nome = nome;
+            usuario.id_facebook = idFacebook;
+            usuario.imagem = img;
+
+            await this.repositorio.salvar(usuario);
+        } catch (error) {
+            console.error(error);
+            throw new Error('Erro ao criar usuário');
+        }
+
+    }
+
     public async buscarPorId(id: number) {
         try {
             const usuario = await this.repositorio.buscarPorId(id);
