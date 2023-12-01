@@ -13,13 +13,13 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import apiGames from "../services/apiGames";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiService from '../services/api'
+import apiService from "../services/api";
 
 export default function Home() {
   const navigation = useNavigation();
   const handleHome = () => navigation.navigate("Home");
   const handlePerfil = () => navigation.navigate("Perfil");
-  const handleHistorico = () => navigation.navigate("Historico")
+  const handleHistorico = () => navigation.navigate("Historico");
   const [jogosDisp, setJogosDisp] = useState([]);
   const [gameList, setGameList] = useState([]);
   const [visible, setVisible] = useState(3);
@@ -32,15 +32,14 @@ export default function Home() {
     const fetchData = async () => {
       try {
         loadingGames();
-  
+
         const usuarioJson = await AsyncStorage.getItem("@usuario");
         const usuario = JSON.parse(usuarioJson);
-  
+
         const reviews = await apiService.buscarReviewUsuario(usuario.id);
         if (reviews?.length) {
           setGameList([...reviews]);
         }
-
       } catch (error) {
         console.error("Houve um erro: ", error);
       }
@@ -69,14 +68,14 @@ export default function Home() {
     console.log(usuario);
     if (usuario.imagem) {
       if (usuario.id_google || usuario.id_facebook) {
-        setImage(`${usuario.imagem}`)
+        setImage(`${usuario.imagem}`);
       } else {
         setImage(
           `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
         );
       }
     }
-  }
+  };
 
   const handleNavigate = (item) => {
     navigation.navigate("Review", {
@@ -84,7 +83,7 @@ export default function Home() {
         image: item?.background_image,
         name: item?.name,
         rating: item?.metacritic,
-        lancamento: item?.released
+        lancamento: item?.released,
       },
     });
   };
@@ -106,9 +105,9 @@ export default function Home() {
   const jogosAvaliados = ({ item }) => {
     return (
       <TouchableOpacity style={styles.card} onPress={handleHistorico}>
-        <Image 
-          source={{ uri: item.jogo.background_image }} 
-          style={styles.imagemGameAv} 
+        <Image
+          source={{ uri: item.jogo.background_image }}
+          style={styles.imagemGameAv}
         />
       </TouchableOpacity>
     );
@@ -170,7 +169,9 @@ export default function Home() {
         <View style={styles.perfilctn}>
           <TouchableOpacity onPress={handlePerfil}>
             <Image
-              source={image ? { uri: image } : require("../../assets/usercommun.png")}
+              source={
+                image ? { uri: image } : require("../../assets/usercommun.png")
+              }
               style={styles.perfil}
               resizeMode="contain"
             />
@@ -188,74 +189,61 @@ const styles = StyleSheet.create({
     color: "#FAFF19",
     fontSize: 22,
   },
-
   contorno: {
     textShadowColor: "#000000",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 2,
     padding: 5,
   },
-
   container: {
     flex: 1,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     alignItems: "center",
     justifyContent: "center",
   },
-
   logoContainer: {
     position: "absolute",
     top: 35,
     left: 10,
   },
-
   perfilctn: {
     position: "absolute",
     top: 45,
     left: 300,
   },
-
   perfil: {
     width: 80,
     height: 80,
   },
-
   logo: {
     width: 100,
     height: 100,
   },
-
   background: {
     flex: 1,
     resizeMode: "cover",
   },
-
   jogosDisp: {
     maxHeight: 200,
     maxWidth: 300,
   },
-
   jogosAvaliados: {
     marginTop: 30,
   },
-
   dividerContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 10,
     width: 300,
   },
-
   dividerLine: {
     flex: 1,
     height: 3,
     backgroundColor: "#100E0E",
   },
-
   cardsContainer: {
     flex: 1,
   },
-
   imagemGameDisp: {
     width: 120,
     height: 120,
@@ -263,7 +251,6 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: "black",
   },
-
   imagemGameAv: {
     width: 120,
     height: 120,

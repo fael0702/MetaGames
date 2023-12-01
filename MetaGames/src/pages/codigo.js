@@ -43,9 +43,8 @@ export default function Codigo() {
 
     if (usuario.email === email) {
       const envio = await apiService.enviarCodigo(email);
-
     }
-  }
+  };
 
   const confirmar = async (email, codigo) => {
     const confirmacao = await apiService.confirmarCodigo(email, codigo);
@@ -53,7 +52,7 @@ export default function Codigo() {
     if (confirmacao) {
       navigation.navigate("NovaSenha");
     }
-  }
+  };
 
   return (
     <ImageBackground
@@ -98,7 +97,8 @@ export default function Codigo() {
               <Text style={styles.btnText}>CONFIRMAR</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.btn}
+          <TouchableOpacity
+            style={styles.btn}
             onPress={() => enviarEmail(email)}
           >
             <Text style={styles.btnText}>REENVIAR</Text>

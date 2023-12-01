@@ -40,13 +40,13 @@ export default function AlterarNome() {
     const usuarioJson = await AsyncStorage.getItem("@usuario");
     const usuario = JSON.parse(usuarioJson);
 
-    const nomeAlterado = await apiService.alterarNome(nome, usuario.id)
+    const nomeAlterado = await apiService.alterarNome(nome, usuario.id);
 
     if (nomeAlterado) {
       const usuarioAtualizado = await apiService.buscarUsuario(usuario.id);
       await AsyncStorage.setItem("@usuario", JSON.stringify(usuarioAtualizado));
     }
-  }
+  };
 
   return (
     <ImageBackground
@@ -74,7 +74,7 @@ export default function AlterarNome() {
             >
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => alterarNome(novoNome)}
               style={styles.btn}
             >

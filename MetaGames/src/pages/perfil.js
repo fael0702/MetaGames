@@ -38,7 +38,7 @@ export default function Perfil() {
 
       if (usuario.imagem) {
         if (usuario.id_google || usuario.id_facebook) {
-          setImage(`${usuario.imagem}`)
+          setImage(`${usuario.imagem}`);
         } else {
           setImage(
             `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
@@ -76,7 +76,7 @@ export default function Perfil() {
       await AsyncStorage.setItem("@usuario", JSON.stringify(usuarioComImg));
       if (img) {
         if (usuario.id_google || usuario.id_facebook) {
-          setImage(`${usuarioComImg.imagem}`)
+          setImage(`${usuarioComImg.imagem}`);
         } else {
           setImage(
             `https://drive.google.com/uc?export=view&id=${usuarioComImg.imagem}`
@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     borderRadius: 35,
   },
-
   Perfilctn: {
     width: 280,
     height: 280,
@@ -181,7 +180,6 @@ const styles = StyleSheet.create({
     top: 35,
     left: 10,
   },
-
   imagemPerfil: {
     width: 250,
     height: 250,

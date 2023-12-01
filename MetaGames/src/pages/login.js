@@ -193,21 +193,21 @@ const Login = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.red, styles.contorno]}
+            style={[styles.text, styles.contorno]}
             onPress={handleLogin}
           >
-            <Text style={[styles.red, styles.contorno]}>Entrar</Text>
+            <Text style={[styles.text, styles.contorno]}>Entrar</Text>
           </TouchableOpacity>
 
           <View style={styles.cadastro}>
             <Text style={styles.textCadastro}>Ainda não cadastrado?</Text>
             <TouchableOpacity
-              style={[styles.red, styles.contorno]}
+              style={[styles.text, styles.contorno]}
               onPress={() => {
                 navigation.navigate("Cadastro");
               }}
             >
-              <Text style={[styles.red, styles.contorno]}>Cadastre-se</Text>
+              <Text style={[styles.text, styles.contorno]}>Cadastre-se</Text>
             </TouchableOpacity>
           </View>
 
@@ -220,14 +220,14 @@ const Login = () => {
           <View style={styles.imageContainer}>
             <TouchableOpacity
               disabled={!request2}
-              style={[styles.red, styles.contorno]}
+              style={[styles.text, styles.contorno]}
               onPress={() => handlePressAsync()}
             >
               <FontAwesome5 name="facebook" size={47} color="#00f" />
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.red, styles.contorno]}
+              style={[styles.text, styles.contorno]}
               onPress={() => promptAsync()}
             >
               <FontAwesome name="google" size={50} color="#f00" />
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
     padding: 5,
   },
-  red: {
+  text: {
     color: "#FAFF19",
     fontSize: 20,
   },

@@ -36,7 +36,7 @@ export default function NovaSenha() {
 
   const trocarSenha = async (senha) => {
     await apiService.alterarSenha(userInfo?.email || email, senha);
-  }
+  };
 
   return (
     <ImageBackground
@@ -69,7 +69,8 @@ export default function NovaSenha() {
             >
               <Text style={styles.btnText}>CANCELAR</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}
+            <TouchableOpacity
+              style={styles.btn}
               onPress={() => trocarSenha(senha)}
             >
               <Text style={styles.btnText}>TROCAR</Text>

@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-
 });
 
 export default Historico;

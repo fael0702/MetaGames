@@ -214,7 +214,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
   mostrarMais: {
     width: 50,
     height: 50,

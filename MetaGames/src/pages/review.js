@@ -147,18 +147,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 5,
   },
-
   containerRola: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-
   background: {
     flex: 1,
     resizeMode: "cover",
   },
-
   input: {
     padding: 4,
     marginTop: 7,
@@ -192,11 +189,9 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 20,
   },
-
   ou: {
     fontSize: 10,
   },
-
   gameImage: {
     width: 150,
     height: 200,
