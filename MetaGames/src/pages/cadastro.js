@@ -27,49 +27,49 @@ const Cadastro = () => {
   const handleCadastro = async () => {
     // Verificar se as senhas são iguais
     if (password !== authPassword) {
-      console.log("As senhas não coincidem");
+      alert("As senhas não coincidem");
       return;
     }
-
-    // Restante do código para verificar a força da senha e cadastrar o usuário
-    if (senhaForca === "fraca") {
-      console.log("Senha fraca");
-    } else if (senhaForca === "média") {
-      console.log("Senha média");
-    } else if (senhaForca === "forte") {
-      console.log("Senha forte");
-    }
-
     try {
       if (dataValida(dataNasc)) {
         const dataConvertida = converterDataSql(dataNasc);
-        const cadastrado = await api.cadastroUsuario(name, email, password, dataConvertida);
+        const cadastrado = await api.cadastroUsuario(
+          name,
+          email,
+          password,
+          dataConvertida
+        );
         if (cadastrado) {
           navigation.navigate("Login");
+        } else {
+          alert("ERROR");
         }
       } else {
-        throw new Error('Insira uma data valida');
+        throw new Error("Insira uma data valida");
       }
     } catch (error) {
-      console.log("Erro ao salvar os dados: ", error);
+      alert("Erro ao salvar os dados: ", error);
     }
+  };
 
+  const handleLogin = () => {
+    navigation.navigate("Login");
   };
 
   function dataValida(data) {
     const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
-  
+
     if (!dateRegex.test(data)) {
       return false;
     }
-  
-    const parts = data.split('/');
+
+    const parts = data.split("/");
     const day = parseInt(parts[0], 10);
     const month = parseInt(parts[1], 10);
     const year = parseInt(parts[2], 10);
-  
+
     const dateObject = new Date(year, month - 1, day);
-  
+
     return (
       dateObject.getFullYear() === year &&
       dateObject.getMonth() === month - 1 &&
@@ -78,12 +78,12 @@ const Cadastro = () => {
   }
 
   function converterDataSql(data) {
-    const partes = data.split('/');
-  
+    const partes = data.split("/");
+
     const dd = partes[0];
     const mm = partes[1];
     const yyyy = partes[2];
-  
+
     return `${mm}-${dd}-${yyyy}`;
   }
 
@@ -212,7 +212,7 @@ const Cadastro = () => {
 
           <View style={styles.inputContainer2}>
             <Text>Já cadastrado?</Text>
-            <TouchableOpacity onPress={handleCadastro}>
+            <TouchableOpacity onPress={handleLogin}>
               <Text style={[styles.red, styles.contorno2]}>Login</Text>
             </TouchableOpacity>
           </View>

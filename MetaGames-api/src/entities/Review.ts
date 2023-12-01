@@ -12,6 +12,9 @@ export class Review extends BaseEntityColumns {
     @Column({ type: 'decimal', precision: 5, scale: 1 })
     nota: number;
 
+    @Column({ nullable: true })
+    sentimento: number;
+
     @ManyToOne(type => Usuario)
     @JoinColumn({name: 'usuario_id'})
     usuario: Usuario;

@@ -33,6 +33,23 @@ class ApiService {
     }
   }
 
+  async cadastroUsuarioGoogle(nome, email, idGoogle, img) {
+    try {
+
+      await this.axiosInstance.post('/usuario/criar-google', {
+        nome,
+        email,
+        idGoogle,
+        img,
+      });
+      console.log('Usuário cadastrado!');
+      return true;
+    } catch (error) {
+      console.error('Erro ao cadastrar usuário: ', error);
+      return false;
+    }
+  }
+
   async login(email, senha) {
     try {
 
@@ -131,6 +148,18 @@ class ApiService {
     }
   }
 
+  async buscarPorEmail(email) {
+    try {
+      await this.setAuthorizationHeader();
+
+      const response = await this.axiosInstance.get(`/usuario/buscar-email/${email}`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar usuario: ', error);
+      return null;
+    }
+  }
+
   async buscarReviewUsuario(idUsuario) {
     try {
       await this.setAuthorizationHeader();
@@ -185,7 +214,7 @@ class ApiService {
     try {
       await this.setAuthorizationHeader();
 
-      await this.axiosInstance.put(`/usuario/enviar-codigo/${email}`);
+      await this.axiosInstance.post(`/usuario/enviar-codigo/${email}`);
 
       console.log('Código enviado com sucesso!');
       return true;
@@ -195,16 +224,29 @@ class ApiService {
     }
   }
 
-  async alterarSenha(email, senha, codigo) {
+  async confirmarCodigo(email, codigo) {
     try {
       await this.setAuthorizationHeader();
 
-      await this.axiosInstance.put(`/usuario/alterar-senha/${email}/${senha}/${codigo}`);
+      await this.axiosInstance.get(`/passwordReset/confirmar/${email}/${codigo}`)
 
-      console.log('Código enviado com sucesso!');
       return true;
     } catch (error) {
-      console.error('Erro ao enviar código: ', error);
+      console.error('Erro ao confirmar código: ', error);
+      return false;
+    }
+  }
+
+  async alterarSenha(email, senha) {
+    try {
+      await this.setAuthorizationHeader();
+
+      await this.axiosInstance.put(`/usuario/alterar-senha/${email}/${senha}`);
+
+      console.log('Senha alterada com sucesso!');
+      return true;
+    } catch (error) {
+      console.error('Erro ao alterar senha: ', error);
       return false;
     }
   }

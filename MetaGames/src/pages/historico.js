@@ -27,7 +27,7 @@ const Historico = ({ route }) => {
         const usuario = JSON.parse(usuarioString);
   
         const reviews = await apiService.buscarReviewUsuario(usuario.id);
-        if (reviews.length) {
+        if (reviews?.length) {
           setGameList([...reviews]);
         }
       } catch (error) {
@@ -48,7 +48,7 @@ const Historico = ({ route }) => {
     const usuario = JSON.parse(usuarioJson);
 
     const reviews = await apiService.buscarReviewUsuario(usuario.id);
-    if (reviews.length) {
+    if (reviews?.length) {
       setGameList([...reviews]);
     }
   };
@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+
 });
 
 export default Historico;

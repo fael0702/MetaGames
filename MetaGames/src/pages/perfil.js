@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,10 +13,11 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiService from '../services/api';
+import apiService from "../services/api";
 
 export default function Perfil() {
   const navigation = useNavigation();
+
   const [image, setImage] = useState(
     "https://cdn-icons-png.flaticon.com/512/5953/5953527.png"
   );
@@ -25,25 +26,27 @@ export default function Perfil() {
 
   useEffect(() => {
     handleUsuario();
-  }, []);
-
-  useEffect(() => {
-    const initializeAppAndUserInfo = async () => {
-      const usuarioJson = await AsyncStorage.getItem("@usuario");
-  
-      if (usuarioJson) {
-        const usuario = JSON.parse(usuarioJson);
-        setUserInfo(usuario);
-  
-        if (usuario.imagem) {
-          setImage(`https://drive.google.com/uc?export=view&id=${usuario.imagem}`);
-        }
-      }
-    };
-  
     initializeAppAndUserInfo();
   }, []);
-  
+
+  const initializeAppAndUserInfo = async () => {
+    const usuarioJson = await AsyncStorage.getItem("@usuario");
+
+    if (usuarioJson) {
+      const usuario = JSON.parse(usuarioJson);
+      setUserInfo(usuario);
+
+      if (usuario.imagem) {
+        if (usuario.id_google) {
+          setImage(`${usuario.imagem}`)
+        } else {
+          setImage(
+            `https://drive.google.com/uc?export=view&id=${usuario.imagem}`
+          );
+        }
+      }
+    }
+  };
 
   const handleUsuario = async () => {
     const usuarioJson = await AsyncStorage.getItem("@usuario");
@@ -64,10 +67,21 @@ export default function Perfil() {
       const usuarioJson = await AsyncStorage.getItem("@usuario");
       const usuario = JSON.parse(usuarioJson);
 
-      const img = await apiService.alterarImagem(usuario.id, result.assets[0].uri)
+      const img = await apiService.alterarImagem(
+        usuario.id,
+        result.assets[0].uri
+      );
+
       const usuarioComImg = await apiService.buscarUsuario(usuario.id);
+      await AsyncStorage.setItem("@usuario", JSON.stringify(usuarioComImg));
       if (img) {
-        setImage(`https://drive.google.com/uc?export=view&id=${usuarioComImg.imagem}`);
+        if (usuario.id_google) {
+          setImage(`${usuarioComImg.imagem}`)
+        } else {
+          setImage(
+            `https://drive.google.com/uc?export=view&id=${usuarioComImg.imagem}`
+          );
+        }
       }
     }
   };
@@ -83,9 +97,9 @@ export default function Perfil() {
 
     if (logoff) {
       localStorage.clear();
-      navigation.navigate('Login')
+      navigation.navigate("Login");
     }
-  }
+  };
 
   return (
     <ImageBackground
@@ -112,10 +126,10 @@ export default function Perfil() {
           <Text style={[styles.title, styles.contorno]}>
             {userInfo?.name || nome}
           </Text>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={() => navigation.navigate("AlterarNome")}>
             <Text style={styles.title}>ALTERAR NOME</Text>
           </TouchableOpacity>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={() => navigation.navigate("Codigo")}>
             <Text style={styles.title}>ALTERAR SENHA</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleSair}>
@@ -132,7 +146,7 @@ export default function Perfil() {
 const styles = StyleSheet.create({
   contorno: {
     textShadowColor: "#FAFF19",
-    textShadowOffset: { width: 2, height: 2},
+    textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
   },
   title: {

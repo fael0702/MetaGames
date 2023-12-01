@@ -30,4 +30,12 @@ export default class PasswordResetRepositorio extends Repository<PasswordReset>{
     }
   }
 
+  public async apagarCodigo(passwordReset: PasswordReset) {
+    try {
+      this.repositorio.remove(passwordReset);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 }

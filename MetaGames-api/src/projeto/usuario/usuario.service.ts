@@ -45,6 +45,28 @@ export default class UsuarioService {
 
     }
 
+    public async criarUsuarioGoogle(email: string, nome: string, idGoogle: string, img: string): Promise<void> {
+        try {
+            const jaExiste = await this.repositorio.buscarPorEmail(email);
+
+            if (jaExiste) {
+                throw new Error('Já existe um usuário com esse email!');
+            }
+
+            const usuario = new Usuario();
+            usuario.email = email;
+            usuario.nome = nome;
+            usuario.id_google = idGoogle;
+            usuario.imagem = img;
+
+            await this.repositorio.salvar(usuario);
+        } catch (error) {
+            console.error(error);
+            throw new Error('Erro ao criar usuário');
+        }
+
+    }
+
     public async buscarPorId(id: number) {
         try {
             const usuario = await this.repositorio.buscarPorId(id);
@@ -143,7 +165,7 @@ export default class UsuarioService {
             })
 
             const opcoes = {
-                from: process.env.EMAIL_SENDER,
+                from: process.env.EMAIL_FROM,
                 to: `${email}`,
                 subject: 'Código de Confirmação',
                 text: `Seu código de confirmação é: ${codigoConfirmacao}`
@@ -163,16 +185,8 @@ export default class UsuarioService {
         }
     }
 
-    public async alterarSenha(email: string, senha: string, codigo: string) {
+    public async alterarSenha(email: string, senha: string) {
         try {
-            const passwordResetRepositorio = new PasswordResetRepositorio();
-            const passwordReset = await passwordResetRepositorio.buscarCodigo(email, codigo);
-
-            if (!passwordReset) {
-                throw new Error(`Não existe codigo de vericação para o email: ${email}`);
-            }
-            await passwordResetRepositorio.remove(passwordReset);
-
             await this.repositorio.alterarSenha(email, senha);
 
         } catch (error) {

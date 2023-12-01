@@ -5,11 +5,9 @@ import * as WebBrowser from "expo-web-browser";
 import * as Facebook from 'expo-auth-session/providers/facebook'
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Image } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
 import apiService from '../services/api'
-import jwt_decode from 'jwt-decode';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -18,27 +16,35 @@ const Login = () => {
   const [user, setUser] = React.useState(null);
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
+  const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const toggleSenhaVisivel = () => {
-    setSenhaVisivel(!senhaVisivel);
-  };
-
-  const toggleConfirmarSenhaVisivel = () => {
-    setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
-  };
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: process.env.ANDROID_CLIENT_ID,
+    webClientId: process.env.WEB_CLIENT_ID,
+    expoClientId: process.env.EXPO_CLIENT_ID,
+    redirectUri: process.env.REDIRECT_URI,
+  });
 
   const [request2, response2, promptAsync2] = Facebook.useAuthRequest({
     clientId: process.env.CLIENT_ID
   })
 
+  React.useEffect(() => {
+    loginGoogle();
+  }, [response]);
+
   useEffect(() => {
     if (response2 && response2.type === "success" && response2.authentication) {
       (async () => {
         const userInfoResponse = await fetch(
-          `https://graph.facebook.com/me?access_token=${response2.authentication.accessToken}&fields=id,name,picture.type(large)`
+          `https://graph.facebook.com/me?access_token=${response2.authentication.accessToken}&fields=id,email,name,picture.type(large)`
         );
         const userInfo = await userInfoResponse.json();
         setUser(userInfo);
+
+        await AsyncStorage.setItem("@userInfo", JSON.stringify(userInfo));
       })();
     }
     const fetchData = async () => {
@@ -47,9 +53,16 @@ const Login = () => {
       if (valido) {
         navigation.navigate('MainTabs');
       }
-    }
+    };
     fetchData();
   }, [response2]);
+
+  const toggleSenhaVisivel = () => {
+    setSenhaVisivel(!senhaVisivel);
+  };
+  const toggleConfirmarSenhaVisivel = () => {
+    setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
+  };
 
   const handlePressAsync = async () => {
     const result = await promptAsync2();
@@ -57,35 +70,14 @@ const Login = () => {
       alert("Uh oh, something went wrong");
       return;
     } else {
-      navigation.navigate('MainTabs');
+      navigation.navigate('MainTabs')
     }
   };
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: process.env.ANDROID_CLIENT_ID,
-    webClientId: process.env.WEB_CLIENT_ID,
-    expoClientId: process.env.EXPO_CLIENT_ID,
-    redirectUri: process.env.REDIRECT_URI,
-  });
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const navigation = useNavigation();
-
-  React.useEffect(() => {
-    loginGoogle();
-  }, [response]);
-
   async function loginGoogle() {
-    const user = await AsyncStorage.getItem("@user");
-
-    if (!user) {
-      if (response?.type === 'success') {
-        await getUserInfo(response.authentication.accessToken);
-        navigation.navigate('MainTabs');
-      }
-    } else {
-      setUserInfo(JSON.parse(user));
+    if (response?.type === 'success') {
+      await getUserInfo(response.authentication.accessToken);
+      navigation.navigate('MainTabs');
     }
   }
 
@@ -99,10 +91,23 @@ const Login = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      const user = await response.json();
-      await AsyncStorage.setItem("@user", JSON.stringify(user));
-      setUserInfo(user);
 
+      const user = await response.json();
+      const jaExiste = await apiService.buscarPorEmail(user.email);
+
+      if (jaExiste) {
+        const data = await apiService.login(user.email);
+        await AsyncStorage.setItem('token', data.token);
+        await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
+      } else {
+        const cadastro = await apiService.cadastroUsuarioGoogle(user.name, user.email, user.id, user.picture);
+        if (cadastro) {
+          const usuario = await apiService.buscarPorEmail(user.email);
+          const data = await apiService.login(usuario.email);
+          await AsyncStorage.setItem('token', data.token);
+          await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
+        }
+      }
     } catch (error) {
       console.log('erro: ' + error);
     }
@@ -126,14 +131,15 @@ const Login = () => {
     >
       <View style={styles.containerRola}>
         <View style={styles.container}>
+
           <Text style={[styles.title, styles.contorno]}>Login</Text>
           <View>
             <Text style={styles.label}>Email</Text>
-            <TextInput style={styles.input} value={email} onChangeText={setEmail}/>
+            <TextInput style={styles.input} value={email} onChangeText={setEmail} />
             <Text style={styles.label}>Senha</Text>
 
             <View style={styles.inputContainer}>
-              <TextInput style={styles.input} secureTextEntry={!senhaVisivel} value={password} onChangeText={setPassword}/>
+              <TextInput style={styles.input} secureTextEntry={!senhaVisivel} value={password} onChangeText={setPassword} />
               <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={toggleSenhaVisivel}
@@ -145,8 +151,8 @@ const Login = () => {
                 />
               </TouchableOpacity>
             </View>
-
           </View>
+
           <TouchableOpacity style={[styles.red, styles.contorno]} onPress={handleLogin}>
             <Text style={[styles.red, styles.contorno]}>Entrar</Text>
           </TouchableOpacity>
@@ -180,6 +186,7 @@ const Login = () => {
 
             </TouchableOpacity>
           </View>
+
         </View>
       </View>
     </ImageBackground>
