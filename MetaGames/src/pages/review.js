@@ -141,10 +141,10 @@ const Review = ({ route, navigation }) => {
     setNota(itemValue);
     setCor(
       itemValue <= 3
-        ? "#f00"
+        ? "#fa4b4b"
         : itemValue > 3 && itemValue < 7
-        ? "#ffff00"
-        : "#0f0"
+        ? "#f5b505"
+        : "#258a25"
     );
   };
 
