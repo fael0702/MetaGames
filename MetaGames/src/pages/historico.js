@@ -14,6 +14,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiService from '../services/api'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
+
 
 const Historico = ({ route }) => {
   const navigation = useNavigation();
@@ -25,7 +28,7 @@ const Historico = ({ route }) => {
       try {
         const usuarioString = await AsyncStorage.getItem("@usuario");
         const usuario = JSON.parse(usuarioString);
-  
+
         const reviews = await apiService.buscarReviewUsuario(usuario.id);
         if (reviews?.length) {
           setGameList([...reviews]);
@@ -53,7 +56,16 @@ const Historico = ({ route }) => {
     }
   };
 
+
   const renderGameCard = ({ item }) => {
+    const renderSentimentoIcon = () => {
+      if (item.sentimento === 1) {
+        return <FontAwesome5 name="thumbs-up" style={{color: 'green', fontSize: 25, position: 'absolute', top: 5, right: 5 }} />;
+      } else {
+        return <FontAwesome5 name="thumbs-down" style={{color: 'red', fontSize: 25, position: 'absolute', top: 5, right: 5 }} />;
+      }
+    };
+
     return (
       <TouchableOpacity style={styles.card}>
         <TouchableOpacity
@@ -66,9 +78,11 @@ const Historico = ({ route }) => {
         <Image source={{ uri: item?.jogo.background_image }} style={styles.cardImage} />
         <Text style={styles.gameTitle}>{item?.nota}</Text>
         <Text style={styles.gameTitle}>{item?.comentario}</Text>
+        {renderSentimentoIcon()}
       </TouchableOpacity>
     );
   };
+
 
   const filteredGameList = [...gameList].reverse().filter((item) => {
     const gameName = item?.nome?.toLowerCase() || "";
