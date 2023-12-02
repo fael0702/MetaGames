@@ -30,24 +30,26 @@ export default function Home() {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        loadingGames();
-
-        const usuarioJson = await AsyncStorage.getItem("@usuario");
-        const usuario = JSON.parse(usuarioJson);
-
-        const reviews = await apiService.buscarReviewUsuario(usuario.id);
-        if (reviews?.length) {
-          setGameList([...reviews]);
-        }
-      } catch (error) {
-        console.error("Houve um erro: ", error);
-      }
-    };
     fetchData();
     handleImage();
   }, []);
+
+
+  const fetchData = async () => {
+    try {
+      loadingGames();
+
+      const usuarioJson = await AsyncStorage.getItem("@usuario");
+      const usuario = JSON.parse(usuarioJson);
+
+      const reviews = await apiService.buscarReviewUsuario(usuario.id);
+      if (reviews?.length) {
+        setGameList([...reviews]);
+      }
+    } catch (error) {
+      console.error("Houve um erro: ", error);
+    }
+  };
 
   async function loadingGames() {
     if (loading) return;

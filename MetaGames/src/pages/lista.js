@@ -21,6 +21,7 @@ export default function Lista() {
   const [detailList, setDetailList] = useState([]);
   const [visibleCards, setVisibleCards] = useState(3);
   const [searchText, setSearchText] = useState("");
+  const [colorGenrs, setColorGenrs] = useState("");
 
   const handleLista = () => {
     navigation.navigate("Home");
@@ -45,6 +46,8 @@ export default function Lista() {
         lancamento: item?.released,
         genres: item?.genres,
       },
+
+      
     });
   };
 
@@ -168,16 +171,19 @@ const styles = StyleSheet.create({
   gameTitle: {
     fontSize: 15,
     fontWeight: "bold",
-    textAlign: "center",
+    marginLeft: 10,
   },
   card: {
     backgroundColor: "rgba(255, 255, 255, 0.7)",
-    borderRadius: 20,
+    borderRadius: 32,
     padding: 5,
     margin: 8,
-    height: 151,
-    width: 298,
+    height: 120,
+    width: 280,
     justifyContent: "center",
+    opacity: 0.8,
+    borderWidth: 2,
+    borderColor: "black",
   },
   cardContent: {
     flexDirection: "row",
@@ -190,8 +196,10 @@ const styles = StyleSheet.create({
   cardImage: {
     width: 80,
     height: 80,
-    borderRadius: 20,
+    borderRadius: 64,
     marginRight: 8,
+    borderColor: "black",
+    borderWidth: 2,
   },
   detailsContainer: {
     flex: 1,
@@ -221,14 +229,16 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     marginBottom: 10,
-    width: "85%",
+    width: 350,
   },
   searchInput: {
     flex: 1,
     backgroundColor: "#FFF",
     paddingVertical: 8,
     paddingHorizontal: 12,
-    borderRadius: 20,
+    borderRadius: 64,
     marginRight: 10,
+    borderColor: 'black',
+    borderWidth: 2,
   },
 });

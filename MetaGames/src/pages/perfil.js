@@ -127,10 +127,10 @@ export default function Perfil() {
             {userInfo?.name || nome}
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate("AlterarNome")}>
-            <Text style={styles.title}>ALTERAR NOME</Text>
+            <Text style={[styles.title , styles.alterarNome, styles.contorno]}>ALTERAR NOME</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleSair}>
-            <Text style={styles.title}>SAIR</Text>
+            <Text style={[styles.title , styles.sair]}>SAIR</Text>
           </TouchableOpacity>
         </View>
 
@@ -148,17 +148,34 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#000000",
-    fontSize: 22,
+    fontSize: 20,
+  },
+  sair: {
+    marginTop: 20,
+    borderWidth: 2,
+    borderColor: "red",
+    borderRadius: 64,
+    paddingHorizontal: 20,
+    color: "red",
+  },
+  alterarNome : {
+    marginTop: 8,
+    fontSize: 16,
+    borderWidth: 2,
+    borderColor: "#FAFF19",
+    borderRadius: 64,
+    paddingHorizontal: 16,
+    color: "black",
   },
   infoPerfil: {
     marginTop: 40,
-    width: 300,
+    width: 250,
     height: 200,
     backgroundColor: "#D9D9D9",
     alignItems: "center",
     justifyContent: "center",
     opacity: 0.8,
-    borderRadius: 35,
+    borderRadius: 64,
   },
   Perfilctn: {
     width: 280,

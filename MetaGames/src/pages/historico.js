@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiService from '../services/api'
+import apiService from "../services/api";
 
 const Historico = ({ route }) => {
   const navigation = useNavigation();
@@ -21,21 +21,22 @@ const Historico = ({ route }) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const usuarioString = await AsyncStorage.getItem("@usuario");
-        const usuario = JSON.parse(usuarioString);
-  
-        const reviews = await apiService.buscarReviewUsuario(usuario.id);
-        if (reviews?.length) {
-          setGameList([...reviews]);
-        }
-      } catch (error) {
-        console.error("Houve um erro: ", error);
-      }
-    };
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const usuarioString = await AsyncStorage.getItem("@usuario");
+      const usuario = JSON.parse(usuarioString);
+
+      const reviews = await apiService.buscarReviewUsuario(usuario.id);
+      if (reviews?.length) {
+        setGameList([...reviews]);
+      }
+    } catch (error) {
+      console.error("Houve um erro: ", error);
+    }
+  };
 
   const handleDelete = async (item) => {
     const updatedGameList = gameList.filter((game) => game.id !== item.id);
@@ -56,16 +57,25 @@ const Historico = ({ route }) => {
   const renderGameCard = ({ item }) => {
     return (
       <TouchableOpacity style={styles.card}>
+        <Text style={[styles.gameTitle, styles.nameGame]}>
+          {item?.jogo.nome}
+        </Text>
+        <Text style={[styles.gameTitle, styles.notaGame]}>{item?.nota}</Text>
+        <View style={styles.ctnInfos}>
+          <Image
+            source={{ uri: item?.jogo.background_image }}
+            style={styles.cardImage}
+          />
+          <Text style={[styles.gameTitle, styles.multilineText]}>
+            {item?.comentario}
+          </Text>
+        </View>
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => handleDelete(item)}
         >
           <Text style={styles.deleteButtonText}>Excluir</Text>
         </TouchableOpacity>
-        <Text style={styles.gameTitle}>{item?.jogo.nome}</Text>
-        <Image source={{ uri: item?.jogo.background_image }} style={styles.cardImage} />
-        <Text style={styles.gameTitle}>{item?.nota}</Text>
-        <Text style={styles.gameTitle}>{item?.comentario}</Text>
       </TouchableOpacity>
     );
   };
@@ -121,6 +131,25 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
   },
+  multilineText: {
+    height: "auto",
+    flexWrap: "wrap",
+    textAlign: "center",
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  nameGame: {
+    textDecorationLine: "underline",
+  },
+  notaGame: {
+    marginBottom: 8,
+  },
+
+  ctnInfos: {
+    flexDirection: "row",
+    height: "80%",
+    width: "70%",
+  },
   cardsContainer: {
     flex: 1,
     justifyContent: "center",
@@ -130,13 +159,17 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "rgba(255, 255, 255, 0.7)",
-    borderRadius: 20,
+    borderRadius: 32,
     padding: 5,
-    margin: 15,
-    height: 151,
-    width: 298,
+    margin: 8,
+    height: 180,
+    width: 360,
     justifyContent: "center",
+    opacity: 0.8,
+    borderWidth: 2,
+    borderColor: "black",
     position: "relative",
+    opacity: 0.8,
   },
   gameTitle: {
     fontSize: 12,
@@ -146,13 +179,16 @@ const styles = StyleSheet.create({
   cardImage: {
     width: 80,
     height: 80,
-    marginBottom: 8,
-    borderRadius: 20,
+    borderRadius: 64,
+    marginRight: 8,
+    borderColor: "black",
+    borderWidth: 2,
   },
   searchContainer: {
     flexDirection: "row",
     marginBottom: 10,
-    width: "85%",
+    width: 400,
+    
   },
   searchInput: {
     flex: 1,
@@ -161,17 +197,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 20,
     marginRight: 10,
+    borderColor: 'black',
+    borderWidth: 2,
   },
   deleteButton: {
     position: "absolute",
     bottom: 5,
     right: 5,
-    backgroundColor: "red",
     padding: 5,
-    borderRadius: 5,
+    borderRadius: 64,
+    borderWidth: 2,
+    borderColor: "red",
+    marginRight: 12,
+    marginTop: 8,
   },
   deleteButtonText: {
-    color: "white",
+    color: "red",
     fontWeight: "bold",
     height: 20,
   },

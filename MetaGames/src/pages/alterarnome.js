@@ -46,6 +46,8 @@ export default function AlterarNome() {
       const usuarioAtualizado = await apiService.buscarUsuario(usuario.id);
       await AsyncStorage.setItem("@usuario", JSON.stringify(usuarioAtualizado));
     }
+
+    navigation.navigate("Perfil")
   };
 
   return (
