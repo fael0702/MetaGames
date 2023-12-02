@@ -15,6 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiService from "../services/api";
 
+
 export default function Perfil() {
   const navigation = useNavigation();
 

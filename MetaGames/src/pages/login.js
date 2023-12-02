@@ -227,17 +227,17 @@ const Login = () => {
           <View style={styles.imageContainer}>
             <TouchableOpacity
               disabled={!request2}
-              style={[styles.text, styles.contorno]}
+              style={[styles.imageContainer, styles.contorno]} // Add styles.imageContainer
               onPress={() => handlePressAsync()}
             >
-              <FontAwesome5 name="facebook" size={47} color="#00f" />
+              <Image source={require('../../assets/logo_facebook.png')} style={styles.iconImage} />
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.text, styles.contorno]}
+              style={[styles.imageContainer, styles.contorno]} // Add styles.imageContainer
               onPress={() => promptAsync()}
             >
-              <FontAwesome name="google" size={50} color="#f00" />
+              <Image source={require('../../assets/logo_google.png')} style={styles.iconImage} />
             </TouchableOpacity>
           </View>
         </View>
