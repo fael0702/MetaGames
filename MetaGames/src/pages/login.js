@@ -15,7 +15,8 @@ import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
-import apiService from "../services/api";
+import apiService from '../services/api'
+import { Image } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -68,10 +69,16 @@ const Login = () => {
       })();
     }
     const fetchData = async () => {
-      const valido = await apiService.verificarToken();
 
-      if (valido) {
-        navigation.navigate("MainTabs");
+      const usuarioJson = await AsyncStorage.getItem("@usuario");
+      const usuario = JSON.parse(usuarioJson);
+
+      if (usuario) {
+        const valido = await apiService.verificarToken();
+
+        if (valido) {
+          navigation.navigate('MainTabs');
+        }
       }
     };
     fetchData();
