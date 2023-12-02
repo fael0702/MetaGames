@@ -96,7 +96,7 @@ export default function Perfil() {
     const logoff = await apiService.logoff(token);
 
     if (logoff) {
-      localStorage.clear();
+      AsyncStorage.clear();
       navigation.navigate("Login");
     }
   };
