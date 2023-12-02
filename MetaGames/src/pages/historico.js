@@ -70,13 +70,18 @@ const Historico = ({ route }) => {
     }
   };
 
+  
 
   const renderGameCard = ({ item }) => {
+    
     const renderSentimentoIcon = () => {
       if (item.sentimento === 1) {
         return <FontAwesome5 name="thumbs-up" style={{color: 'green', fontSize: 25, position: 'absolute', top: 5, right: 5 }} />;
-      } else {
+      } else if (item.sentimento === -1){
         return <FontAwesome5 name="thumbs-down" style={{color: 'red', fontSize: 25, position: 'absolute', top: 5, right: 5 }} />;
+      }
+      else {
+        return null
       }
     };
 
@@ -101,10 +106,10 @@ const Historico = ({ route }) => {
         >
           <Text style={styles.deleteButtonText}>Excluir</Text>
         </TouchableOpacity>
-        <Text style={styles.gameTitle}>{item?.jogo.nome}</Text>
+        {/* <Text style={styles.gameTitle}>{item?.jogo.nome}</Text>
         <Image source={{ uri: item?.jogo.background_image }} style={styles.cardImage} />
         <Text style={styles.gameTitle}>{item?.nota}</Text>
-        <Text style={styles.gameTitle}>{item?.comentario}</Text>
+        <Text style={styles.gameTitle}>{item?.comentario}</Text> */}
         {renderSentimentoIcon()}
       </TouchableOpacity>
     );
@@ -112,7 +117,7 @@ const Historico = ({ route }) => {
 
 
   const filteredGameList = [...gameList].reverse().filter((item) => {
-    const gameName = item?.nome?.toLowerCase() || "";
+    const gameName = item?.jogo?.nome?.toLowerCase() || "";
     const searchTextLower = searchText.toLowerCase();
     return gameName.includes(searchTextLower);
   });
@@ -128,7 +133,7 @@ const Historico = ({ route }) => {
             <View style={styles.searchContainer}>
               <TextInput
                 style={styles.searchInput}
-                placeholder="Digite o nome do jogo"
+                placeholder="Digite o nome de um jogo..."
                 value={searchText}
                 onChangeText={setSearchText}
               />

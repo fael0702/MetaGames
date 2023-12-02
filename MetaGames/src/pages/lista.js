@@ -18,10 +18,8 @@ import apiGames from "../services/apiGames";
 export default function Lista() {
   const navigation = useNavigation();
   const [gameList, setGameList] = useState([]);
-  const [detailList, setDetailList] = useState([]);
-  const [visibleCards, setVisibleCards] = useState(3);
+  const [loadedGames, setLoadedGames] = useState(3); // Ajuste o número inicial de jogos carregados
   const [searchText, setSearchText] = useState("");
-  const [colorGenrs, setColorGenrs] = useState("");
 
   const handleLista = () => {
     navigation.navigate("Home");
@@ -46,8 +44,6 @@ export default function Lista() {
         lancamento: item?.released,
         genres: item?.genres,
       },
-
-      
     });
   };
 
@@ -56,19 +52,13 @@ export default function Lista() {
   );
 
   const renderGameCard = ({ item }) => {
-    const genresToDisplay = item.genres.slice(0, 3); // Limita a exibição a 3 gêneros
+    const genresToDisplay = item.genres.slice(0, 3);
 
     return (
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => handleNavigate(item)}
-      >
+      <TouchableOpacity style={styles.card} onPress={() => handleNavigate(item)}>
         <View style={styles.cardContent}>
           <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: item.background_image }}
-              style={styles.cardImage}
-            />
+            <Image source={{ uri: item.background_image }} style={styles.cardImage} />
           </View>
           <View style={styles.detailsContainer}>
             <Text style={styles.gameTitle}>{item.name}</Text>
@@ -90,10 +80,11 @@ export default function Lista() {
   };
 
   const handleShowMore = () => {
-    setVisibleCards((prevVisibleCards) => prevVisibleCards + 6);
+    // Ajuste a quantidade de jogos a serem carregados ao clicar em "Mostrar Mais"
+    setLoadedGames((prevLoadedGames) => prevLoadedGames + 6);
   };
 
-  const visibleGameList = gameList.slice(0, visibleCards);
+  const visibleGameList = filteredGameList.slice(0, loadedGames);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -115,25 +106,18 @@ export default function Lista() {
             <View style={styles.searchContainer}>
               <TextInput
                 style={styles.searchInput}
-                placeholder="Digite o nome do jogo"
+                placeholder="Digite o nome de um jogo..."
                 value={searchText}
                 onChangeText={setSearchText}
               />
             </View>
 
             <FlatList
-              data={filteredGameList}
+              data={visibleGameList}
               renderItem={renderGameCard}
               keyExtractor={(item) => item.id.toString()}
             />
-            {/* {visibleCards < filteredGameList.length && (
-              <TouchableOpacity onPress={handleShowMore}>
-                <Image
-                  source={require('../../assets/mostrarMais.png')}
-                  style={styles.mostrarMais}
-                />
-              </TouchableOpacity>
-            )} */}
+           
           </View>
         </View>
         <StatusBar style="auto" />

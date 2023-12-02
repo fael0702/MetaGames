@@ -52,7 +52,8 @@ export default function Perfil() {
     const usuarioJson = await AsyncStorage.getItem("@usuario");
     const usuario = JSON.parse(usuarioJson);
 
-    setNome(usuario.nome);
+    const partesNome = usuario.nome.split(' ');
+    setNome(partesNome[0]);
   };
 
   const handleImagePicker = async () => {
