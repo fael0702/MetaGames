@@ -60,7 +60,22 @@ const Historico = ({ route }) => {
         <Text style={[styles.gameTitle, styles.nameGame]}>
           {item?.jogo.nome}
         </Text>
-        <Text style={[styles.gameTitle, styles.notaGame]}>{item?.nota}</Text>
+        <Text
+          style={[
+            styles.gameTitle,
+            styles.notaGame,
+            {
+              color:
+                item?.nota <= 3
+                  ? "#f00" 
+                  : item?.nota > 3 && item?.nota < 7
+                  ? "#ffff00"
+                  : "#0f0", 
+            },
+          ]}
+        >
+          {item?.nota}
+        </Text>
         <View style={styles.ctnInfos}>
           <Image
             source={{ uri: item?.jogo.background_image }}
@@ -141,9 +156,7 @@ const styles = StyleSheet.create({
   nameGame: {
     textDecorationLine: "underline",
   },
-  notaGame: {
-    marginBottom: 8,
-  },
+ 
 
   ctnInfos: {
     flexDirection: "row",
@@ -176,6 +189,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+  notaGame: {
+    marginBottom: 8,
+    fontSize: 16,
+  },
   cardImage: {
     width: 80,
     height: 80,
@@ -188,7 +205,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 10,
     width: 400,
-    
   },
   searchInput: {
     flex: 1,
@@ -197,7 +213,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 20,
     marginRight: 10,
-    borderColor: 'black',
+    borderColor: "black",
     borderWidth: 2,
   },
   deleteButton: {

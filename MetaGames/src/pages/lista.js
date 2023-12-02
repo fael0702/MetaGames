@@ -46,8 +46,6 @@ export default function Lista() {
         lancamento: item?.released,
         genres: item?.genres,
       },
-
-      
     });
   };
 
@@ -70,7 +68,7 @@ export default function Lista() {
               style={styles.cardImage}
             />
           </View>
-          <View style={styles.detailsContainer}>
+          <View style={[styles.detailsContainer]}>
             <Text style={styles.gameTitle}>{item.name}</Text>
             <ScrollView
               horizontal
@@ -78,9 +76,28 @@ export default function Lista() {
               contentContainerStyle={styles.genresContainer}
             >
               {genresToDisplay.map((genre) => (
-                <Text key={genre.id} style={styles.genreText}>
-                  {genre.name}
-                </Text>
+                <Text
+                key={genre.id}
+                style={[
+                  styles.genreText,
+                  {
+                    backgroundColor: genre.name === "Action"
+                      ? "#fa4b4b" 
+                      : genre.name === "Adventure"
+                      ? "#258a25" 
+                      : genre.name === "RPG"
+                      ? "#f5b505" 
+                      : genre.name === "Puzzle"
+                      ? "#9c9c9c" 
+                      : genre.name === "Shooter"
+                      ? "#aa36e0" 
+                      : "#fff", 
+                  },
+                ]}
+              >
+                {genre.name}
+              </Text>
+              
               ))}
             </ScrollView>
           </View>
@@ -216,11 +233,13 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     backgroundColor: "rgba(255, 255, 255, 0.7)",
     paddingVertical: 2,
-    paddingHorizontal: 6,
+    paddingHorizontal: 4,
     borderRadius: 10,
+    borderColor: "black",
     marginBottom: 4,
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 1,
   },
   mostrarMais: {
     width: 50,
@@ -238,7 +257,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 64,
     marginRight: 10,
-    borderColor: 'black',
+    borderColor: "black",
     borderWidth: 2,
   },
 });
