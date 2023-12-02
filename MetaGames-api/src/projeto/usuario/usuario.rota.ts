@@ -13,7 +13,6 @@ export default class UsuarioRota {
   }
 
   private initializeRoutes() {
-    console.log(this.controller);
     this.router.post('/criar', this.controller.criarUsuario);
     this.router.post('/criar-google', this.controller.criarUsuarioGoogle);
     this.router.post('/criar-facebook', this.controller.criarUsuarioFacebook);

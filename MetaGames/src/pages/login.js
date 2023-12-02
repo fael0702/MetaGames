@@ -94,6 +94,7 @@ const Login = () => {
   };
 
   async function loginGoogle() {
+    console.log(response);
     if (response?.type === 'success') {
       await getUserInfo(response.authentication.accessToken);
       navigation.navigate('MainTabs');

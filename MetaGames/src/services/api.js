@@ -18,7 +18,6 @@ class ApiService {
 
   async cadastroUsuario(nome, email, senha, dataNasc) {
     try {
-      console.log('post');
       await this.axiosInstance.post('/usuario/criar', {
         nome,
         email,
@@ -169,6 +168,7 @@ class ApiService {
     try {
       await this.setAuthorizationHeader();
 
+      console.log('get');
       const response = await this.axiosInstance.get(`/usuario/buscar-email/${email}`);
       return response.data;
     } catch (error) {
