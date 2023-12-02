@@ -25,43 +25,112 @@ const Review = ({ route, navigation }) => {
     navigation.goBack();
   };
 
+  // const handleNavigate = async () => {
+  //   try {
+  //     const usuarioJson = await AsyncStorage.getItem("@usuario");
+  //     const usuario = JSON.parse(usuarioJson);
+  //     let jogoCadastrado;
+  //     let reviewCadastrado;
+  
+  //     // Adicione essa verificação para garantir que o usuário esteja autenticado
+  //     if (!usuario || !usuario.id) {
+  //       console.log("Usuário não autenticado.");
+  //       return;
+  //     }
+  
+  //     // Continue com o restante do código
+  //     const jogoJaCadastrado = await apiService.buscarJogo(name);
+  
+  //     if (!jogoJaCadastrado) {
+  //       jogoCadastrado = await apiService.cadastroJogo(name, image, lancamento);
+  //       if (jogoCadastrado) {
+  //         reviewCadastrado = await apiService.cadastroReview(comentario, nota, jogoCadastrado.id, usuario.id)
+  //       }
+  //     } else {
+  //       reviewCadastrado = await apiService.cadastroReview(comentario, nota, jogoJaCadastrado.id, usuario.id)
+  //     }
+  
+  //     navigation.navigate('Historico', {
+  //       parametro: reviewCadastrado,
+  //     });
+  //     navigation.navigate('Home', {
+  //       parametro: reviewCadastrado,
+  //     });
+
+        
+  //     // Enviar o ID do usuário para o servidor Python
+  //     const response = await fetch('http://127.0.0.1:5000/receber_id_usuario', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ id_usuario: usuario.id }),
+  //     });
+  
+  //     if (!response.ok) {
+  //       console.log('Erro ao enviar ID do usuário para o servidor Python.');
+  //       return;
+  //     }
+
+  //   } catch (error) {
+  //     console.log('Erro ao salvar jogo revisado:', error);
+  //   }
+  // };  
+
   const handleNavigate = async () => {
     try {
       const usuarioJson = await AsyncStorage.getItem("@usuario");
       const usuario = JSON.parse(usuarioJson);
       let jogoCadastrado;
       let reviewCadastrado;
+  
+      // Adicione essa verificação para garantir que o usuário esteja autenticado
+      if (!usuario || !usuario.id) {
+        console.log("Usuário não autenticado.");
+        return;
+      }
+  
+      // Continue com o restante do código
       const jogoJaCadastrado = await apiService.buscarJogo(name);
-
+  
       if (!jogoJaCadastrado) {
         jogoCadastrado = await apiService.cadastroJogo(name, image, lancamento);
         if (jogoCadastrado) {
-          reviewCadastrado = await apiService.cadastroReview(
-            comentario,
-            nota,
-            jogoCadastrado.id,
-            user.id
-          );
+          reviewCadastrado = await apiService.cadastroReview(comentario, nota, jogoCadastrado.id, usuario.id);
         }
       } else {
-        reviewCadastrado = await apiService.cadastroReview(
-          comentario,
-          nota,
-          jogoJaCadastrado.id,
-          usuario.id
-        );
+        reviewCadastrado = await apiService.cadastroReview(comentario, nota, jogoJaCadastrado.id, usuario.id);
       }
-
-      navigation.navigate("Historico", {
-        parametro: reviewCadastrado,
-      });
-      navigation.navigate("Home", {
-        parametro: reviewCadastrado,
-      });
+  
+      // Navegar apenas se a revisão estiver cadastrada
+      if (reviewCadastrado) {
+        navigation.navigate('Historico', {
+          parametro: reviewCadastrado,
+        });
+        navigation.navigate('Home', {
+          parametro: reviewCadastrado,
+        });
+  
+        // Enviar o ID do usuário para o servidor Python
+        const response = await fetch('http://127.0.0.1:5000/receber_id_usuario', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id_usuario: usuario.id }),
+        });
+  
+        if (!response.ok) {
+          console.log('Erro ao enviar ID do usuário para o servidor Python.');
+          return;
+        }
+      } else {
+        console.log('Erro ao cadastrar a revisão. O ID do usuário não será enviado para o servidor Python.');
+      }
     } catch (error) {
-      console.log("Erro ao salvar jogo revisado:", error);
+      console.log('Erro ao salvar jogo revisado:', error);
     }
-  };
+  };  
 
   const handlePickerChange = (itemValue) => {
     setNota(itemValue);

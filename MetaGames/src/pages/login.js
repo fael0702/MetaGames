@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Importar ícones
 import apiService from '../services/api'
+import { Image } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
