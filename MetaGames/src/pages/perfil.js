@@ -37,7 +37,7 @@ export default function Perfil() {
       setUserInfo(usuario);
 
       if (usuario.imagem) {
-        if (usuario.id_google) {
+        if (usuario.id_google || usuario.id_facebook) {
           setImage(`${usuario.imagem}`)
         } else {
           setImage(
@@ -75,7 +75,7 @@ export default function Perfil() {
       const usuarioComImg = await apiService.buscarUsuario(usuario.id);
       await AsyncStorage.setItem("@usuario", JSON.stringify(usuarioComImg));
       if (img) {
-        if (usuario.id_google) {
+        if (usuario.id_google || usuario.id_facebook) {
           setImage(`${usuarioComImg.imagem}`)
         } else {
           setImage(

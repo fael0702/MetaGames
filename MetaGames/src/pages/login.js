@@ -42,10 +42,22 @@ const Login = () => {
         const userInfoResponse = await fetch(
           `https://graph.facebook.com/me?access_token=${response2.authentication.accessToken}&fields=id,email,name,picture.type(large)`
         );
-        const userInfo = await userInfoResponse.json();
-        setUser(userInfo);
+        const user = await userInfoResponse.json();
+        const jaExiste = await apiService.buscarPorEmail(user.email);
 
-        await AsyncStorage.setItem("@userInfo", JSON.stringify(userInfo));
+        if (jaExiste) {
+          const data = await apiService.login(user.email);
+          await AsyncStorage.setItem('token', data.token);
+          await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
+        } else {
+          const cadastro = await apiService.cadastroUsuarioGoogle(user.name, user.email, user.id, user.picture.data.url);
+          if (cadastro) {
+            const usuario = await apiService.buscarPorEmail(user.email);
+            const data = await apiService.login(usuario.email);
+            await AsyncStorage.setItem('token', data.token);
+            await AsyncStorage.setItem("@usuario", JSON.stringify(data.usuario));
+          }
+        }
       })();
     }
     const fetchData = async () => {

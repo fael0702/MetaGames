@@ -50,6 +50,23 @@ class ApiService {
     }
   }
 
+  async cadastroUsuarioFacebook(nome, email, idFacebook, img) {
+    try {
+
+      await this.axiosInstance.post('/usuario/criar-facebook', {
+        nome,
+        email,
+        idFacebook,
+        img,
+      });
+      console.log('Usuário cadastrado!');
+      return true;
+    } catch (error) {
+      console.error('Erro ao cadastrar usuário: ', error);
+      return false;
+    }
+  }
+
   async login(email, senha) {
     try {
 

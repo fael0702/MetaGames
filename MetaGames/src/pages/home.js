@@ -66,9 +66,9 @@ export default function Home() {
     const usuarioJson = await AsyncStorage.getItem("@usuario");
     const usuario = JSON.parse(usuarioJson);
 
-
+    console.log(usuario);
     if (usuario.imagem) {
-      if (usuario.id_google) {
+      if (usuario.id_google || usuario.id_facebook) {
         setImage(`${usuario.imagem}`)
       } else {
         setImage(
@@ -170,7 +170,7 @@ export default function Home() {
         <View style={styles.perfilctn}>
           <TouchableOpacity onPress={handlePerfil}>
             <Image
-              source={{ uri: image }}
+              source={image ? { uri: image } : require("../../assets/usercommun.png")}
               style={styles.perfil}
               resizeMode="contain"
             />
