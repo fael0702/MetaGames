@@ -33,6 +33,7 @@ const Cadastro = () => {
     try {
       if (dataValida(dataNasc)) {
         const dataConvertida = converterDataSql(dataNasc);
+        console.log('antes do cadastro')
         const cadastrado = await api.cadastroUsuario(
           name,
           email,

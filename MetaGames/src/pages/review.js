@@ -40,7 +40,7 @@ const Review = ({ route, navigation }) => {
             comentario,
             nota,
             jogoCadastrado.id,
-            user.id
+            usuario.id
           );
         }
       } else {

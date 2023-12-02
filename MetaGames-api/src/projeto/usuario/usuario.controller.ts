@@ -19,6 +19,7 @@ export default class UsuarioController extends BaseController {
 
   public async criarUsuario(req: Request, res: Response): Promise<void> {
     await this.executeMethod(async () => {
+      console.log('controller')
       const email = req.body.email;
       const nome = req.body.nome;
       const dataNasc = new Date(req.body.dataNasc);
