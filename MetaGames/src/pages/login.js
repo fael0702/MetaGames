@@ -60,10 +60,16 @@ const Login = () => {
       })();
     }
     const fetchData = async () => {
-      const valido = await apiService.verificarToken();
 
-      if (valido) {
-        navigation.navigate('MainTabs');
+      const usuarioJson = await AsyncStorage.getItem("@usuario");
+      const usuario = JSON.parse(usuarioJson);
+
+      if (usuario) {
+        const valido = await apiService.verificarToken();
+
+        if (valido) {
+          navigation.navigate('MainTabs');
+        }
       }
     };
     fetchData();
